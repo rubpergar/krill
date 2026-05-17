@@ -1,8 +1,8 @@
 <p align="center">
-  <img width="180" height="180" alt="PrawnFlow" src="https://github.com/user-attachments/assets/343504e5-96bf-4d0d-adb1-a3c732ce0c17" />
+  <img width="180" height="180" alt="Krill" src="https://github.com/user-attachments/assets/343504e5-96bf-4d0d-adb1-a3c732ce0c17" />
 </p>
 
-<h1 align="center">PrawnFlow</h1>
+<h1 align="center">Krill</h1>
 
 <p align="center">
   Spec-driven agent workflow template for structured, test-first software development.
