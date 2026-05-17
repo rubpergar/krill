@@ -16,6 +16,11 @@ This repository is in **skeleton mode** — no product code has been implemented
 
 A structured agent workspace for [OpenCode](https://opencode.ai) that enforces disciplined software engineering practices: spec-first planning, test-driven development, source-of-truth documentation governance, and resumable task tracking. Designed to be cloned and adapted, not forked.
 
+## Prerequisites
+
+- **OpenCode** &mdash; this skeleton is designed for OpenCode but the conventions and workflows could be adapted to other agent workspaces.
+- **Context7 MCP** &mdash; required for the `context7-mcp` skill (library documentation queries). Configure it in your OpenCode settings (`opencode.json` or global config). See [Context7 MCP docs](https://opencode.ai) for setup instructions.
+
 ## Custom Commands
 
 | Command | Description |
