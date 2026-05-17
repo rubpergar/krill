@@ -2,16 +2,10 @@
 --
 -- If `AGENTS.md` points to a project-local DB change log file, update that file instead of this one.
 --
--- Keep entries ordered and append-only unless a correction is required.
---
--- Template:
--- [TASK-XXX] Short title
--- Date: YYYY-MM-DD
--- Forward:
--- <SQL statements>
--- Rollback:
--- <SQL statements or `Irreversible: reason`>
--- Pre-checks:
--- <optional verification SQL>
--- Post-checks:
--- <optional verification SQL>
+-- Example entry format:
+[TASK-XXX] Short title
+Date: YYYY-MM-DD
+Forward:
+CREATE TABLE example (id INT PRIMARY KEY);
+Rollback:
+DROP TABLE IF EXISTS example;

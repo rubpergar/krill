@@ -9,14 +9,15 @@ Copy to `agents/task/TASK-XXX-checklist.md` after the task plan is approved. Do 
 ## Rules
 - Work in order unless blocked.
 - Keep items derived from the approved plan.
-- Mark completed items during implementation.
+- **ALL checkboxes must start `[ ]` (unchecked). Never pre-mark items when generating the checklist.**
+- Mark completed items during implementation only.
 
 ## Checklist
 
 ### 1. Context
-- [ ] Read the approved plan and referenced source-of-truth docs.
-- [ ] Read and apply `agents/skills/test-driven-development/SKILL.md`, or record why it does not apply.
-- [ ] Confirm no open questions block implementation.
+- [ ] Re-read the approved plan and referenced source-of-truth docs (do not skip even if read during planning).
+- [ ] Load and apply `agents/skills/test-driven-development/SKILL.md`, or record why it does not apply.
+- [ ] Verify no open questions block implementation.
 
 ### 2. TDD Ledger
 Track each behavior/subtask from the plan through RED → GREEN → REFACTOR cycles.

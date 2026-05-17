@@ -5,7 +5,7 @@ Use this file as the task queue. Keep only one task under `## Current`.
 Task format:
 
 ```md
-- [ ] TASK-XXX: Short task title
+- TASK-XXX: Short task title
 ```
 
 When work starts on a current task, create:
