@@ -3,7 +3,7 @@
 Copy to `agents/task/TASK-XXX-plan.md`. Do not implement from this template.
 
 ## Status
-`draft | approved | in_progress | blocked | implemented | validated | closed`
+`draft | approved | blocked | implemented | validated | closed`
 
 ## Task
 - ID: TASK-XXX
