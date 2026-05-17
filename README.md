@@ -19,7 +19,7 @@ A structured agent workspace for [OpenCode](https://opencode.ai) that enforces d
 ## Custom Commands
 
 | Command | Description |
-|---|---|---|
+|---|---|
 | [`bootstrap`](.opencode/commands/bootstrap.md) | Adopt the agent skeleton into an existing project; configure source-of-truth docs and transition to project mode |
 | [`commit`](.opencode/commands/commit.md) | Group changes into semantic commits and push |
 | [`fast`](.opencode/commands/skip-sdd-tdd.md) | Quick implementation of trivial, non-behavioral changes (bypasses SDD/TDD) |
