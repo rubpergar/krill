@@ -1,81 +1,121 @@
 <p align="center">
-  <img width="180" height="180" alt="krill-logo" src="https://github.com/user-attachments/assets/343504e5-96bf-4d0d-adb1-a3c732ce0c17" />
+  <img src="krill_banner.jpeg" alt="Krill" width="75%" />
 </p>
 
 <h1 align="center">krill</h1>
 
 <p align="center">
-    Agent skeleton with spec-driven development (SDD) workflow, custom commands, and extensible skill system.
+  An agent skeleton for disciplined development with <strong>OpenCode</strong>, SDD, TDD, and docs as source of truth.
+</p>
+
+<p align="center">
+  <img alt="Static Badge" src="https://img.shields.io/badge/Krill-agent_skeleton-0A2540?style=flat-square&label=%F0%9F%A6%90" />
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-3B82F6?style=flat-square" />
 </p>
 
 ---
 
-This repository is in **skeleton mode** — no product code has been implemented yet. It is ready to be adopted into an existing project or initialized for a new one via the bootstrap workflow.
+## What It Is
 
-## Description
+**Krill** is a workspace template for development agents. It enables an agent to step into a project with clear rules, traceable tasks, and disciplined validation — before touching a single line of product code.
 
-A structured agent workspace for [OpenCode](https://opencode.ai) that enforces disciplined software engineering practices: spec-first planning, test-driven development, source-of-truth documentation governance, and resumable task tracking. Designed to be cloned and adapted, not forked.
+The repository is currently in **skeleton mode**: no product code yet. It is ready to be adopted into an existing project or used to initialize a new one through the bootstrap workflow.
 
-## Prerequisites
+## Why It Exists
 
-- **OpenCode** &mdash; this skeleton is designed for OpenCode but the conventions and workflows could be adapted to other agent workspaces.
-- **Context7 MCP** &mdash; required for the `context7-mcp` skill (library documentation queries). Configure it in your OpenCode settings (`opencode.json` or global config). See [Context7 MCP docs](https://opencode.ai) for setup instructions.
+- **Less guesswork** — decisions live in source-of-truth docs, not lost context.
+- **Traceable work** — backlog, plan, checklist, and Definition of Done for every meaningful change.
+- **TDD by default** — define the expectation first, then implement and validate.
+- **Extensible agents** — commands and skills ready to adapt the workflow to each project.
+- **Safe bootstrap** — keeps agent setup separate from product implementation.
 
-## Custom Commands
+## Workflow
 
-| Command | Description |
+```mermaid
+flowchart LR
+    Boot["Bootstrap"] --> Back["Backlog"]
+    Back --> Plan["Approved Plan"]
+    Plan --> Check["Checklist"]
+    Check --> TDD["TDD"]
+    TDD --> Val["Validation"]
+    Val --> Doc["Documentation"]
+```
+
+1. Run bootstrap to adapt the agent to your project.
+2. Select a single active task in `agents/task/backlog.md`.
+3. Create and approve a task-specific plan.
+4. Derive an executable checklist from the plan.
+5. Implement with TDD and validate against the Definition of Done.
+6. Update only the documentation that changes durable contracts.
+
+## What's Included
+
+| Area | Contents |
 |---|---|
-| [`bootstrap`](.opencode/commands/bootstrap.md) | Adopt the agent skeleton into an existing project; configure source-of-truth docs and transition to project mode |
-| [`commit`](.opencode/commands/commit.md) | Group changes into semantic commits and push |
-| [`fast`](.opencode/commands/skip-sdd-tdd.md) | Quick implementation of trivial, non-behavioral changes (bypasses SDD/TDD) |
-| [`prompt`](.opencode/commands/prompt.md) | Convert a rough request into an optimized prompt (output only, no execution) |
-| [`prompt-run`](.opencode/commands/prompt-run.md) | Convert a rough request into an optimized prompt and execute it |
-| [`readme`](.opencode/commands/readme.md) | Generate or overwrite the project README.md |
+| Agent rules | `AGENTS.md` with mode, boundaries, SDD/TDD workflow, and source-of-truth map |
+| OpenCode commands | Bootstrap, semantic commits, prompt tools, README, and fast-track trivial changes |
+| Tasks | Backlog, plans, checklists, and archive under `agents/task/` |
+| Documentation | DoD, testing, API, DB, decisions, debt, design, and dependency policy |
+| Skills | TDD, code review, security, performance, SEO, UI, and Context7 MCP |
+
+## Commands
+
+| Command | Purpose |
+|---|---|
+| [`/bootstrap`](.opencode/commands/bootstrap.md) | Adopt the skeleton into an existing project and prepare transition to project mode |
+| [`/commit`](.opencode/commands/commit.md) | Group changes into semantic commits and push |
+| [`/fast`](.opencode/commands/skip-sdd-tdd.md) | Quick implementation of trivial, non-behavioral changes (bypasses SDD/TDD) |
+| [`/prompt`](.opencode/commands/prompt.md) | Convert a rough request into an optimized prompt (output only, no execution) |
+| [`/prompt-run`](.opencode/commands/prompt-run.md) | Convert a rough request into an optimized prompt and execute it |
+| [`/readme`](.opencode/commands/readme.md) | Regenerate the README from the actual project state |
+
+## Requirements
+
+- [OpenCode](https://opencode.ai) — the skeleton is designed around its commands, agents, and configuration.
+- Context7 MCP — required if you want to use the `context7-mcp` skill for up-to-date library, SDK, and framework documentation.
 
 ## Installation
 
-Clone the repository and place it at the root of your project workspace:
+Clone the repository at the root of the workspace where you want to prepare the agent:
 
 ```bash
-git clone <repo-url> krill
+git clone https://github.com/rubpergar/krill.git
+cd krill
 ```
 
-If you are adopting this skeleton for an **existing project**, run the bootstrap command:
+To adopt the skeleton into an **existing project**:
 
-```
+```text
 /bootstrap
 ```
 
-If you are starting a **new project**, follow the incremental initialization path in `agents/docs/bootstrap.md`.
+If you are starting a **new project** with no code yet, follow the incremental path described in [`agents/docs/bootstrap.md`](agents/docs/bootstrap.md).
 
-## Usage
+## Structure
 
-1. Ensure your project is in **project mode** (see bootstrap).
-2. Add a single task under `## Current` in `agents/task/backlog.md`.
-3. Create and approve a task plan (`agents/task/TASK-XXX-plan.md`).
-4. Create a checklist (`agents/task/TASK-XXX-checklist.md`).
-5. Implement following test-driven development.
-6. Validate against the Definition of Done (`agents/docs/DoD.md`).
-
-Refer to `AGENTS.md` for the full SDD workflow, operating rules, and source-of-truth governance.
-
-## Directory Structure
-
-```
+```text
 krill/
 ├── .opencode/
-│   └── commands/         # Custom OpenCode commands (bootstrap, commit, fast, prompt, readme)
-├── AGENTS.md             # Operating rules, SDD workflow, boundaries, commands
-├── README.md             # This file
-└── skills-lock.json      # Skill provenance and integrity hashes
+│   └── commands/        # Custom OpenCode commands
+├── agents/              # Source-of-truth docs, tasks, DB, and agent skills
+├── assets/              # README images and resources
+├── AGENTS.md            # Main operating rules
+├── LICENSE              # MIT license
+├── README.md            # Project presentation
+└── skills-lock.json     # Skill provenance and integrity hashes
 ```
 
-> The `agents/` directory (task tracking, source-of-truth docs, DB schema, skills) is excluded from this overview. See `AGENTS.md` for its structure.
+## Current Status
+
+- Mode: `skeleton`.
+- No product stack configured yet.
+- No install, test, lint, typecheck, or build commands defined for product code.
+- Feature implementation is blocked until bootstrap is complete and the repo transitions to `project mode`.
 
 ## Contributing
 
-This is a private agent skeleton. Contributions are not expected in its current state. If you have suggestions, open an issue in the upstream repository.
+This is a private agent skeleton. If you reuse it, adapt the source-of-truth docs to your project first, and avoid introducing product code until bootstrap is finished.
 
 ## License
 
-MIT &mdash; see [LICENSE](LICENSE) for details.
+MIT. See [`LICENSE`](LICENSE) for details.
