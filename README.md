@@ -1,8 +1,6 @@
 <p align="center">
-  <img src="krill_banner.jpeg" alt="Krill" width="75%" />
+  <img src="https://github.com/user-attachments/assets/4b3644b1-5931-43a9-ab00-17b852a014d1" alt="Krill" width="72%" />
 </p>
-
-<h1 align="center">krill</h1>
 
 <p align="center">
   An agent skeleton for disciplined development with <strong>OpenCode</strong>, SDD, TDD, and docs as source of truth.
