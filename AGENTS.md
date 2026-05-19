@@ -4,29 +4,25 @@ This repository starts as an agent skeleton and can be prepared for active proje
 
 ## Mode
 
-Current mode: `skeleton`.
+Current mode: `project`.
 
-This repository is in agent bootstrap mode. Product feature implementation is not allowed.
+This repository is an active project. Use the SDD/TDD workflow and the source-of-truth documents under `agents/**`.
 
-For skeleton-mode scope, required setup information, validation, and transition to project mode, follow `agents/docs/bootstrap.md`. After transition to project mode, the archived bootstrap is at `agents/task/archive/bootstrap-*.md` (historical reference only).
-
-Do not modify product source code or unrelated files unless the bootstrap docs explicitly allow it or the user explicitly requests it.
+Bootstrap is complete. Archived bootstrap documents are historical references only and must not be followed unless the user explicitly requests bootstrap maintenance or review.
 
 ## Project
-Fill this section during bootstrap. Leave fields blank only while they are unknown or not configured yet.
-- Product:
-- Domain:
-- Users:
-- Goal:
+- Product: incidencias-coworking
+- Domain: Gestión de incidencias de espacios de coworking
+- Users: Clientes del coworking, administradores
+- Goal: Sistema de creación y gestión de incidencias de un espacio de coworking
 
 ## Stack
-Fill only what applies during bootstrap.
-- Runtime/framework:
-- Package manager:
-- Database:
-- Test tools:
-- Deployment:
-- External services:
+- Runtime/framework: Node 22 LTS + Fastify 5 (backend) / React 19 + Vite 6 (frontend)
+- Package manager: pnpm (workspaces)
+- Database: Pendiente (sin DB en skeleton)
+- Test tools: Vitest
+- Deployment: Pendiente
+- External services: Pendiente
 
 ## Operating Rules
 - In skeleton mode, editing agent configuration files (`AGENTS.md`, `agents/**`, `.opencode/**`) does not require user approval. The Source of Truth Map approval column only applies in project mode.
@@ -150,14 +146,14 @@ Product implementation starts only when there is exactly one task under `## Curr
 - Never expose secrets, tokens, credentials, private keys, or production-like sensitive data.
 
 ## Commands
-Validation commands (test, lint, typecheck, build, full validation) are defined in `agents/docs/testing.md`.
+Validation commands (test, lint, typecheck, build) are defined in `agents/docs/testing.md`.
 
 Non-validation commands:
 
 | Purpose | Command | Notes |
 |---|---|---|
-| Install | not configured | Package manager and lockfile policy |
-| Dev server | not configured | Port and env requirements |
+| Install | `pnpm install` | Instala backend + frontend via workspaces |
+| Dev server | `pnpm dev` | Backend en puerto 3000, frontend en puerto 5173 con proxy a backend |
 
 ## Code Conventions
 - Prefer existing patterns and local helpers.
@@ -166,4 +162,13 @@ Non-validation commands:
 - Move detailed conventions into source-of-truth docs when they become durable project rules.
 
 ## Project Structure
-Add only primary routes with their purpose.
+| Ruta | Propósito |
+|---|---|
+| `backend/` | API REST Fastify, modular (routes, modules, shared) |
+| `frontend/` | SPA React + Vite + Tailwind CSS |
+| `backend/src/api/v1/` | Definiciones de rutas REST versionadas |
+| `backend/src/modules/` | Lógica de negocio por dominio |
+| `backend/src/shared/` | Middleware, errores, validación, tipos compartidos |
+| `frontend/src/components/` | Componentes UI reutilizables |
+| `frontend/src/pages/` | Componentes de página |
+| `frontend/src/services/` | Clientes de API |
