@@ -1,0 +1,6 @@
+packages:
+  - 'backend'
+  - 'frontend'
+allowBuilds:
+  '@biomejs/biome': true
+  esbuild: true

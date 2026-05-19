@@ -1,0 +1,12 @@
+{
+  "name": "incidencias-coworking",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --parallel \"/dev/\"",
+    "dev:backend": "pnpm --filter backend dev",
+    "dev:frontend": "pnpm --filter frontend dev",
+    "test": "pnpm --parallel --filter '!*test:watch' --filter '*test'",
+    "lint": "pnpm --parallel \"/lint/\"",
+    "typecheck": "pnpm --parallel \"/typecheck/\""
+  }
+}
