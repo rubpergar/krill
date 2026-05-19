@@ -9,19 +9,19 @@ This file defines project-specific testing logistics. Use `agents/skills/test-dr
 ### Fast (TDD cycle / pre-commit)
 | Purpose | Command |
 |---|---|
-| Targeted unit | |
-| Full unit | |
-| Lint | |
-| Typecheck | |
+| Targeted unit | `pnpm --filter backend test -- --run tests/foo.test.ts` (o `pnpm --filter frontend test`) |
+| Full unit | `pnpm test` |
+| Lint | `pnpm --filter backend lint` (o `pnpm --filter frontend lint`) |
+| Typecheck | `pnpm --filter backend typecheck` (o `pnpm --filter frontend typecheck`) |
 
 ### Slow (pre-merge / CI)
 | Purpose | Command |
 |---|---|
-| Integration | |
-| E2E | |
-| Build | |
-| Full validation | |
-| Coverage report | |
+| Integration | `pnpm test` |
+| E2E | not available |
+| Build | `pnpm --filter frontend build` |
+| Full validation | `pnpm test && pnpm --parallel \"/lint|\" && pnpm --parallel \"/typecheck|\"` |
+| Coverage report | not available |
 | DESIGN.md lint | `npx @google/design.md lint agents/docs/design.md` (requires Node.js; optional — skip if unavailable) |
 
 ## Test Levels
@@ -34,11 +34,11 @@ This file defines project-specific testing logistics. Use `agents/skills/test-dr
 ## Coverage
 | Item | Configuration |
 |---|---|
-| Tool | |
-| Threshold | |
-| Command | |
-| Excluded paths | |
-| Fail on below threshold | yes / no |
+| Tool | Vitest |
+| Threshold | not configured |
+| Command | `pnpm test` |
+| Excluded paths | not configured |
+| Fail on below threshold | no |
 
 ## Environment
 - Required services:
@@ -61,9 +61,9 @@ This file defines project-specific testing logistics. Use `agents/skills/test-dr
 | E2E | Staging or sandbox environment |
 
 ## Test Locations
-- Unit:
-- Integration:
-- E2E:
+- Unit: `backend/tests/`, `frontend/tests/`
+- Integration: not configured
+- E2E: not configured
 
 ## TDD Coordination
 - Read and apply the TDD skill once before implementation code when the task changes behavior or refactors behavior-preserving code.
