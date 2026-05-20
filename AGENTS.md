@@ -1,32 +1,28 @@
 # AGENTS.md
 
-Este repositorio comienza como un esqueleto de agente y puede prepararse para trabajo activo en un proyecto.
+Este repositorio es un proyecto activo de desarrollo.
 
 ## Modo
 
-Modo actual: `skeleton`.
+Current mode: `project`.
 
-Este repositorio está en modo de bootstrap de agente. No se permite la implementación de funcionalidades de producto.
+This repository is an active project. Use the SDD/TDD workflow and the source-of-truth documents under `agents/**`.
 
-Para el alcance del modo skeleton, la información de configuración requerida, la validación y la transición al modo proyecto, sigue `agents/docs/bootstrap.md`. Después de la transición al modo proyecto, el bootstrap archivado está en `agents/task/archive/bootstrap-*.md` (solo referencia histórica).
-
-No modifiques el código fuente del producto ni archivos no relacionados a menos que los documentos de bootstrap lo permitan explícitamente o el usuario lo solicite explícitamente.
+Bootstrap is complete. Archived bootstrap documents are historical references only and must not be followed unless the user explicitly requests bootstrap maintenance or review.
 
 ## Proyecto
-Completa esta sección durante el bootstrap. Deja los campos en blanco solo mientras sean desconocidos o aún no estén configurados.
-- Product:
-- Domain:
-- Users:
-- Goal:
+- Product: Sistema de creación y gestión de incidencias para espacios de coworking
+- Domain: Coworking, gestión de incidencias, espacios de trabajo compartidos
+- Users: Clientes/usuarios del coworking (reportan incidencias), administradores (gestionan incidencias)
+- Goal: Probar el flujo SDD/TDD con un proyecto real desde cero, implementando un sistema web completo de incidencias
 
 ## Stack
-Completa solo lo que aplique durante el bootstrap.
-- Runtime/framework:
-- Package manager:
-- Database:
-- Test tools:
-- Deployment:
-- External services:
+- Runtime/framework: Node.js 22, Hono.js (backend), React 19 + Vite (frontend)
+- Package manager: pnpm 11 (monorepo workspaces)
+- Database: Pendiente de definir (SQLite vía Drizzle ORM como candidato inicial)
+- Test tools: Vitest
+- Deployment: No configurado
+- External services: No configurado
 
 ## Reglas Operativas
 - En modo skeleton, editar archivos de configuración del agente (`AGENTS.md`, `agents/**`, `.opencode/**`) no requiere aprobación del usuario. La columna de aprobación del Source of Truth Map solo aplica en modo proyecto.

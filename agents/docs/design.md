@@ -1,97 +1,60 @@
 # Sistema de Diseño
 
-Fuente de verdad de UI/diseño reutilizable. Marca como `Not applicable` para proyectos sin interfaz de usuario.
-
-Documenta solo decisiones de UI duraderas y reutilizables aquí. No documentes detalles de pantallas puntuales.
-
-Validación: `npx @google/design.md lint agents/docs/design.md` (opcional, requiere Node.js).
-
----
-
-```yaml
----
-version: alpha
-name:
-colors:
-  background:
-  surface:
-  foreground:
-  muted:
-  border:
-  primary:
-  secondary:
-  success:
-  warning:
-  danger:
-  focus:
-typography:
-  body:
-    fontFamily:
-    fontSize:
-  heading:
-    fontFamily:
-    fontSize:
-rounded:
-  sm:
-  md:
-  lg:
-spacing:
-  xs:
-  sm:
-  md:
-  lg:
-components:
-  button:
-    backgroundColor:
-    textColor:
-    rounded:
-  input:
-    backgroundColor:
-    borderColor:
-    rounded:
----
-```
+Fuente de verdad de UI/diseño reutilizable.
 
 ## Descripción General
 
-- **Tipo de UI:**
-- **Audiencia:**
-- **Tono:**
-- **Densidad:**
-- **Objetivo de accesibilidad:** WCAG 2.2 AA (predeterminado)
-- **Modo oscuro:** compatible / planeado / no aplica
+- **Tipo de UI:** Dashboard / Admin tool
+- **Audiencia:** Usuarios y administradores de coworking
+- **Tono:** Profesional, claro, funcional
+- **Densidad:** Media
+- **Objetivo de accesibilidad:** WCAG 2.2 AA
+- **Modo oscuro:** no aplica (MVP)
 
 ### Principios Visuales
 
-Enumera 3 a 6 principios que guían las decisiones de UI reutilizables.
-
 | Principio | Significado | Aplica a |
 |---|---|---|
-| | | |
+| Clara jerarquía | La info más importante destaca visualmente | Dashboard, tablas, detalle |
+| Estados visibles | Cada acción tiene feedback inmediato | Formularios, botones, listas |
+| Consistencia | Mismos patrones en todo el sistema | Componentes, espaciado, colores |
+| Mobile-first | Funcional en cualquier viewport | Layout, navegación, tablas |
 
 ## Colores
 
-Explica la paleta, las reglas de uso de tokens y la estrategia de modo oscuro.
+Paleta basada en Tailwind neutral + blue como semantic primary.
 
-- Estrategia de modo oscuro:
-- Excepciones conocidas:
+| Token | Clase Tailwind | Uso |
+|---|---|---|
+| `surface` | `bg-white` | Fondo principal |
+| `surface-muted` | `bg-neutral-50` | Fondo secundario / cards |
+| `foreground` | `text-neutral-900` | Texto principal |
+| `muted` | `text-neutral-500` | Texto secundario / labels |
+| `border` | `border-neutral-200` | Bordes de componentes |
+| `primary` | `bg-blue-600 text-white` | Botones, enlaces, acentos |
+| `primary-hover` | `bg-blue-700` | Hover de primary |
+| `success` | `text-green-600` / `bg-green-100` | Status resolved |
+| `warning` | `text-amber-500` / `bg-amber-100` | Status in_progress |
+| `danger` | `text-red-600` / `bg-red-100` | Status/priority crítico |
+| `info` | `text-blue-600` / `bg-blue-100` | Status/priority info |
+| `focus` | `ring-blue-500` | Focus visible |
 
 ## Tipografía
 
-Describe la jerarquía, la pila de fuentes y las reglas de uso.
-
-| Token | Fuente | Tamaño | Peso | Altura de línea | Uso |
-|---|---|---|---|---|---|
-| `body` | | | | | Cuerpo predeterminado |
-| `heading` | | | | | Encabezados |
+| Token | Fuente | Tamaño | Peso | Uso |
+|---|---|---|---|---|
+| `body` | system-ui sans | `text-sm` (14px) | 400 | Cuerpo predeterminado |
+| `body-large` | system-ui sans | `text-base` (16px) | 400 | Cuerpo amplio |
+| `heading` | system-ui sans | `text-lg` (18px) | 600 | Encabezados de sección |
+| `heading-page` | system-ui sans | `text-2xl` (24px) | 700 | Título de página |
+| `small` | system-ui sans | `text-xs` (12px) | 500 | Labels, badges, metadata |
 
 ## Diseño
 
-Define puntos de quiebre, cuadrícula y comportamiento responsive.
-
-- Estrategia de diseño:
-- Ancho máximo de contenido:
-- Puntos de quiebre: sm / md / lg / xl
+- **Estrategia de diseño:** Bento grid responsivo (Tailwind grid)
+- **Ancho máximo de contenido:** `max-w-7xl`
+- **Puntos de quiebre:** sm (640px) / md (768px) / lg (1024px) / xl (1280px)
+- **Bento grid:** `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4`
 
 ## Componentes
 
@@ -99,20 +62,22 @@ Define puntos de quiebre, cuadrícula y comportamiento responsive.
 
 | Estado | Regla visual | Regla de accesibilidad |
 |---|---|---|
-| Predeterminado | | |
-| Hover | | No depender de affordances solo por hover |
-| Focus | | Debe ser visible para usuarios de teclado |
-| Deshabilitado | | Debe comunicar el estado no disponible |
-| Error | | Debe incluir texto, no solo color |
+| Predeterminado | Fondo primary / border neutral | Contraste 4.5:1+ |
+| Hover | Opacidad 90% o color más oscuro | No depender de affordances solo por hover |
+| Focus | `ring-2 ring-blue-500 ring-offset-2` | Visible para teclado |
+| Deshabilitado | Opacidad 50%, cursor not-allowed | Comunicar estado no disponible |
+| Error | Borde rojo + texto helper | Incluir texto, no solo color |
 
 ### Catálogo de Componentes
 
 | Componente | Variantes | Estados | Notas |
 |---|---|---|---|
-| Botón | | | |
-| Campo de texto | | | |
-| Tarjeta | | | |
-| Modal | | | |
+| Button | primary, secondary, ghost, danger | default, hover, focus, disabled, loading | Loading con spinner SVG inline |
+| Input | text, email, password, select | default, focus, error, disabled | Label visible siempre |
+| Card | default, interactive | default, hover | Sombra sutil, borde neutral |
+| Badge | status, priority | según color mapping | Mapping status→color en helper |
+| Skeleton | text, card, avatar | animación pulse | Ocupa mismo espacio que contenido |
+| Toast | success, error, info | visible, hidden | Auto-dismiss 4s, aria-live polite |
 
 ## Qué Hacer y Qué No Hacer
 
@@ -123,4 +88,5 @@ Define puntos de quiebre, cuadrícula y comportamiento responsive.
 
 | Excepción | Razón | Alcance |
 |---|---|---|
-| | | |
+| Modo oscuro | Fuera de MVP | Post-MVP |
+| framer-motion | Dependencia existente pero no usada en MVP | Futura iteración |
