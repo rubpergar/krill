@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
+    "dev:seed": "SEED=true tsx watch src/server.ts",
+    "seed": "tsx seed.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "biome check src/ tests/",
