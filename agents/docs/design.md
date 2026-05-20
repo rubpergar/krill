@@ -1,126 +1,73 @@
 # Design System
 
-Reusable UI/design source of truth. Mark as `Not applicable` for projects without UI.
-
-Document only durable, reusable UI decisions here. Do not document one-off screen details.
-
-Validation: `npx @google/design.md lint agents/docs/design.md` (optional, requires Node.js).
-
----
-
-```yaml
----
-version: alpha
-name:
-colors:
-  background:
-  surface:
-  foreground:
-  muted:
-  border:
-  primary:
-  secondary:
-  success:
-  warning:
-  danger:
-  focus:
-typography:
-  body:
-    fontFamily:
-    fontSize:
-  heading:
-    fontFamily:
-    fontSize:
-rounded:
-  sm:
-  md:
-  lg:
-spacing:
-  xs:
-  sm:
-  md:
-  lg:
-components:
-  button:
-    backgroundColor:
-    textColor:
-    rounded:
-  input:
-    backgroundColor:
-    borderColor:
-    rounded:
----
-```
+Reusable UI/design source of truth.
 
 ## Overview
-
-- **UI type:**
-- **Audience:**
-- **Tone:**
-- **Density:**
-- **Accessibility target:** WCAG 2.2 AA (default)
-- **Dark mode:** supported / planned / not applicable
+- **UI type:** Dashboard / Bento grid
+- **Audience:** Coworking clients and admins
+- **Tone:** Professional, clean, dark theme
+- **Density:** Comfortable
+- **Accessibility target:** WCAG 2.2 AA
+- **Dark mode:** Default (solo modo oscuro)
 
 ### Visual Principles
-
-List 3-6 principles guiding reusable UI decisions.
-
 | Principle | Meaning | Applies to |
 |---|---|---|
-| | | |
+| Oscuro por defecto | Fondo surface (neutral-950), texto neutral-100 | All surfaces |
+| Cards bento | Bordes sutiles, bg surface-card, border-border | All cards |
+| Primary accent | Cyan/teal para acciones y highlights | Buttons, links, icons |
 
 ## Colors
-
-Explain palette, token usage rules, and dark mode strategy.
-
-- Dark mode strategy:
-- Known exceptions:
+| Token | Tailwind value | Usage |
+|---|---|---|
+| `surface` | `#0a0a0f` | Fondo principal de página |
+| `surface-card` | `#14141f` | Fondo de cards |
+| `surface-elevated` | `#1c1c2e` | Fondo elevado (hover, badges) |
+| `surface-hover` | `#262640` | Hover de cards |
+| `primary` | `#22d3ee` (cyan-400) | Acciones, links, iconos activos |
+| `primary-hover` | `#06b6d4` (cyan-500) | Hover de botones primary |
+| `muted` | `#73738c` | Texto secundario |
+| `muted-foreground` | `#a1a1b5` | Texto terciario |
+| `border` | `#2a2a3e` | Bordes por defecto |
+| `border-light` | `#3a3a4e` | Bordes elevados |
 
 ## Typography
+Default system font stack via Tailwind. No custom fonts.
 
-Describe hierarchy, font stack, and usage rules.
-
-| Token | Font | Size | Weight | Line height | Usage |
-|---|---|---|---|---|---|
-| `body` | | | | | Default body |
-| `heading` | | | | | Headings |
+| Token | Size | Weight | Usage |
+|---|---|---|---|
+| `body` | text-sm (14px) | normal | Default text |
+| `heading` | text-xl / text-2xl | medium | Page titles |
+| `stat` | text-2xl | semibold | Stat values |
+| `label` | text-sm | normal | Form labels |
 
 ## Layout
-
-Define breakpoints, grid, and responsive behavior.
-
-- Layout strategy:
-- Max content width:
-- Breakpoints: sm / md / lg / xl
+- **Max content width:** 72rem (max-w-6xl)
+- **Bento grid:** 1 col mobile → 2 col tablet → 3-4 col desktop
+- **Card rounded:** 1rem (rounded-bento)
+- **Spacing:** Tailwind defaults (p-4, p-5 cards, gap-4 grid)
+- **Breakpoints:** sm (640px), md (768px), lg (1024px)
 
 ## Components
 
 ### Interactive States
-
 | State | Visual rule | Accessibility rule |
 |---|---|---|
-| Default | | |
-| Hover | | Do not rely on hover-only affordances |
-| Focus | | Must be visible for keyboard users |
-| Disabled | | Must communicate unavailable state |
-| Error | | Must include text, not color alone |
+| Default | bg-surface-card, border-border | — |
+| Hover | bg-surface-hover, transition-colors | Do not rely on hover-only affordances |
+| Focus | ring-1 ring-primary, border-primary | Must be visible for keyboard users |
+| Disabled | opacity-50, cursor-not-allowed | Must communicate unavailable state |
+| Error | bg-red-900/20, text-red-400 | Must include text, not color alone |
 
 ### Component Catalog
-
 | Component | Variants | States | Notes |
 |---|---|---|---|
-| Button | | | |
-| Input | | | |
-| Card | | | |
-| Modal | | | |
+| Button | Primary, ghost | Default, hover, focus, disabled | Primary: bg-primary text-surface. Ghost: transparent |
+| Input | Text, email, password | Default, focus, error, disabled | Border border-border, focus border-primary |
+| Card | StatCard | Default, hover | Rounded-bento, p-5 |
+| Badge | StatusBadge | Default | Rounded-full, icon + label |
+| Navbar | Sticky | Default | bg-surface/80 backdrop-blur, border-bottom |
 
 ## Do's and Don'ts
-
 - **Update** when a reusable token, component variant, layout rule, or accessibility rule changes.
 - **Do not update** for normal use of existing components or one-off visual details.
-
-### Known Exceptions
-
-| Exception | Reason | Scope |
-|---|---|---|
-| | | |
