@@ -58,4 +58,22 @@ export const authService = {
 
     return { user: toPublic(user) };
   },
+
+  async seedAdmin(email: string, password: string): Promise<void> {
+    const existing = authRepository.findByEmail(email);
+    if (existing) return;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const admin: User = {
+      id: randomUUID(),
+      email: email.toLowerCase().trim(),
+      password: hashedPassword,
+      name: 'Admin',
+      role: 'admin',
+      createdAt: new Date(),
+    };
+
+    authRepository.save(admin);
+  },
 };

@@ -3,8 +3,12 @@ import jwt from '@fastify/jwt';
 import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import Fastify from 'fastify';
+import { adminRoutes } from './api/v1/admin/admin.routes.js';
 import { authRoutes } from './api/v1/auth/auth.routes.js';
+import { commentRoutes } from './api/v1/comments/comments.routes.js';
+import { incidentRoutes } from './api/v1/incidents/incidents.routes.js';
 import { env } from './config/env.js';
+import { authService } from './modules/auth/auth.service.js';
 import { AppError } from './shared/errors/app-error.js';
 
 export async function buildApp() {
@@ -44,6 +48,13 @@ export async function buildApp() {
   });
 
   await app.register(authRoutes, { prefix: '/api/v1/auth' });
+  await app.register(incidentRoutes, { prefix: '/api/v1/incidents' });
+  await app.register(commentRoutes, { prefix: '/api/v1/incidents' });
+  await app.register(adminRoutes, { prefix: '/api/v1/admin' });
+
+  if (env.adminEmail && env.adminPassword) {
+    await authService.seedAdmin(env.adminEmail, env.adminPassword);
+  }
 
   return app;
 }

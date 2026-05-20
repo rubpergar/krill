@@ -7,7 +7,7 @@ export async function authenticate(
   try {
     await request.jwtVerify();
   } catch {
-    reply.status(401).send({
+    return reply.status(401).send({
       ok: false,
       error: { code: 'UNAUTHORIZED', message: 'Token inválido o ausente' },
     });
