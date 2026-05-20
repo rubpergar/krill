@@ -13,21 +13,23 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "lucide-react": "^1.16.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.15.1"
   },
   "devDependencies": {
-    "typescript": "^5.8.3",
+    "@biomejs/biome": "^1.9.4",
+    "@testing-library/react": "^16.3.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
-    "vite": "^6.3.2",
     "@vitejs/plugin-react": "^4.4.1",
-    "vitest": "^3.1.1",
-    "jsdom": "^26.0.0",
-    "@testing-library/react": "^16.3.0",
-    "tailwindcss": "^3.4.17",
-    "postcss": "^8.5.3",
     "autoprefixer": "^10.4.21",
-    "@biomejs/biome": "^1.9.4"
+    "jsdom": "^26.0.0",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.2",
+    "vitest": "^3.1.1"
   }
 }

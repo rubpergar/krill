@@ -1,119 +1,163 @@
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/4b3644b1-5931-43a9-ab00-17b852a014d1" alt="Krill" width="72%" />
-</p>
+# Incidencias Coworking
 
-<p align="center">
-  An agent skeleton for disciplined development with <strong>OpenCode</strong>, SDD, TDD, and docs as source of truth.
-</p>
+Sistema de gestión de incidencias para espacios de coworking. API REST con Fastify 5 + frontend React 19 con Vite 6, Tailwind CSS 3 y diseño bento dark.
 
-<p align="center">
-  <img alt="Static Badge" src="https://img.shields.io/badge/Krill-agent_skeleton-0A2540?style=flat-square&label=%F0%9F%A6%90" />
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-3B82F6?style=flat-square" />
-</p>
+## Stack
 
----
+| Capa | Tecnología |
+|---|---|
+| Runtime | Node 22 LTS |
+| Backend | Fastify 5, TypeScript, Zod |
+| Frontend | React 19, Vite 6, Tailwind CSS 3, react-router-dom v7 |
+| UI icons | lucide-react |
+| Auth | @fastify/jwt, bcryptjs |
+| Testing | Vitest, jsdom |
+| Lint/format | Biome |
+| Monorepo | pnpm workspaces |
 
-## What It Is
+## Arquitectura
 
-**Krill** is a workspace template for development agents. It enables an agent to step into a project with clear rules, traceable tasks, and disciplined validation — before touching a single line of product code.
-
-The repository is currently in **skeleton mode**: no product code yet. It is ready to be adopted into an existing project or used to initialize a new one through the bootstrap workflow.
-
-## Why It Exists
-
-- **Less guesswork** — decisions live in source-of-truth docs, not lost context.
-- **Traceable work** — backlog, plan, checklist, and Definition of Done for every meaningful change.
-- **TDD by default** — define the expectation first, then implement and validate.
-- **Extensible agents** — commands and skills ready to adapt the workflow to each project.
-- **Safe bootstrap** — keeps agent setup separate from product implementation.
-
-## Workflow
-
-```mermaid
-flowchart LR
-    Boot["Bootstrap"] --> Back["Backlog"]
-    Back --> Plan["Approved Plan"]
-    Plan --> Check["Checklist"]
-    Check --> TDD["TDD"]
-    TDD --> Val["Validation"]
-    Val --> Doc["Documentation"]
+```
+incidencias-coworking/
+├── backend/
+│   ├── src/
+│   │   ├── api/v1/        # Rutas REST (auth, incidents, comments, admin)
+│   │   ├── modules/       # Lógica de negocio (auth, incidents, comments)
+│   │   ├── shared/        # Middleware, errores, tipos comunes
+│   │   └── config/        # Variables de entorno
+│   ├── tests/             # Tests Vitest
+│   └── seed.ts            # Población de datos de prueba
+├── frontend/
+│   ├── src/
+│   │   ├── pages/         # Login, Register, Dashboard
+│   │   ├── components/    # Navbar, ProtectedRoute
+│   │   ├── contexts/      # AuthContext
+│   │   └── services/      # Cliente API tipado
+│   └── tests/             # Tests Vitest + jsdom
+└── pnpm-workspace.yaml
 ```
 
-1. Run bootstrap to adapt the agent to your project.
-2. Select a single active task in `agents/task/backlog.md`.
-3. Create and approve a task-specific plan.
-4. Derive an executable checklist from the plan.
-5. Implement with TDD and validate against the Definition of Done.
-6. Update only the documentation that changes durable contracts.
+### Backend — API REST `/api/v1`
 
-## What's Included
+| Endpoint | Método | Auth | Descripción |
+|---|---|---|---|
+| `/auth/register` | POST | — | Registrar usuario |
+| `/auth/login` | POST | — | Iniciar sesión |
+| `/auth/me` | GET | user | Perfil del usuario autenticado |
+| `/incidents` | GET | user | Listar incidencias propias (filtros + paginación) |
+| `/incidents` | POST | user | Crear incidencia |
+| `/incidents/:id` | GET | user | Detalle + comentarios |
+| `/incidents/:id/status` | PATCH | user | Cambiar estado (máquina de estados) |
+| `/incidents/:id/priority` | PATCH | user | Cambiar prioridad (solo admin) |
+| `/incidents/:id/comments` | POST | user | Añadir comentario |
+| `/incidents/:id/comments` | GET | user | Listar comentarios |
+| `/admin/incidents` | GET | admin | Listar todas (filtros + paginación) |
+| `/admin/health` | GET | admin | Health check |
 
-| Area | Contents |
-|---|---|
-| Agent rules | `AGENTS.md` with mode, boundaries, SDD/TDD workflow, and source-of-truth map |
-| OpenCode commands | Bootstrap, semantic commits, prompt tools, README, and fast-track trivial changes |
-| Tasks | Backlog, plans, checklists, and archive under `agents/task/` |
-| Documentation | DoD, testing, API, DB, decisions, debt, design, and dependency policy |
-| Skills | TDD, code review, security, performance, SEO, UI, and Context7 MCP |
+#### Filtros y paginación
 
-## Commands
+`GET /incidents` y `GET /admin/incidents` aceptan:
 
-| Command | Purpose |
-|---|---|
-| [`/bootstrap`](.opencode/commands/bootstrap.md) | Adopt the skeleton into an existing project and prepare transition to project mode |
-| [`/commit`](.opencode/commands/commit.md) | Group changes into semantic commits and push |
-| [`/fast`](.opencode/commands/skip-sdd-tdd.md) | Quick implementation of trivial, non-behavioral changes (bypasses SDD/TDD) |
-| [`/prompt`](.opencode/commands/prompt.md) | Convert a rough request into an optimized prompt (output only, no execution) |
-| [`/prompt-run`](.opencode/commands/prompt-run.md) | Convert a rough request into an optimized prompt and execute it |
-| [`/readme`](.opencode/commands/readme.md) | Regenerate the README from the actual project state |
+| Parámetro | Tipo | Ejemplo |
+|---|---|---|
+| `status` | string (csv) | `open,in_progress` |
+| `priority` | string (csv) | `high,critical` |
+| `category` | string (csv) | `hardware,network` |
+| `dateFrom` | ISO date | `2025-01-01` |
+| `dateTo` | ISO date | `2025-12-31` |
+| `page` | number | `1` |
+| `limit` | number | `20` |
 
-## Requirements
+Respuesta incluye `meta: { page, limit, total, pages }`.
 
-- [OpenCode](https://opencode.ai) — the skeleton is designed around its commands, agents, and configuration.
-- Context7 MCP — required if you want to use the `context7-mcp` skill for up-to-date library, SDK, and framework documentation.
+#### Máquina de estados
 
-## Installation
+```
+open → in_progress → resolved → closed
+  ↑____________________________|  (re-open)
+```
 
-Clone the repository at the root of the workspace where you want to prepare the agent:
+#### Errores
+
+```json
+{ "ok": false, "error": { "code": "NOT_FOUND", "message": "..." } }
+```
+
+### Frontend — SPA React
+
+- **Login/Register** — formularios con validación y persistencia de token en localStorage
+- **Dashboard** — grid bento con tarjetas de resumen, incidencias recientes, acceso rápido
+- **AuthContext** — login, registro, logout, restauración automática al recargar
+- **API service** — fetch wrapper tipado con manejo de errores y auto-logout en 401
+- **Tema oscuro** — paleta custom (surface, primary, muted, border)
+
+## Comandos
 
 ```bash
-git clone https://github.com/rubpergar/krill.git
-cd krill
+# Instalar dependencias
+pnpm install
+
+# Desarrollo (backend + frontend en paralelo)
+pnpm dev
+
+# Solo backend (puerto 3000)
+pnpm dev:backend
+
+# Solo frontend (puerto 5173, proxy /api → localhost:3000)
+pnpm dev:frontend
+
+# Backend con datos de prueba precargados
+pnpm dev:seed        # alias: SEED=true pnpm --filter backend dev
+
+# Poblar datos sin servidor
+pnpm --filter backend seed
+
+# Tests
+pnpm test            # todos los workspaces
+pnpm --filter backend test   # solo backend (145 tests)
+pnpm --filter frontend test  # solo frontend (6 tests)
+
+# Lint y typecheck
+pnpm lint
+pnpm typecheck
+
+# Documentación OpenAPI
+# http://localhost:3000/docs
 ```
 
-To adopt the skeleton into an **existing project**:
+## Datos de prueba
 
-```text
-/bootstrap
-```
+Ejecuta `pnpm dev:seed` o `pnpm --filter backend seed` para poblar:
 
-If you are starting a **new project** with no code yet, follow the incremental path described in [`agents/docs/bootstrap.md`](agents/docs/bootstrap.md).
+| Email | Contraseña | Rol |
+|---|---|---|
+| `admin@coworking.com` | `admin123` | admin |
+| `ana@example.com` | `123456` | user |
+| `carlos@example.com` | `123456` | user |
+| `laura@example.com` | `123456` | user |
 
-## Structure
+Incluye 12 incidencias realistas con distintos estados, prioridades y categorías, más 9 comentarios.
 
-```text
-krill/
-├── .opencode/
-│   └── commands/        # Custom OpenCode commands
-├── agents/              # Source-of-truth docs, tasks, DB, and agent skills
-├── assets/              # README images and resources
-├── AGENTS.md            # Main operating rules
-├── LICENSE              # MIT license
-├── README.md            # Project presentation
-└── skills-lock.json     # Skill provenance and integrity hashes
-```
+## Configuración
 
-## Current Status
+Variables de entorno en `backend/.env`:
 
-- Mode: `skeleton`.
-- No product stack configured yet.
-- No install, test, lint, typecheck, or build commands defined for product code.
-- Feature implementation is blocked until bootstrap is complete and the repo transitions to `project mode`.
+| Variable | Default | Descripción |
+|---|---|---|
+| `PORT` | `3000` | Puerto del servidor |
+| `NODE_ENV` | `development` | Entorno |
+| `JWT_SECRET` | (requerido) | Secreto para firmar tokens |
+| `JWT_EXPIRES_IN` | `7d` | Duración del token |
+| `ADMIN_EMAIL` | `admin@coworking.com` | Email del admin a seedear |
+| `ADMIN_PASSWORD` | `admin123` | Contraseña del admin |
 
-## Contributing
+La autenticación usa JWT. Los tokens se envían como `Authorization: Bearer <token>`.
 
-This is a private agent skeleton. If you reuse it, adapt the source-of-truth docs to your project first, and avoid introducing product code until bootstrap is finished.
+## Tests
 
-## License
+- **Backend:** 145 tests (auth, roles, incidents CRUD, filtros, paginación, máquina de estados, flujos completos de usuario y admin)
+- **Frontend:** 6 tests (API service mockeado)
 
-MIT. See [`LICENSE`](LICENSE) for details.
+## Licencia
+
+MIT. Ver [LICENSE](LICENSE).
