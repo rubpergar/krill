@@ -2,53 +2,53 @@
 description: Adopt the agent into an existing project, configure source-of-truth docs, and transition to project mode
 ---
 
-Adopts this agent skeleton for an **existing project** (one with source code, manifests, config files). For new/empty projects use the incremental initialization path described in `agents/docs/bootstrap.md`.
+Adopta este esqueleto de agente para un **proyecto existente** (uno con código fuente, manifiestos, archivos de configuración). Para proyectos nuevos/vacíos usa la ruta de inicialización incremental descrita en `agents/docs/bootstrap.md`.
 
-Source of truth for bootstrap rules and readiness: `agents/docs/bootstrap.md`.
+Fuente de verdad para las reglas de bootstrap y preparación: `agents/docs/bootstrap.md`.
 
-Optional context: `$ARGUMENTS`
+Contexto opcional: `$ARGUMENTS`
 
-If `$ARGUMENTS` is provided, use it as a seed to pre-fill answers and reduce the number of questions.
+Si se proporciona `$ARGUMENTS`, úsalo como semilla para pre-llenar respuestas y reducir el número de preguntas.
 
 ## General Rules
 
-- Do not modify product source code, configuration, or dependencies during adoption.
-- Write only to `AGENTS.md`, `agents/`, and agent files.
-- Classify each finding as `detected` (observed), `inferred` (needs confirmation), or `missing` (not found).
-- Unconfirmed fields are marked `pending confirmation`.
-- User-approved assumptions are marked `user-approved assumption: <description>`.
-- If the repository is empty or has no product code, inform the user this command is for existing project adoption and suggest the new project initialization path from `agents/docs/bootstrap.md`.
+- No modifiques el código fuente del producto, la configuración ni las dependencias durante la adopción.
+- Escribe solo en `AGENTS.md`, `agents/` y archivos de agente.
+- Clasifica cada hallazgo como `detected` (observado), `inferred` (necesita confirmación) o `missing` (no encontrado).
+- Los campos no confirmados se marcan como `pending confirmation`.
+- Las suposiciones aprobadas por el usuario se marcan como `user-approved assumption: <description>`.
+- Si el repositorio está vacío o no tiene código de producto, informa al usuario que este comando es para adopción de proyectos existentes y sugiere la ruta de inicialización de proyectos nuevos desde `agents/docs/bootstrap.md`.
 
 ## Flow
 
 ### 1. Auto-detection
 
-Inspect the repository for existing product code. Look for:
+Inspecciona el repositorio en busca de código de producto existente. Busca:
 - Manifests (`package.json`, `Cargo.toml`, `pyproject.toml`, `go.mod`, etc.)
 - Source directories (`src/`, `lib/`, `app/`, `packages/`)
 - Project configuration files
 
-If there is no product code, stop and inform the user.
+Si no hay código de producto, detente e informa al usuario.
 
 ### 2. Phase 1 — Non-invasive Inspection
 
-**2.1 Structure** — List root directories. Inspect `src/`/`lib/`/`app/`/`packages/` up to 3 levels. Detect monorepo signs (workspace config, `packages/`, `apps/`).
+**2.1 Structure** — Lista los directorios raíz. Inspecciona `src/`/`lib/`/`app/`/`packages/` hasta 3 niveles. Detecta señales de monorepo (configuración de workspace, `packages/`, `apps/`).
 
-**2.2 Stack** — Review manifests for runtime: `package.json` (JS/TS), `Cargo.toml` (Rust), `pyproject.toml` (Python), `go.mod` (Go), `Gemfile` (Ruby), `composer.json` (PHP), `pom.xml`/`build.gradle` (Java/Kotlin), `.csproj` (.NET). Check dependencies for frameworks.
+**2.2 Stack** — Revisa los manifiestos para el runtime: `package.json` (JS/TS), `Cargo.toml` (Rust), `pyproject.toml` (Python), `go.mod` (Go), `Gemfile` (Ruby), `composer.json` (PHP), `pom.xml`/`build.gradle` (Java/Kotlin), `.csproj` (.NET). Verifica las dependencias para frameworks.
 
-**2.3 Package Manager** — Identify by lockfile: `package-lock.json` (npm), `yarn.lock` (yarn), `pnpm-lock.yaml` (pnpm), `Cargo.lock` (cargo), `poetry.lock` (poetry), `Gemfile.lock` (bundler), `go.sum` (go), `composer.lock` (composer). If multiple, ask the user.
+**2.3 Package Manager** — Identifica por archivo de bloqueo: `package-lock.json` (npm), `yarn.lock` (yarn), `pnpm-lock.yaml` (pnpm), `Cargo.lock` (cargo), `poetry.lock` (poetry), `Gemfile.lock` (bundler), `go.sum` (go), `composer.lock` (composer). Si hay múltiples, pregunta al usuario.
 
-**2.4 Tests** — Look for config/deps: `jest.config.*`, `vitest.config.*`, `.mocharc.*`, `playwright.config.*`, `cypress.config.*`, `pytest.ini`, `[tool.pytest]`, `rspec`, `cargo test`, `*.test.*`/`*.spec.*`. Identify existing test command.
+**2.4 Tests** — Busca configuración/dependencias: `jest.config.*`, `vitest.config.*`, `.mocharc.*`, `playwright.config.*`, `cypress.config.*`, `pytest.ini`, `[tool.pytest]`, `rspec`, `cargo test`, `*.test.*`/`*.spec.*`. Identifica el comando de prueba existente.
 
-**2.5 CI** — Review pipelines (`.github/workflows/*.yml`, `.gitlab-ci.yml`, `Jenkinsfile`, `.circleci/config.yml`, `azure-pipelines.yml`). Extract test/lint/build/deploy commands.
+**2.5 CI** — Revisa los pipelines (`.github/workflows/*.yml`, `.gitlab-ci.yml`, `Jenkinsfile`, `.circleci/config.yml`, `azure-pipelines.yml`). Extrae los comandos de test/lint/build/deploy.
 
-**2.6 Docs** — Read `README.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `docs/`, `ARCHITECTURE.md`, ADRs, `API.md` or `api/`/`openapi/`/`swagger/`, existing agent configs (`.opencode/`, `.claude/`, `AGENTS.md`).
+**2.6 Docs** — Lee `README.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `docs/`, `ARCHITECTURE.md`, ADRs, `API.md` o `api/`/`openapi/`/`swagger/`, configuraciones de agente existentes (`.opencode/`, `.claude/`, `AGENTS.md`).
 
-**2.7 Config** — Review `.gitignore`, `.dockerignore`, `Dockerfile`, `docker-compose.yml`, `.env.example` (template only, never `.env`), style config (`.editorconfig`, `.prettierrc`, `tsconfig.json`, etc.), linter config (ESLint, Prettier, Ruff, rustfmt, clippy, golangci-lint, RuboCop, etc.).
+**2.7 Config** — Revisa `.gitignore`, `.dockerignore`, `Dockerfile`, `docker-compose.yml`, `.env.example` (solo plantilla, nunca `.env`), configuración de estilo (`.editorconfig`, `.prettierrc`, `tsconfig.json`, etc.), configuración de linter (ESLint, Prettier, Ruff, rustfmt, clippy, golangci-lint, RuboCop, etc.).
 
 ### 3. Phase 2 — Summary
 
-Present findings in three groups:
+Presenta los hallazgos en tres grupos:
 
 | Category | Findings |
 |---|---|
@@ -58,16 +58,16 @@ Present findings in three groups:
 
 ### 4. Phase 3 — Confirmation Questions
 
-Ask the user one by one. Use `$ARGUMENTS` as seed when relevant.
+Pregunta al usuario una por una. Usa `$ARGUMENTS` como semilla cuando sea relevante.
 
 **4.1 Product:**
-- Product name
-- Domain/industry
-- Target users
-- Main goal
+- Nombre del producto
+- Dominio/industria
+- Usuarios objetivo
+- Objetivo principal
 
 **4.2 Commands:**
-Present detected/inferred ones. Ask for the real command for each purpose. Use `not available` when it does not exist.
+Presenta los detectados/inferidos. Pregunta por el comando real para cada propósito. Usa `not available` cuando no exista.
 
 | Purpose | Detected | Confirmed |
 |---|---|---|
@@ -80,75 +80,75 @@ Present detected/inferred ones. Ask for the real command for each purpose. Use `
 | Build | ... | ... |
 
 **4.3 Stack:**
-Confirm: runtime, framework, PM, database, test tools, deployment, external services.
+Confirma: runtime, framework, PM, base de datos, herramientas de prueba, despliegue, servicios externos.
 
 **4.4 Critical Modules:**
-Key services, entry points, sensitive areas.
+Servicios clave, puntos de entrada, áreas sensibles.
 
 **4.5 Restrictions:**
-Security (auth, payments, PII), performance, deployment limits, code standards, branch/release workflows.
+Seguridad (auth, pagos, PII), rendimiento, límites de despliegue, estándares de código, flujos de rama/release.
 
 **4.6 Additional Documents:**
-Ask if the project needs:
-- `agents/docs/api.md` (API?)
-- `agents/db/schema.sql` + `agents/db/domain.md` (DB/model?)
-- `agents/docs/design.md` (UI?)
-- `agents/docs/decisions.md` (ADR?)
+Pregunta si el proyecto necesita:
+- `agents/docs/api.md` (¿API?)
+- `agents/db/schema.sql` + `agents/db/domain.md` (¿BD/modelo?)
+- `agents/docs/design.md` (¿UI?)
+- `agents/docs/decisions.md` (¿ADR?)
 
 ### 5. Phase 4 — Fill Source-of-Truth Docs
 
-Write only facts confirmed by the user. Never write unconfirmed inferences as authoritative.
+Escribe solo hechos confirmados por el usuario. Nunca escribas inferencias no confirmadas como autoritativas.
 
 **5.1 `AGENTS.md`:**
-- Fill `## Project` (Product, Domain, Users, Goal)
-- Fill `## Stack` (Runtime/framework, Package manager, Database, Test tools, Deployment, External services)
-- Fill `## Commands` with confirmed commands
-- Fill `## Project Structure` with primary routes and their purpose
+- Completa `## Project` (Product, Domain, Users, Goal)
+- Completa `## Stack` (Runtime/framework, Package manager, Database, Test tools, Deployment, External services)
+- Completa `## Commands` con los comandos confirmados
+- Completa `## Project Structure` con las rutas principales y su propósito
 
 **5.2 `agents/docs/testing.md`:**
-- Test commands, locations, services, env vars
+- Comandos de prueba, ubicaciones, servicios, variables de entorno
 
 **5.3 Additional Documents (per 4.6):**
-- `agents/docs/api.md`: base URL, routes, auth, formats, errors
-- `agents/db/schema.sql`: DB type, schema, migrations, connection
-- `agents/db/domain.md`: vocabulary, entities, business rules
-- `agents/docs/design.md`: components, styles, a11y, tokens
-- `agents/docs/decisions.md`: existing ADRs
+- `agents/docs/api.md`: URL base, rutas, auth, formatos, errores
+- `agents/db/schema.sql`: tipo de BD, esquema, migraciones, conexión
+- `agents/db/domain.md`: vocabulario, entidades, reglas de negocio
+- `agents/docs/design.md`: componentes, estilos, accesibilidad, tokens
+- `agents/docs/decisions.md`: ADRs existentes
 
-Mark unused files as `Not applicable`.
+Marca los archivos no utilizados como `Not applicable`.
 
 ### 6. Phase 5 — Mark Uncertainty
 
-Before writing, distinguish:
+Antes de escribir, distingue:
 
-- **confirmed**: user answered explicitly (including `not available` responses).
-- **assumed**: user accepted an inference ("user-approved assumption").
-- **pending**: user did not answer, said "I don't know", or could not be detected and confirmed.
+- **confirmed**: el usuario respondió explícitamente (incluyendo respuestas `not available`).
+- **assumed**: el usuario aceptó una inferencia ("user-approved assumption").
+- **pending**: el usuario no respondió, dijo "no lo sé", o no pudo ser detectado y confirmado.
 
-Confirmed fields → written as-is.
-Assumed fields → written with note `user-approved assumption: <description>`.
-Pending fields → not written as authoritative; marked `pending confirmation`.
+Campos confirmados → se escriben tal cual.
+Campos asumidos → se escriben con la nota `user-approved assumption: <description>`.
+Campos pendientes → no se escriben como autoritativos; se marcan `pending confirmation`.
 
 ### 7. Readiness Check
 
-Classify fields into two categories (see `agents/docs/bootstrap.md` for full criteria):
+Clasifica los campos en dos categorías (consulta `agents/docs/bootstrap.md` para los criterios completos):
 
 **Critical fields** (required for project mode):
-- Product: name, domain, users, goal
+- Producto: nombre, dominio, usuarios, objetivo
 - Runtime/framework
 - Package manager
-- Install command
-- At least one test command
+- Comando de instalación
+- Al menos un comando de prueba
 
 **Deferrable fields** (important but do not block transition):
-- Database, deployment, external services
+- Base de datos, despliegue, servicios externos
 - Lint, typecheck, build
-- Additional documents (api.md, design.md, decisions.md, schema.sql)
-- Project structure
+- Documentos adicionales (api.md, design.md, decisions.md, schema.sql)
+- Estructura del proyecto
 
-A field counts as resolved if `confirmed` or `assumed` (including `not available`). A `pending` field counts as unresolved.
+Un campo cuenta como resuelto si está `confirmed` o `assumed` (incluyendo `not available`). Un campo `pending` cuenta como no resuelto.
 
-Evaluate completeness:
+Evalúa la completitud:
 
 | % Critical resolved | Scenario | Action |
 |---|---|---|
@@ -158,30 +158,30 @@ Evaluate completeness:
 | <50% | Largely incomplete | Readiness does NOT pass. Explain blockers. Do not offer transition. |
 | 0% with no context | Nothing completed | Only happens with empty repos. Already stopped at auto-detection. |
 
-For partial or mostly incomplete: ask if the user wants to answer pending fields now or defer.
+Para parcial o mayormente incompleto: pregunta si el usuario quiere responder los campos pendientes ahora o posponerlo.
 
 ### 8. Transition to Project Mode
 
-Follow the readiness verdict:
+Sigue el veredicto de preparación:
 
-**If readiness passes (complete or partial):**
-Ask: "Do you want to transition to project mode?"
+**Si la preparación es satisfactoria (completa o parcial):**
+Pregunta: "¿Quieres hacer la transición al modo proyecto?"
 
-- If yes (complete):
-  - In `AGENTS.md`: change `Current mode: \`skeleton\`` to `Current mode: \`project\``
-  - Replace skeleton-mode message with project-mode message (see `agents/docs/bootstrap.md`)
-  - Move `agents/docs/bootstrap.md` to `agents/task/archive/bootstrap-YYYY-MM-DD.md`
-  - Confirm archived file is historical reference
+- Si sí (completo):
+  - En `AGENTS.md`: cambia `Current mode: \`skeleton\`` a `Current mode: \`project\``
+  - Reemplaza el mensaje de modo skeleton con el mensaje de modo proyecto (consulta `agents/docs/bootstrap.md`)
+  - Mueve `agents/docs/bootstrap.md` a `agents/task/archive/bootstrap-YYYY-MM-DD.md`
+  - Confirma que el archivo archivado es referencia histórica
 
-- If yes (partial):
-  - Same transition and archive as complete, but add to project-mode message: "Pending fields: <list>. Resolve them in a task plan before working on those areas."
-  - Archive `bootstrap.md` to `agents/task/archive/bootstrap-YYYY-MM-DD.md` (historical reference; pending fields are tracked in the mode message above).
+- Si sí (parcial):
+  - Misma transición y archivo que completo, pero agrega al mensaje de modo proyecto: "Campos pendientes: <list>. Resuélvelos en un plan de tarea antes de trabajar en esas áreas."
+  - Archiva `bootstrap.md` en `agents/task/archive/bootstrap-YYYY-MM-DD.md` (referencia histórica; los campos pendientes se rastrean en el mensaje de modo anterior).
 
-- If no:
-  - The partial configuration is saved. Repository stays in skeleton mode.
-  - User can resume later.
+- Si no:
+  - La configuración parcial se guarda. El repositorio permanece en modo skeleton.
+  - El usuario puede reanudar más tarde.
 
-**If readiness does NOT pass (mostly incomplete):**
-- Do not offer transition.
-- Explain: "Cannot transition to project mode until these critical fields are resolved: <list>."
-- Suggest: "Run `/bootstrap` again when you have that information, or use `/bootstrap <context>` to pre-fill answers."
+**Si la preparación NO es satisfactoria (mayormente incompleto):**
+- No ofrezcas la transición.
+- Explica: "No se puede hacer la transición al modo proyecto hasta que estos campos críticos estén resueltos: <list>."
+- Sugiere: "Ejecuta `/bootstrap` de nuevo cuando tengas esa información, o usa `/bootstrap <context>` para pre-llenar respuestas."

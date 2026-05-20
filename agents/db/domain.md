@@ -1,17 +1,17 @@
-# Domain Model
+# Modelo de Dominio
 
-Mark as `Not applicable` if the project has no persistent domain model.
+Marca como `No aplica` si el proyecto no tiene un modelo de dominio persistente.
 
-## Entities
-| Entity | Meaning | Notes |
+## Entidades
+| Entidad | Significado | Notas |
 |---|---|---|
 
-## Relationships
+## Relaciones
 - ...
 
-## Business Rules
+## Reglas de Negocio
 - ...
 
-## Glossary
-| Term | Meaning |
+## Glosario
+| Término | Significado |
 |---|---|

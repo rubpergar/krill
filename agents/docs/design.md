@@ -1,10 +1,10 @@
-# Design System
+# Sistema de Diseño
 
-Reusable UI/design source of truth. Mark as `Not applicable` for projects without UI.
+Fuente de verdad de UI/diseño reutilizable. Marca como `Not applicable` para proyectos sin interfaz de usuario.
 
-Document only durable, reusable UI decisions here. Do not document one-off screen details.
+Documenta solo decisiones de UI duraderas y reutilizables aquí. No documentes detalles de pantallas puntuales.
 
-Validation: `npx @google/design.md lint agents/docs/design.md` (optional, requires Node.js).
+Validación: `npx @google/design.md lint agents/docs/design.md` (opcional, requiere Node.js).
 
 ---
 
@@ -52,75 +52,75 @@ components:
 ---
 ```
 
-## Overview
+## Descripción General
 
-- **UI type:**
-- **Audience:**
-- **Tone:**
-- **Density:**
-- **Accessibility target:** WCAG 2.2 AA (default)
-- **Dark mode:** supported / planned / not applicable
+- **Tipo de UI:**
+- **Audiencia:**
+- **Tono:**
+- **Densidad:**
+- **Objetivo de accesibilidad:** WCAG 2.2 AA (predeterminado)
+- **Modo oscuro:** compatible / planeado / no aplica
 
-### Visual Principles
+### Principios Visuales
 
-List 3-6 principles guiding reusable UI decisions.
+Enumera 3 a 6 principios que guían las decisiones de UI reutilizables.
 
-| Principle | Meaning | Applies to |
+| Principio | Significado | Aplica a |
 |---|---|---|
 | | | |
 
-## Colors
+## Colores
 
-Explain palette, token usage rules, and dark mode strategy.
+Explica la paleta, las reglas de uso de tokens y la estrategia de modo oscuro.
 
-- Dark mode strategy:
-- Known exceptions:
+- Estrategia de modo oscuro:
+- Excepciones conocidas:
 
-## Typography
+## Tipografía
 
-Describe hierarchy, font stack, and usage rules.
+Describe la jerarquía, la pila de fuentes y las reglas de uso.
 
-| Token | Font | Size | Weight | Line height | Usage |
+| Token | Fuente | Tamaño | Peso | Altura de línea | Uso |
 |---|---|---|---|---|---|
-| `body` | | | | | Default body |
-| `heading` | | | | | Headings |
+| `body` | | | | | Cuerpo predeterminado |
+| `heading` | | | | | Encabezados |
 
-## Layout
+## Diseño
 
-Define breakpoints, grid, and responsive behavior.
+Define puntos de quiebre, cuadrícula y comportamiento responsive.
 
-- Layout strategy:
-- Max content width:
-- Breakpoints: sm / md / lg / xl
+- Estrategia de diseño:
+- Ancho máximo de contenido:
+- Puntos de quiebre: sm / md / lg / xl
 
-## Components
+## Componentes
 
-### Interactive States
+### Estados Interactivos
 
-| State | Visual rule | Accessibility rule |
+| Estado | Regla visual | Regla de accesibilidad |
 |---|---|---|
-| Default | | |
-| Hover | | Do not rely on hover-only affordances |
-| Focus | | Must be visible for keyboard users |
-| Disabled | | Must communicate unavailable state |
-| Error | | Must include text, not color alone |
+| Predeterminado | | |
+| Hover | | No depender de affordances solo por hover |
+| Focus | | Debe ser visible para usuarios de teclado |
+| Deshabilitado | | Debe comunicar el estado no disponible |
+| Error | | Debe incluir texto, no solo color |
 
-### Component Catalog
+### Catálogo de Componentes
 
-| Component | Variants | States | Notes |
+| Componente | Variantes | Estados | Notas |
 |---|---|---|---|
-| Button | | | |
-| Input | | | |
-| Card | | | |
+| Botón | | | |
+| Campo de texto | | | |
+| Tarjeta | | | |
 | Modal | | | |
 
-## Do's and Don'ts
+## Qué Hacer y Qué No Hacer
 
-- **Update** when a reusable token, component variant, layout rule, or accessibility rule changes.
-- **Do not update** for normal use of existing components or one-off visual details.
+- **Actualiza** cuando un token reutilizable, variante de componente, regla de diseño o regla de accesibilidad cambie.
+- **No actualices** por uso normal de componentes existentes o detalles visuales puntuales.
 
-### Known Exceptions
+### Excepciones Conocidas
 
-| Exception | Reason | Scope |
+| Excepción | Razón | Alcance |
 |---|---|---|
 | | | |

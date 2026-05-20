@@ -1,83 +1,83 @@
-# Testing Guide
+# Guía de Pruebas
 
-Customize before product implementation. If a command is unavailable, write `not available` and explain the fallback.
+Personaliza antes de la implementación del producto. Si un comando no está disponible, escribe `not available` y explica la alternativa.
 
-This file defines project-specific testing logistics. Use `agents/skills/test-driven-development/SKILL.md` as the authority for the TDD workflow itself.
+Este archivo define la logística de pruebas específica del proyecto. Usa `agents/skills/test-driven-development/SKILL.md` como la autoridad para el flujo de trabajo TDD en sí.
 
-## Commands
+## Comandos
 
-### Fast (TDD cycle / pre-commit)
-| Purpose | Command |
+### Rápidos (ciclo TDD / pre-commit)
+| Propósito | Comando |
 |---|---|
-| Targeted unit | |
-| Full unit | |
+| Pruebas unitarias específicas | |
+| Pruebas unitarias completas | |
 | Lint | |
-| Typecheck | |
+| Verificador de tipos | |
 
-### Slow (pre-merge / CI)
-| Purpose | Command |
+### Lentos (pre-fusión / CI)
+| Propósito | Comando |
 |---|---|
-| Integration | |
+| Integración | |
 | E2E | |
-| Build | |
-| Full validation | |
-| Coverage report | |
-| DESIGN.md lint | `npx @google/design.md lint agents/docs/design.md` (requires Node.js; optional — skip if unavailable) |
+| Compilación | |
+| Validación completa | |
+| Informe de cobertura | |
+| Lint de DESIGN.md | `npx @google/design.md lint agents/docs/design.md` (requiere Node.js; opcional — saltar si no está disponible) |
 
-## Test Levels
-| Level | Purpose | Isolation | When to run |
+## Niveles de Prueba
+| Nivel | Propósito | Aislamiento | Cuándo ejecutar |
 |---|---|---|---|
-| Unit | Business logic, pure functions, isolated components | No network, no DB, no IO | Every TDD cycle |
-| Integration | Interaction between layers (repository + service, API + DB) | Mock at external boundaries, real DB or testcontainers for project DB | Pre-commit / CI |
-| E2E | Full flow (UI → API → DB → response) | Real or staging environment | CI / pre-release |
+| Unitarias | Lógica de negocio, funciones puras, componentes aislados | Sin red, sin BD, sin E/S | Cada ciclo TDD |
+| Integración | Interacción entre capas (repositorio + servicio, API + BD) | Mock en límites externos, BD real o testcontainers para BD del proyecto | Pre-commit / CI |
+| E2E | Flujo completo (UI → API → BD → respuesta) | Entorno real o staging | CI / pre-lanzamiento |
 
-## Coverage
-| Item | Configuration |
+## Cobertura
+| Elemento | Configuración |
 |---|---|
-| Tool | |
-| Threshold | |
-| Command | |
-| Excluded paths | |
-| Fail on below threshold | yes / no |
+| Herramienta | |
+| Umbral | |
+| Comando | |
+| Rutas excluidas | |
+| Fallar por debajo del umbral | yes / no |
 
-## Environment
-- Required services:
-- Required environment variables:
-- Reset/cleanup:
+## Entorno
+- Servicios requeridos:
+- Variables de entorno requeridas:
+- Reinicio/limpieza:
 
 ## Fixtures
-| Type | Location | When used |
+| Tipo | Ubicación | Cuándo se usa |
 |---|---|---|
-| Unit (factories, builders, mocks) | | Unit tests |
-| Integration (seed data, DB snapshots) | | Integration tests |
-| E2E (test users, sandbox data) | | E2E tests |
-| Shared utilities | | All levels |
+| Unitarias (fábricas, constructores, mocks) | | Pruebas unitarias |
+| Integración (datos semilla, snapshots de BD) | | Pruebas de integración |
+| E2E (usuarios de prueba, datos sandbox) | | Pruebas E2E |
+| Utilidades compartidas | | Todos los niveles |
 
-## External Services Strategy
-| Level | Strategy |
+## Estrategia de Servicios Externos
+| Nivel | Estrategia |
 |---|---|
-| Unit | Always mock or stub |
-| Integration | Project DB: real. Third-party APIs: mock or testcontainer |
-| E2E | Staging or sandbox environment |
+| Unitarias | Siempre mock o stub |
+| Integración | BD del proyecto: real. APIs de terceros: mock o testcontainer |
+| E2E | Entorno staging o sandbox |
 
-## Test Locations
-- Unit:
-- Integration:
+## Ubicaciones de Pruebas
+- Unitarias:
+- Integración:
 - E2E:
 
-## TDD Coordination
-- Read and apply the TDD skill once before implementation code when the task changes behavior or refactors behavior-preserving code.
-- Use the commands and locations in this guide while following the skill's red/green/refactor cycle.
-- Record any approved TDD exception in the task plan and checklist before implementing under that exception.
+## Coordinación TDD
+- Lee y aplica la skill de TDD una vez antes del código de implementación cuando la tarea cambie comportamiento o refactorice código que preserva comportamiento.
+- Usa los comandos y ubicaciones de esta guía mientras sigues el ciclo red/green/refactor de la skill.
+- Registra cualquier excepción de TDD aprobada en el plan y la lista de verificación de la tarea antes de implementar bajo esa excepción.
 
-## Test Quality
-- Prefer deterministic fixtures.
-- Avoid shared mutable state and order-dependent tests.
-- Keep sensitive or production-like data out of fixtures.
-- Mock external services at boundaries; prefer real code for domain logic.
-- Do not assert only on mock calls when user-visible behavior can be asserted.
+## Calidad de las Pruebas
+- Prefiere fixtures deterministas.
+- Evita estado mutable compartido y pruebas que dependen del orden.
+- Mantén datos sensibles o similares a producción fuera de los fixtures.
+- Mockea servicios externos en los límites; prefiere código real para la lógica de dominio.
+- No asserts solo sobre llamadas a mocks cuando se pueda afirmar sobre el comportamiento visible para el usuario.
 
-## Failure Handling
-- Fix unexpected targeted-test failures before continuing.
-- Report unrelated failures before broadening scope.
-- Record skipped commands, reasons, and residual risk.
+## Manejo de Fallos
+- Corrige fallos inesperados en pruebas específicas antes de continuar.
+- Reporta fallos no relacionados antes de ampliar el alcance.
+- Registra comandos omitidos, motivos y riesgo residual.

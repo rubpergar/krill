@@ -2,13 +2,13 @@
 description: Group changes into semantic commits and push
 ---
 
-Create semantic commits from all available changes.
+Crea commits semánticos a partir de todos los cambios disponibles.
 
-Do not make one big commit by default.
-Group files by purpose.
-Commit each group separately.
+No hagas un solo commit grande por defecto.
+Agrupa los archivos por propósito.
+Haz commit de cada grupo por separado.
 
-If the user provides extra context via `$ARGUMENTS`, use it to refine commit messages — but do not force text that does not accurately describe the changes.
+Si el usuario proporciona contexto adicional mediante `$ARGUMENTS`, úsalo para refinar los mensajes de commit — pero no fuerces texto que no describa con precisión los cambios.
 
 ## Steps
 
@@ -21,7 +21,7 @@ git diff
 git ls-files --others --exclude-standard
 ```
 
-Understand every available change before committing.
+Entiende cada cambio disponible antes de hacer commit.
 
 ### 2. Detect issue key
 
@@ -29,71 +29,71 @@ Understand every available change before committing.
 git branch --show-current
 ```
 
-If the branch contains an issue key (`PROJ-123`, `POW-456`, `#123`), use it in every related commit. Otherwise, commit without it. Do not invent one.
+Si la rama contiene una clave de issue (`PROJ-123`, `POW-456`, `#123`), úsala en cada commit relacionado. De lo contrario, haz commit sin ella. No inventes una.
 
 ### 3. Group changes semantically
 
-Group files and hunks by intent. One commit = one purpose.
+Agrupa archivos y hunks por intención. Un commit = un propósito.
 
-Valid groups: one bug fix, one feature, one refactor, one test update, one documentation change, one dependency update, one config/CI change.
+Grupos válidos: una corrección de bug, una funcionalidad, una refactorización, una actualización de pruebas, un cambio de documentación, una actualización de dependencias, un cambio de configuración/CI.
 
-If two files changed for the same reason, commit them together. If one file contains unrelated changes, split hunks with `git add -p` or stage files explicitly with `git add <file>`. Do not use `git add -A` blindly when changes are unrelated.
+Si dos archivos cambiaron por la misma razón, haz commit juntos. Si un archivo contiene cambios no relacionados, divide los hunks con `git add -p` o agrega archivos explícitamente con `git add <file>`. No uses `git add -A` a ciegas cuando los cambios no están relacionados.
 
 ### 4. Create commits one by one
 
-For each semantic group:
-1. Stage only the files or hunks for that group.
-2. Verify the staged diff with `git diff --cached`.
-3. Create a Conventional Commit.
-4. Commit.
-5. Repeat until no meaningful changes remain.
+Para cada grupo semántico:
+1. Agrega solo los archivos o hunks de ese grupo.
+2. Verifica el diff agregado con `git diff --cached`.
+3. Crea un Conventional Commit.
+4. Haz commit.
+5. Repite hasta que no queden cambios significativos.
 
-Commit format:
+Formato de commit:
 
 ```
 git commit -m "type(scope): summary"
 git commit -m "issue-key: type(scope): summary"
 ```
 
-Use the most accurate type: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
+Usa el tipo más preciso: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
 
-Use a short scope when useful (feature area, package, route, module, service, config). Skip scope only if it adds no value.
+Usa un scope corto cuando sea útil (área de funcionalidad, paquete, ruta, módulo, servicio, config). Omite el scope solo si no aporta valor.
 
-Message rules:
-- Max 72 characters, imperative mood, capitalize, no period.
-- Describe the purpose, not the file changed.
-- Do not use `changes`, `stuff`, `misc`, or `wip`.
+Reglas del mensaje:
+- Máximo 72 caracteres, modo imperativo, mayúscula inicial, sin punto.
+- Describe el propósito, no el archivo modificado.
+- No uses `changes`, `stuff`, `misc` o `wip`.
 
 ### 5. Keep committing until done
 
-After each commit, check remaining changes with `git status --short`. Stop only when:
-- all intentional changes are committed
-- unrelated or unsafe changes are left unstaged on purpose
-- the user must decide what to do with ambiguous changes
+Después de cada commit, verifica los cambios restantes con `git status --short`. Detente solo cuando:
+- todos los cambios intencionales están commiteados
+- los cambios no relacionados o inseguros quedan sin agregar a propósito
+- el usuario debe decidir qué hacer con cambios ambiguos
 
 ## Splitting rules
 
-Split commits when changes are unrelated:
-- UI change + dependency update = two commits
-- bug fix + test for that bug = usually one commit
-- refactor + behavior change = two commits
-- docs for a feature + feature code = usually one commit
-- formatting many files + logic change = two commits
-- generated lockfile from dependency update = same commit
+Divide los commits cuando los cambios no estén relacionados:
+- cambio de UI + actualización de dependencias = dos commits
+- corrección de bug + prueba para ese bug = generalmente un commit
+- refactorización + cambio de comportamiento = dos commits
+- documentación de una funcionalidad + código de la funcionalidad = generalmente un commit
+- formateo de muchos archivos + cambio de lógica = dos commits
+- lockfile generado por actualización de dependencias = mismo commit
 
-If a change cannot be explained by the same sentence, split it.
+Si un cambio no puede explicarse con la misma oración, divídelo.
 
 ## Safety rules
 
-Never commit: secrets, `.env` files with real values, API keys, tokens, credentials, debug logs, local editor files, temporary files, build artifacts unless intentionally tracked, unrelated experiments.
+Nunca hagas commit de: secretos, archivos `.env` con valores reales, claves de API, tokens, credenciales, registros de depuración, archivos locales del editor, archivos temporales, artefactos de compilación a menos que se rastreen intencionalmente, experimentos no relacionados.
 
-Before each commit, verify the staged diff with `git diff --cached`. If it contains unrelated changes, unstage with `git restore --staged <file>` and split.
+Antes de cada commit, verifica el diff agregado con `git diff --cached`. Si contiene cambios no relacionados, desagrega con `git restore --staged <file>` y divide.
 
 ## Final check
 
-When finished, run `git status --short`. Then report in as few words as possible:
-- commits created
-- files intentionally left uncommitted
-- anything skipped for safety
+Cuando termines, ejecuta `git status --short`. Luego informa en la menor cantidad de palabras posible:
+- commits creados
+- archivos intencionalmente dejados sin commit
+- cualquier cosa omitida por seguridad
 
-Done means clean semantic history, not just zero pending files.
+Hecho significa historial semántico limpio, no solo cero archivos pendientes.

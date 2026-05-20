@@ -1,108 +1,108 @@
-# Dependency Policy
+# Política de Dependencias
 
-Rules for introducing new dependencies (libraries, packages, frameworks) into the project. The goal is to avoid accidental dependency bloat and ensure every addition is justified, evaluated, and recorded.
+Reglas para introducir nuevas dependencias (librerías, paquetes, frameworks) en el proyecto. El objetivo es evitar la hinchazón accidental de dependencias y asegurar que cada adición esté justificada, evaluada y registrada.
 
-## Scope
+## Alcance
 
-Applies to all runtime dependencies. Dev dependencies for tooling (lint, format, test, typecheck) follow a lighter path described in the exceptions section.
+Aplica a todas las dependencias de runtime. Las dependencias de desarrollo para herramientas (lint, formato, pruebas, verificación de tipos) siguen un camino más ligero descrito en la sección de excepciones.
 
-Dependencies that are part of the initial project scaffold (chosen during bootstrap) are exempt — they are already decided by the stack selection.
+Las dependencias que forman parte del andamio inicial del proyecto (elegidas durante el bootstrap) están exentas — ya están decididas por la selección del stack.
 
-## 1. Justification
+## 1. Justificación
 
-Before adding any dependency, answer:
+Antes de agregar cualquier dependencia, responde:
 
-- What specific problem does it solve?
-- Can this be solved with the language/runtime standard library or existing project code?
-- If a similar dependency already exists in the project, why does it not suffice?
+- ¿Qué problema específico resuelve?
+- ¿Puede resolverse con la librería estándar del lenguaje/runtime o con código existente del proyecto?
+- Si ya existe una dependencia similar en el proyecto, ¿por qué no es suficiente?
 
-## 2. Alternatives Considered
+## 2. Alternativas Consideradas
 
-Evaluate at least two alternatives (including "do not add anything"). For each:
+Evalúa al menos dos alternativas (incluyendo "no agregar nada"). Para cada una:
 
-| Alternative | Maturity | License | Maintenance | Security | Size |
-|---|---|---|---|---|---|
+| Alternativa | Madurez | Licencia | Mantenimiento | Seguridad | Tamaño |
+|---|---|---|---|---|---|---|
 | ... | ... | ... | ... | ... | ... |
 
-## 3. Evaluation Criteria
+## 3. Criterios de Evaluación
 
-### Maturity
-- Stable version (not alpha/beta/0.x unless justified)
-- Regular releases and active maintenance
-- Number of maintainers and community size
+### Madurez
+- Versión estable (no alpha/beta/0.x a menos que esté justificado)
+- Lanzamientos regulares y mantenimiento activo
+- Número de mantenedores y tamaño de la comunidad
 
-### License
-Must be compatible with the project's license. Check:
-- SPDX identifier
-- GPL family copyleft risk
-- Patent grants if applicable
+### Licencia
+Debe ser compatible con la licencia del proyecto. Verifica:
+- Identificador SPDX
+- Riesgo de copyleft de la familia GPL
+- Concesiones de patentes si aplica
 
-### Maintenance Cost
-- Frequency of breaking changes
-- Number of transitive dependencies
-- Community responsiveness (issues, PRs)
+### Costo de Mantenimiento
+- Frecuencia de cambios disruptivos
+- Número de dependencias transitivas
+- Capacidad de respuesta de la comunidad (issues, PRs)
 
-### Security
-- Historical CVEs and how they were handled
-- Attack surface of the dependency
-- Supply-chain risk (maintainer trustworthiness, access control)
+### Seguridad
+- CVEs históricos y cómo se manejaron
+- Superficie de ataque de la dependencia
+- Riesgo de cadena de suministro (confiabilidad del mantenedor, control de acceso)
 
-### Size Impact
-- Bundle size contribution (if browser/client-side)
-- Transitive dependency tree depth and width
-- Install time and disk impact
+### Impacto de Tamaño
+- Contribución al tamaño del bundle (si es navegador/lado cliente)
+- Profundidad y anchura del árbol de dependencias transitivas
+- Tiempo de instalación e impacto en disco
 
-## 4. Versioning Policy — Exact Versions Only
+## 4. Política de Versiones — Solo Versiones Exactas
 
-### Rule
-All dependencies in `package.json` MUST use exact versions (`"1.2.3"`). Ranges with caret (`"^1.2.3"`), tilde (`"~1.2.3"`), or other operators are NOT allowed unless explicitly approved via an ADR exception.
+### Regla
+Todas las dependencias en `package.json` DEBEN usar versiones exactas (`"1.2.3"`). Los rangos con caret (`"^1.2.3"`), tilde (`"~1.2.3"`) u otros operadores NO están permitidos a menos que se aprueben explícitamente mediante una excepción vía ADR.
 
-### Rationale
-- `^1.2.3` allows automatic resolution of `1.2.4`, `1.3.0`, etc. Even minor/patch releases can introduce behavioral changes, regressions, or incompatibilities.
-- Exact pinning gives explicit control over when updates happen.
-- The lockfile (`package-lock.json` / `yarn.lock` / `pnpm-lock.yaml`) already pins transitive resolutions, but pinning in `package.json` adds a visible, auditable layer of intent.
+### Justificación
+- `^1.2.3` permite la resolución automática de `1.2.4`, `1.3.0`, etc. Incluso los lanzamientos menores o de parche pueden introducir cambios de comportamiento, regresiones o incompatibilidades.
+- El fijado exacto da control explícito sobre cuándo ocurren las actualizaciones.
+- El archivo de bloqueo (`package-lock.json` / `yarn.lock` / `pnpm-lock.yaml`) ya fija las resoluciones transitivas, pero fijar en `package.json` añade una capa visible y auditable de intención.
 
-### How Updates Work
-- Major, minor, and patch updates are managed via automated tooling (Dependabot, Renovate) or explicit manual PRs.
-- Each update PR must be reviewed for breaking changes, changelog diff, and compatibility before merge.
-- Security patches follow the same process but with higher priority — they are not exempt from review.
+### Cómo Funcionan las Actualizaciones
+- Las actualizaciones mayores, menores y de parche se gestionan mediante herramientas automatizadas (Dependabot, Renovate) o PRs manuales explícitos.
+- Cada PR de actualización debe revisarse en busca de cambios disruptivos, diferencias en el changelog y compatibilidad antes de fusionarse.
+- Los parches de seguridad siguen el mismo proceso pero con mayor prioridad — no están exentos de revisión.
 
-## 5. Decision Record
+## 5. Registro de Decisión
 
-Every new dependency (including the chosen version) MUST be recorded as an ADR in `agents/docs/decisions.md` with:
+Cada nueva dependencia (incluyendo la versión elegida) DEBE registrarse como un ADR en `agents/docs/decisions.md` con:
 
-- Name and exact version
-- Purpose and scope of use
-- Alternatives considered and why they were rejected
-- Evaluation summary (license, maturity, maintenance, security, size)
+- Nombre y versión exacta
+- Propósito y alcance de uso
+- Alternativas consideradas y por qué fueron rechazadas
+- Resumen de evaluación (licencia, madurez, mantenimiento, seguridad, tamaño)
 
-## 6. Exceptions
+## 6. Excepciones
 
-The following dev dependencies may skip the alternatives evaluation step, but still need justification and an ADR entry:
+Las siguientes dependencias de desarrollo pueden saltarse el paso de evaluación de alternativas, pero aún necesitan justificación y una entrada de ADR:
 
-- Linter and formatter (ESLint, Prettier, Ruff, rustfmt, etc.) — when they are the ecosystem standard
-- Test framework (Vitest, Jest, pytest, etc.) — when consistent with project stack
-- Type checker (TypeScript, mypy, etc.)
-- Build tooling (Vite, esbuild, Webpack, etc.) — when consistent with project stack
+- Linter y formateador (ESLint, Prettier, Ruff, rustfmt, etc.) — cuando son el estándar del ecosistema
+- Framework de pruebas (Vitest, Jest, pytest, etc.) — cuando es coherente con el stack del proyecto
+- Verificador de tipos (TypeScript, mypy, etc.)
+- Herramientas de compilación (Vite, esbuild, Webpack, etc.) — cuando son coherentes con el stack del proyecto
 
-All other dev dependencies (plugins, custom runners, code generators) follow the full policy.
+Todas las demás dependencias de desarrollo (plugins, ejecutores personalizados, generadores de código) siguen la política completa.
 
-## 7. Boundary Exclusion
+## 7. Exclusión de Límites
 
-The SDD workflow Boundary rule (`AGENTS.md`) already says:
+La regla de Límites del flujo de trabajo SDD (`AGENTS.md`) ya dice:
 
 > "Do not introduce dependencies without documenting why."
 
-This policy is the "documenting why" mechanism. That rule is updated to point here.
+Esta política es el mecanismo de "documentar por qué". Esa regla está actualizada para referenciar esto.
 
-## 8. Exception Process
+## 8. Proceso de Excepción
 
-To approve an exception to any rule in this policy:
-- Document the exception in the task plan with rationale.
-- Get explicit user approval.
-- Record the exception as an ADR.
+Para aprobar una excepción a cualquier regla de esta política:
+- Documenta la excepción en el plan de la tarea con su justificación.
+- Obtén aprobación explícita del usuario.
+- Registra la excepción como un ADR.
 
-## Exempt from This Policy
+## Exento de Esta Política
 
-- Dependencies introduced during project bootstrap / scaffold initialization.
-- Critical security patches (CVE with active exploitation) — but the update still needs an ADR entry within one working cycle.
+- Dependencias introducidas durante el bootstrap o inicialización del andamio del proyecto.
+- Parches de seguridad críticos (CVE con explotación activa) — pero la actualización aún necesita una entrada de ADR dentro de un ciclo de trabajo.

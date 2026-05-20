@@ -1,63 +1,63 @@
-# Task Plan Template
+# Plantilla de Plan de Tarea
 
-Copy to `agents/task/TASK-XXX-plan.md`. Do not implement from this template.
+Copia a `agents/task/TASK-XXX-plan.md`. No implementes desde esta plantilla.
 
-## Status
-`draft | approved | blocked | implemented | validated | closed`
+## Estado
+`borrador | aprobado | bloqueado | implementado | validado | cerrado`
 
-## Task
+## Tarea
 - ID: TASK-XXX
-- Title:
-- Backlog source: `agents/task/backlog.md`
+- Título:
+- Fuente del backlog: `agents/task/backlog.md`
 
-## Summary
-What will change and why?
+## Resumen
+¿Qué cambiará y por qué?
 
-## Scope
-**In:**
+## Alcance
+**Incluye:**
 - ...
 
-**Out (explicitly excluded):**
+**Excluye (explicitamente excluido):**
 - ...
 
-## Current Behavior
+## Comportamiento Actual
 ...
 
-## Target Behavior
+## Comportamiento Esperado
 ...
 
-## Acceptance Criteria
+## Criterios de Aceptación
 - ...
 
-## Edge Cases
+## Casos Borde
 - ...
 
-## Assumptions / Risks
+## Supuestos / Riesgos
 - ...
 
-## Database Impact
-Use `Not applicable` when the task does not affect the database.
+## Impacto en Base de Datos
+Usa `No aplica` cuando la tarea no afecte la base de datos.
 
-- Change summary:
-- DB schema file from Source of Truth Map:
-- DB change log file from Source of Truth Map:
-- Affected structures/data:
-- Forward migration approach:
-- Rollback approach:
-- Persisted data compatibility:
-- Operational risks:
-- Validation plan:
-- Backup/recovery notes:
-- Required doc updates:
+- Resumen de cambios:
+- Archivo de esquema de BD del Mapa de Fuente de Verdad:
+- Archivo de registro de cambios de BD del Mapa de Fuente de Verdad:
+- Estructuras/datos afectados:
+- Enfoque de migración de avance:
+- Enfoque de reversión:
+- Compatibilidad de datos persistentes:
+- Riesgos operativos:
+- Plan de validación:
+- Notas de respaldo/recuperación:
+- Actualizaciones de documentación requeridas:
 
-## Open Questions
+## Preguntas Abiertas
 - ...
 
-## Source of Truth to Read
+## Fuente de Verdad a Leer
 - `agents/docs/DoD.md`
 - `agents/docs/testing.md`
 - ...
 
-## Decision Records
-- ADRs read from `agents/docs/decisions.md`:
-- New decisions to record after user approval:
+## Registros de Decisiones
+- ADRs leídos de `agents/docs/decisions.md`:
+- Nuevas decisiones a registrar después de la aprobación del usuario:

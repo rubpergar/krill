@@ -1,4 +1,4 @@
--- DB schema fallback for new or unconfigured projects.
+-- Esquema de BD de respaldo para proyectos nuevos o no configurados.
 --
--- If `AGENTS.md` points to a project-local DB schema file, update that file instead of this one.
+-- Si `AGENTS.md` apunta a un archivo de esquema de BD local del proyecto, actualiza ese archivo en lugar de este.
 --

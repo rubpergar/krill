@@ -1,8 +1,8 @@
--- DB change log fallback for new or unconfigured projects.
+-- Registro de cambios de BD de respaldo para proyectos nuevos o no configurados.
 --
--- If `AGENTS.md` points to a project-local DB change log file, update that file instead of this one.
+-- Si `AGENTS.md` apunta a un archivo de registro de cambios de BD local del proyecto, actualiza ese archivo en lugar de este.
 --
--- Example entry format:
+-- Formato de entrada de ejemplo:
 [TASK-XXX] Short title
 Date: YYYY-MM-DD
 Forward:

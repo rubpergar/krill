@@ -1,82 +1,82 @@
 # Bootstrap
 
-Source of truth for `skeleton` mode. Defines how to prepare the agent skeleton for a real project before switching to `project` mode.
+Fuente de verdad para el modo `skeleton`. Define cómo preparar el esqueleto del agente para un proyecto real antes de cambiar al modo `project`.
 
-## Purpose
+## Propósito
 
-Configure the agent with enough verified context to work without avoidable uncertainty. Bootstrap is not product implementation.
+Configurar el agente con suficiente contexto verificado para trabajar sin incertidumbre evitable. Bootstrap no es implementación de producto.
 
-## Allowed Scope
+## Alcance Permitido
 
-Limited to agent and workflow files (`AGENTS.md`, `agents/**`, `.opencode/**`) unless the user explicitly expands scope.
+Limitado a archivos de agente y flujo de trabajo (`AGENTS.md`, `agents/**`, `.opencode/**`) a menos que el usuario expanda el alcance explícitamente.
 
-## Approval Rules
+## Reglas de Aprobación
 
-- **Skeleton mode**: editing agent configuration files does not require user approval. The agent may write to `AGENTS.md`, `agents/**`, and `.opencode/**` freely during bootstrap.
-- **Project mode**: the Source of Truth Map in `AGENTS.md` governs which docs need explicit approval before modification.
+- **Modo skeleton**: editar archivos de configuración del agente no requiere aprobación del usuario. El agente puede escribir libremente en `AGENTS.md`, `agents/**` y `.opencode/**` durante el bootstrap.
+- **Modo project**: el Mapa de Fuentes de Verdad en `AGENTS.md` determina qué documentos necesitan aprobación explícita antes de modificarse.
 
-## Two Paths
+## Dos Caminos
 
-The repository can be prepared for a real project in two ways:
+El repositorio puede prepararse para un proyecto real de dos maneras:
 
-### Path A: Existing Project Discovery
+### Camino A: Descubrimiento de Proyecto Existente
 
-A project with existing source code (package manifests, `src/`, config files, etc.).
+Un proyecto con código fuente existente (manifiestos de paquetes, `src/`, archivos de configuración, etc.).
 
-Uses the `/bootstrap` command (`.opencode/commands/bootstrap.md`), which:
-1. Inspects the repository structure and stack
-2. Interviews the user to confirm findings and fill gaps
-3. Detects existing DB schema and DB change log files and updates the Source of Truth Map paths in `AGENTS.md` when appropriate
-4. Writes source-of-truth docs with confirmed facts only
-5. Runs a readiness check
-6. Offers transition to project mode if ready
+Usa el comando `/bootstrap` (`.opencode/commands/bootstrap.md`), que:
+1. Inspecciona la estructura y el stack del repositorio
+2. Entrevista al usuario para confirmar hallazgos y llenar vacíos
+3. Detecta esquemas de BD y archivos de registro de cambios de BD existentes y actualiza las rutas del Mapa de Fuentes de Verdad en `AGENTS.md` cuando sea apropiado
+4. Escribe documentos fuente de verdad solo con hechos confirmados
+5. Ejecuta una verificación de preparación
+6. Ofrece la transición al modo project si está listo
 
-**Readiness criteria:**
-- Product identity (name, domain, users, goal) confirmed by user
-- Runtime/framework confirmed
-- Package manager confirmed
-- Install command confirmed
-- At least one test command confirmed
-- Lint/typecheck/build may be deferred
+**Criterios de preparación:**
+- Identidad del producto (nombre, dominio, usuarios, objetivo) confirmada por el usuario
+- Runtime/framework confirmado
+- Gestor de paquetes confirmado
+- Comando de instalación confirmado
+- Al menos un comando de prueba confirmado
+- Lint/verificador de tipos/compilación pueden diferirse
 
-**DB file detection:**
-- If the project already contains DB schema or ordered SQL change log files, `/bootstrap` should propose those as the `DB schema` and `DB change log` paths in the Source of Truth Map.
-- If the project does not contain them, keep `agents/db/schema.sql` and `agents/db/changes.sql` as the default paths.
-- After bootstrap, normal implementation work should use the DB paths declared in the Source of Truth Map without any extra DB policy document.
+**Detección de archivos de BD:**
+- Si el proyecto ya contiene esquemas de BD o archivos de registro de cambios SQL ordenados, `/bootstrap` debe proponer esos archivos como las rutas de `DB schema` y `DB change log` en el Mapa de Fuentes de Verdad.
+- Si el proyecto no los contiene, mantén `agents/db/schema.sql` y `agents/db/changes.sql` como las rutas predeterminadas.
+- Después del bootstrap, el trabajo de implementación normal debe usar las rutas de BD declaradas en el Mapa de Fuentes de Verdad sin ningún documento de política de BD adicional.
 
-**Transition:** When readiness passes (100% critical fields or >= 75% with user consent), the command updates `AGENTS.md` mode, archives this file regardless of completeness, and confirms the switch. Pending fields are tracked in the project-mode message in `AGENTS.md`.
+**Transición:** Cuando la preparación se cumple (100% de campos críticos o >= 75% con consentimiento del usuario), el comando actualiza el modo en `AGENTS.md`, archiva este documento independientemente de su integridad, y confirma el cambio. Los campos pendientes se registran en el mensaje de modo project en `AGENTS.md`.
 
-### Path B: New Project Initialization
+### Camino B: Inicialización de Proyecto Nuevo
 
-A zero-start project with no product code yet.
+Un proyecto desde cero sin código de producto aún.
 
-No single `/bootstrap` command. The agent initializes the technical scaffold and fills configuration incrementally as the project grows. This requires explicit user approval and a short initialization plan.
+No hay un solo comando `/bootstrap`. El agente inicializa el andamio técnico y llena la configuración incrementalmente a medida que el proyecto crece. Esto requiere aprobación explícita del usuario y un breve plan de inicialización.
 
-**Readiness criteria (lighter):**
-- Stack (runtime, framework, package manager) chosen and initialized
-- Install command works
-- At least one test command configured (even placeholder)
-- Lint and dev commands may be deferred
+**Criterios de preparación (más ligeros):**
+- Stack (runtime, framework, gestor de paquetes) elegido e inicializado
+- El comando de instalación funciona
+- Al menos un comando de prueba configurado (incluso provisional)
+- Lint y comandos de desarrollo pueden diferirse
 
-**Transition:** When these minimums are met, the agent may propose transition to project mode. The user decides.
+**Transición:** Cuando estos mínimos se cumplen, el agente puede proponer la transición al modo project. El usuario decide.
 
-## Transition To Project Mode
+## Transición al Modo Project
 
-After user approval, perform in one scoped maintenance step:
+Después de la aprobación del usuario, realiza en un solo paso de mantenimiento delimitado:
 
-1. In `AGENTS.md`:
-   - Change `Current mode: skeleton` to `Current mode: project`
-   - Replace the skeleton-mode heading message with:
+1. En `AGENTS.md`:
+   - Cambia `Current mode: skeleton` a `Current mode: project`
+   - Reemplaza el mensaje de encabezado del modo skeleton con:
      ```
      Current mode: `project`.
-     
+
      This repository is an active project. Use the SDD/TDD workflow and the source-of-truth documents under `agents/**`.
-     
+
      Bootstrap is complete. Archived bootstrap documents are historical references only and must not be followed unless the user explicitly requests bootstrap maintenance or review.
      ```
-2. Move this file from `agents/docs/bootstrap.md` to `agents/task/archive/bootstrap-YYYY-MM-DD.md`
-3. Confirm the archived document is historical reference only
+2. Mueve este archivo de `agents/docs/bootstrap.md` a `agents/task/archive/bootstrap-YYYY-MM-DD.md`
+3. Confirma que el documento archivado es solo referencia histórica
 
-## Archived Bootstrap Documents
+## Documentos de Bootstrap Archivados
 
-Archived bootstrap documents are historical references only. Do not follow them during project work unless the user explicitly asks to review bootstrap history or perform bootstrap maintenance.
+Los documentos de bootstrap archivados son solo referencias históricas. No los sigas durante el trabajo del proyecto a menos que el usuario solicite explícitamente revisar el historial de bootstrap o realizar mantenimiento de bootstrap.

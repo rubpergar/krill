@@ -2,41 +2,41 @@
 description: Quick implementation without SDD/TDD for trivial changes
 ---
 
-Implement a change directly, skipping the full SDD workflow (backlog, plan, checklist, TDD).
+Implementa un cambio directamente, omitiendo el flujo completo de SDD (backlog, plan, checklist, TDD).
 
-Requested change: `$ARGUMENTS`
+Cambio solicitado: `$ARGUMENTS`
 
 Rules:
-- This mode only applies to changes that meet ALL eligibility criteria below.
-- You must briefly explain why the change qualifies before implementing.
-- Implement the minimal change needed - no extra refactors or improvements.
-- If during execution the change turns out to be ambiguous, risky, or has behavior impact, STOP and explain that it should follow the normal SDD flow.
-- If `$ARGUMENTS` is empty, ask what the user wants to change.
-- At the end, state that FAST mode was used and what minimum validation was performed (e.g. file was written, syntax is valid).
+- Este modo solo aplica a cambios que cumplan TODOS los criterios de elegibilidad a continuación.
+- Debes explicar brevemente por qué el cambio califica antes de implementarlo.
+- Implementa el cambio mínimo necesario — sin refactorizaciones o mejoras adicionales.
+- Si durante la ejecución el cambio resulta ser ambiguo, riesgoso o tiene impacto en el comportamiento, DETENTE y explica que debería seguir el flujo normal de SDD.
+- Si `$ARGUMENTS` está vacío, pregunta qué quiere cambiar el usuario.
+- Al final, indica que se usó el modo FAST y qué validación mínima se realizó (ej. el archivo fue escrito, la sintaxis es válida).
 
-Eligibility - the change MUST meet ALL conditions:
-- Small and reversible
-- No functional behavior impact
-- Low risk
-- Does NOT touch API, DB, auth, payments, or security
+Elegibilidad: el cambio DEBE cumplir TODAS las condiciones:
+- Pequeño y reversible
+- Sin impacto en el comportamiento funcional
+- Bajo riesgo
+- NO toca API, BD, auth, pagos o seguridad
 
-Allowed changes:
-- Typo fixes in documentation
-- Non-functional copy changes
-- Comment adjustments
-- Non-behavioral formatting
-- Minor internal documentation updates
+Cambios permitidos:
+- Correcciones tipográficas en documentación
+- Cambios de copia no funcionales
+- Ajustes de comentarios
+- Formateo no conductual
+- Actualizaciones menores de documentación interna
 
-NOT allowed:
-- Behavior changes
-- Functional bugfixes
-- Risky refactors
-- API, DB, auth, payment, or security changes
-- UI changes that affect accessibility or behavior
+NO permitidos:
+- Cambios de comportamiento
+- Correcciones de bugs funcionales
+- Refactorizaciones riesgosas
+- Cambios en API, BD, auth, pago o seguridad
+- Cambios de UI que afecten accesibilidad o comportamiento
 
 Flow:
-1. Read `$ARGUMENTS` and determine if the change qualifies for FAST mode.
-2. If it qualifies, explain why and implement directly.
-3. If it does not qualify, explain why and suggest using the normal SDD flow.
-4. If ambiguity or risk appears mid-implementation, stop and escalate to SDD.
-5. When done, report what FAST mode was used for and what validation was performed.
+1. Lee `$ARGUMENTS` y determina si el cambio califica para modo FAST.
+2. Si califica, explica por qué e implementa directamente.
+3. Si no califica, explica por qué y sugiere usar el flujo normal de SDD.
+4. Si aparece ambigüedad o riesgo durante la implementación, detente y escala a SDD.
+5. Cuando termines, reporta para qué se usó el modo FAST y qué validación se realizó.

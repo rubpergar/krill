@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  An agent skeleton for disciplined development with <strong>OpenCode</strong>, SDD, TDD, and docs as source of truth.
+  Un esqueleto de agente para desarrollo disciplinado con <strong>OpenCode</strong>, SDD, TDD y documentos como fuente de verdad.
 </p>
 
 <p align="center">
@@ -13,21 +13,21 @@
 
 ---
 
-## What It Is
+## Qué Es
 
-**Krill** is a workspace template for development agents. It enables an agent to step into a project with clear rules, traceable tasks, and disciplined validation — before touching a single line of product code.
+**Krill** es una plantilla de espacio de trabajo para agentes de desarrollo. Permite que un agente entre a un proyecto con reglas claras, tareas trazables y validación disciplinada — antes de tocar una sola línea de código de producto.
 
-The repository is currently in **skeleton mode**: no product code yet. It is ready to be adopted into an existing project or used to initialize a new one through the bootstrap workflow.
+El repositorio está actualmente en **modo skeleton**: aún no hay código de producto. Está listo para ser adoptado en un proyecto existente o usado para inicializar uno nuevo mediante el flujo de trabajo de bootstrap.
 
-## Why It Exists
+## Por Qué Existe
 
-- **Less guesswork** — decisions live in source-of-truth docs, not lost context.
-- **Traceable work** — backlog, plan, checklist, and Definition of Done for every meaningful change.
-- **TDD by default** — define the expectation first, then implement and validate.
-- **Extensible agents** — commands and skills ready to adapt the workflow to each project.
-- **Safe bootstrap** — keeps agent setup separate from product implementation.
+- **Menos conjeturas** — las decisiones viven en documentos fuente de verdad, no en contexto perdido.
+- **Trabajo trazable** — backlog, plan, checklist y Definition of Done para cada cambio significativo.
+- **TDD por defecto** — define primero la expectativa, luego implementa y valida.
+- **Agentes extensibles** — comandos y skills listos para adaptar el flujo de trabajo a cada proyecto.
+- **Bootstrap seguro** — mantiene la configuración del agente separada de la implementación del producto.
 
-## Workflow
+## Flujo de Trabajo
 
 ```mermaid
 flowchart LR
@@ -39,57 +39,57 @@ flowchart LR
     Val --> Doc["Documentation"]
 ```
 
-1. Run bootstrap to adapt the agent to your project.
-2. Select a single active task in `agents/task/backlog.md`.
-3. Create and approve a task-specific plan.
-4. Derive an executable checklist from the plan.
-5. Implement with TDD and validate against the Definition of Done.
-6. Update only the documentation that changes durable contracts.
+1. Ejecuta el bootstrap para adaptar el agente a tu proyecto.
+2. Selecciona una única tarea activa en `agents/task/backlog.md`.
+3. Crea y aprueba un plan específico para la tarea.
+4. Deriva un checklist ejecutable del plan.
+5. Implementa con TDD y valida contra la Definition of Done.
+6. Actualiza solo la documentación que cambia contratos duraderos.
 
-## What's Included
+## Qué Incluye
 
-| Area | Contents |
+| Área | Contenido |
 |---|---|
-| Agent rules | `AGENTS.md` with mode, boundaries, SDD/TDD workflow, and source-of-truth map |
-| OpenCode commands | Bootstrap, semantic commits, prompt tools, README, and fast-track trivial changes |
-| Tasks | Backlog, plans, checklists, and archive under `agents/task/` |
-| Documentation | DoD, testing, API, DB, decisions, debt, design, and dependency policy |
-| Skills | TDD, code review, security, performance, SEO, UI, and Context7 MCP |
+| Agent rules | `AGENTS.md` con modo, límites, flujo de trabajo SDD/TDD y mapa fuente de verdad |
+| OpenCode commands | Bootstrap, commits semánticos, herramientas de prompt, README y cambios triviales rápidos |
+| Tasks | Backlog, planes, checklists y archivo en `agents/task/` |
+| Documentation | DoD, testing, API, DB, decisions, debt, design y dependency policy |
+| Skills | TDD, code review, security, performance, SEO, UI y Context7 MCP |
 
-## Commands
+## Comandos
 
-| Command | Purpose |
+| Comando | Propósito |
 |---|---|
-| [`/bootstrap`](.opencode/commands/bootstrap.md) | Adopt the skeleton into an existing project and prepare transition to project mode |
-| [`/commit`](.opencode/commands/commit.md) | Group changes into semantic commits and push |
-| [`/fast`](.opencode/commands/skip-sdd-tdd.md) | Quick implementation of trivial, non-behavioral changes (bypasses SDD/TDD) |
-| [`/prompt`](.opencode/commands/prompt.md) | Convert a rough request into an optimized prompt (output only, no execution) |
-| [`/prompt-run`](.opencode/commands/prompt-run.md) | Convert a rough request into an optimized prompt and execute it |
-| [`/readme`](.opencode/commands/readme.md) | Regenerate the README from the actual project state |
+| [`/bootstrap`](.opencode/commands/bootstrap.md) | Adoptar el skeleton en un proyecto existente y preparar la transición al modo proyecto |
+| [`/commit`](.opencode/commands/commit.md) | Agrupar cambios en commits semánticos y hacer push |
+| [`/fast`](.opencode/commands/skip-sdd-tdd.md) | Implementación rápida de cambios triviales no conductuales (omite SDD/TDD) |
+| [`/prompt`](.opencode/commands/prompt.md) | Convertir una solicitud preliminar en un prompt optimizado (solo salida, sin ejecución) |
+| [`/prompt-run`](.opencode/commands/prompt-run.md) | Convertir una solicitud preliminar en un prompt optimizado y ejecutarlo |
+| [`/readme`](.opencode/commands/readme.md) | Regenerar el README desde el estado real del proyecto |
 
-## Requirements
+## Requisitos
 
-- [OpenCode](https://opencode.ai) — the skeleton is designed around its commands, agents, and configuration.
-- Context7 MCP — required if you want to use the `context7-mcp` skill for up-to-date library, SDK, and framework documentation.
+- [OpenCode](https://opencode.ai) — el skeleton está diseñado alrededor de sus comandos, agentes y configuración.
+- Context7 MCP — requerido si quieres usar la skill `context7-mcp` para documentación actualizada de librerías, SDKs y frameworks.
 
-## Installation
+## Instalación
 
-Clone the repository at the root of the workspace where you want to prepare the agent:
+Clona el repositorio en la raíz del espacio de trabajo donde quieras preparar el agente:
 
 ```bash
 git clone https://github.com/rubpergar/krill.git
 cd krill
 ```
 
-To adopt the skeleton into an **existing project**:
+Para adoptar el skeleton en un **proyecto existente**:
 
 ```text
 /bootstrap
 ```
 
-If you are starting a **new project** with no code yet, follow the incremental path described in [`agents/docs/bootstrap.md`](agents/docs/bootstrap.md).
+Si estás comenzando un **nuevo proyecto** sin código aún, sigue la ruta incremental descrita en [`agents/docs/bootstrap.md`](agents/docs/bootstrap.md).
 
-## Structure
+## Estructura
 
 ```text
 krill/
@@ -103,17 +103,17 @@ krill/
 └── skills-lock.json     # Skill provenance and integrity hashes
 ```
 
-## Current Status
+## Estado Actual
 
-- Mode: `skeleton`.
-- No product stack configured yet.
-- No install, test, lint, typecheck, or build commands defined for product code.
-- Feature implementation is blocked until bootstrap is complete and the repo transitions to `project mode`.
+- Modo: `skeleton`.
+- Aún no hay stack de producto configurado.
+- No hay comandos install, test, lint, typecheck ni build definidos para el código de producto.
+- La implementación de funcionalidades está bloqueada hasta que el bootstrap esté completo y el repositorio transicione a `modo proyecto`.
 
-## Contributing
+## Contribuciones
 
-This is a private agent skeleton. If you reuse it, adapt the source-of-truth docs to your project first, and avoid introducing product code until bootstrap is finished.
+Este es un esqueleto de agente privado. Si lo reutilizas, adapta primero los documentos fuente de verdad a tu proyecto y evita introducir código de producto hasta que el bootstrap esté terminado.
 
-## License
+## Licencia
 
-MIT. See [`LICENSE`](LICENSE) for details.
+MIT. Consulta [`LICENSE`](LICENSE) para más detalles.

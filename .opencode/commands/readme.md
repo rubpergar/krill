@@ -2,23 +2,23 @@
 description: Generate or overwrite the project README.md
 ---
 
-Generate a complete README.md for this project.
+Genera un README.md completo para este proyecto.
 
-Optional focus or tone for the README: `$ARGUMENTS`
+Enfoque o tono opcional para el README: `$ARGUMENTS`
 
 Rules:
-- Scan the full project structure to understand the project.
-- Exclude the `agents/` directory and everything under it from the description.
-- Detect the tech stack, project purpose, and main features from the existing code.
-- Include standard sections: title, description, stack, installation, usage, directory structure (excluding `agents/`), contributing, license.
-- If `$ARGUMENTS` is provided, use it as context to adjust the tone, focus, or sections of the README.
-- If the project is still in its initial skeleton state with no product code, reflect that honestly.
-- Overwrite the existing `README.md` with the new content.
-- Do not include placeholder or example content that does not reflect the actual project state.
+- Escanea la estructura completa del proyecto para entenderlo.
+- Excluye el directorio `agents/` y todo lo que contiene de la descripción.
+- Detecta el stack tecnológico, el propósito del proyecto y las características principales a partir del código existente.
+- Incluye secciones estándar: título, descripción, stack, instalación, uso, estructura de directorios (excluyendo `agents/`), contribución, licencia.
+- Si se proporciona `$ARGUMENTS`, úsalo como contexto para ajustar el tono, enfoque o secciones del README.
+- Si el proyecto aún está en su estado inicial de esqueleto sin código de producto, refleja eso honestamente.
+- Sobrescribe el `README.md` existente con el nuevo contenido.
+- No incluyas contenido de marcador de posición o ejemplo que no refleje el estado real del proyecto.
 
 Flow:
-1. Inspect the project structure, package files, source code, and config files.
-2. Identify the tech stack, purpose, and main features.
-3. Construct the README following the rules above.
-4. Overwrite `README.md`.
-5. Confirm the file was written.
+1. Inspecciona la estructura del proyecto, archivos de paquete, código fuente y archivos de configuración.
+2. Identifica el stack tecnológico, el propósito y las características principales.
+3. Construye el README siguiendo las reglas anteriores.
+4. Sobrescribe `README.md`.
+5. Confirma que el archivo fue escrito.
