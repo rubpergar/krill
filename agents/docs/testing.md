@@ -8,20 +8,20 @@ This file defines project-specific testing logistics. Use `agents/skills/test-dr
 
 ### Fast (TDD cycle / pre-commit)
 | Purpose | Command |
-|---|---|
-| Targeted unit | |
-| Full unit | |
-| Lint | |
-| Typecheck | |
+|---|---|---|
+| Targeted unit | `php artisan test --filter={TestName}` |
+| Full unit | `php artisan test` |
+| Lint | `./vendor/bin/pint --test` |
+| Typecheck | `not available` |
 
 ### Slow (pre-merge / CI)
 | Purpose | Command |
-|---|---|
-| Integration | |
-| E2E | |
-| Build | |
-| Full validation | |
-| Coverage report | |
+|---|---|---|
+| Integration | `php artisan test` |
+| E2E | `not available` |
+| Build | `npm run build` |
+| Full validation | `php artisan test && ./vendor/bin/pint --test` |
+| Coverage report | `not available` |
 | DESIGN.md lint | `npx @google/design.md lint agents/docs/design.md` (requires Node.js; optional — skip if unavailable) |
 
 ## Test Levels
@@ -34,24 +34,24 @@ This file defines project-specific testing logistics. Use `agents/skills/test-dr
 ## Coverage
 | Item | Configuration |
 |---|---|
-| Tool | |
-| Threshold | |
-| Command | |
-| Excluded paths | |
-| Fail on below threshold | yes / no |
+| Tool | `not available` |
+| Threshold | `not available` |
+| Command | `not available` |
+| Excluded paths | `not available` |
+| Fail on below threshold | `not available` |
 
 ## Environment
-- Required services:
-- Required environment variables:
-- Reset/cleanup:
+- Required services: SQLite (built-in) o PostgreSQL
+- Required environment variables: `APP_ENV`, `DB_CONNECTION`
+- Reset/cleanup: `php artisan migrate:fresh --seed`
 
 ## Fixtures
 | Type | Location | When used |
 |---|---|---|
-| Unit (factories, builders, mocks) | | Unit tests |
-| Integration (seed data, DB snapshots) | | Integration tests |
-| E2E (test users, sandbox data) | | E2E tests |
-| Shared utilities | | All levels |
+| Unit (factories, builders, mocks) | `database/factories/` | Unit tests |
+| Integration (seed data, DB snapshots) | `database/seeders/` | Integration tests |
+| E2E (test users, sandbox data) | `not available` | E2E tests |
+| Shared utilities | `tests/` (TestCase.php, Pest.php) | All levels |
 
 ## External Services Strategy
 | Level | Strategy |
@@ -61,9 +61,9 @@ This file defines project-specific testing logistics. Use `agents/skills/test-dr
 | E2E | Staging or sandbox environment |
 
 ## Test Locations
-- Unit:
-- Integration:
-- E2E:
+- Unit: `tests/Unit/`
+- Integration: `tests/Feature/`
+- E2E: `not available`
 
 ## TDD Coordination
 - Read and apply the TDD skill once before implementation code when the task changes behavior or refactors behavior-preserving code.

@@ -4,29 +4,25 @@ This repository starts as an agent skeleton and can be prepared for active proje
 
 ## Mode
 
-Current mode: `skeleton`.
+Current mode: `project`.
 
-This repository is in agent bootstrap mode. Product feature implementation is not allowed.
+This repository is an active project. Use the SDD/TDD workflow and the source-of-truth documents under `agents/**`.
 
-For skeleton-mode scope, required setup information, validation, and transition to project mode, follow `agents/docs/bootstrap.md`. After transition to project mode, the archived bootstrap is at `agents/task/archive/bootstrap-*.md` (historical reference only).
-
-Do not modify product source code or unrelated files unless the bootstrap docs explicitly allow it or the user explicitly requests it.
+Bootstrap is complete. Archived bootstrap documents are historical references only and must not be followed unless the user explicitly requests bootstrap maintenance or review.
 
 ## Project
-Fill this section during bootstrap. Leave fields blank only while they are unknown or not configured yet.
-- Product:
-- Domain:
-- Users:
-- Goal:
+- Product: PrawnForms (S5 — Formulario de captación con panel de seguimiento)
+- Domain: Gestión de solicitudes y leads
+- Users: Visitantes públicos, usuarios internos, administradores
+- Goal: Centralizar la recepción y gestión de solicitudes procedentes de un formulario público, evitando que los contactos queden dispersos en correos, mensajes o registros manuales
 
 ## Stack
-Fill only what applies during bootstrap.
-- Runtime/framework:
-- Package manager:
-- Database:
-- Test tools:
-- Deployment:
-- External services:
+- Runtime/framework: PHP 8.3 / Laravel 13 / Filament 5
+- Package manager: Composer
+- Database: PostgreSQL (SQLite para desarrollo local)
+- Test tools: Pest
+- Deployment: pendiente
+- External services: Resend (email)
 
 ## Operating Rules
 - In skeleton mode, editing agent configuration files (`AGENTS.md`, `agents/**`, `.opencode/**`) does not require user approval. The Source of Truth Map approval column only applies in project mode.
@@ -156,8 +152,8 @@ Non-validation commands:
 
 | Purpose | Command | Notes |
 |---|---|---|
-| Install | not configured | Package manager and lockfile policy |
-| Dev server | not configured | Port and env requirements |
+| Install | `composer install` | Composer.lock committed |
+| Dev server | `php artisan serve` | Puerto 8000 por defecto |
 
 ## Code Conventions
 - Prefer existing patterns and local helpers.
@@ -166,4 +162,7 @@ Non-validation commands:
 - Move detailed conventions into source-of-truth docs when they become durable project rules.
 
 ## Project Structure
-Add only primary routes with their purpose.
+| Ruta | Propósito |
+|---|---|
+| `/` | Formulario público de captación |
+| `/admin` | Panel privado Filament (requiere autenticación) |

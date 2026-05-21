@@ -26,3 +26,10 @@ Consequences: What benefits, costs, constraints, or follow-up work does this cre
 ```
 
 ## Log
+
+## ADR-000: Stack tecnológico PrawnForms
+Date: 2026-05-21
+Status: accepted
+Context: Se definió el stack para el proyecto S5 (PrawnForms), un formulario de captación con panel de seguimiento. Se priorizó velocidad de desarrollo y ecosistema maduro.
+Decision: Usar Laravel 13 + Filament 5 + PostgreSQL + Pest + Blade (frontend público) + Resend (email). Filament como panel de administración con autenticación incluida. SQLite como driver de BD para desarrollo local cuando PostgreSQL no esté disponible.
+Consequences: El panel privado se desarrolla con Filament (CRUD, filtros, roles incluidos). Las migraciones y modelos de dominio se crearán en tareas posteriores. El frontend público usa Blade sin Livewire por simplicidad. Se requiere ext-intl y ext-pdo_pgsql en el servidor.
