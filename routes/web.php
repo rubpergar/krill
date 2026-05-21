@@ -10,4 +10,8 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/gracias', function () {
+    return view('confirmacion');
+});
+
 Route::post('/', PublicLeadController::class);

@@ -38,7 +38,6 @@ class PublicLeadController extends Controller
             'consentimiento_fecha' => now(),
         ]);
 
-        return redirect('/')
-            ->with('status', 'Solicitud enviada correctamente.');
+        return redirect('/gracias');
     }
 }

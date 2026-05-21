@@ -14,8 +14,10 @@ Document only public contracts that clients depend on.
 ## Routes
 | Method | Path | Request | Response | Notes |
 |---|---|---|---|---|
-| `POST` | `/` | Form HTML con `nombre`, `email`, `telefono`, `empresa`, `tipo_necesidad`, `mensaje`, `consentimiento` | `302` redirect a `/` con errores de sesión o flash `status` en éxito | Endpoint público del formulario de captación. `tipo_necesidad` debe coincidir con `TipoNecesidad` enum. |
+| `POST` | `/` | Form HTML con `nombre`, `email`, `telefono`, `empresa`, `tipo_necesidad`, `mensaje`, `consentimiento` | `302` redirect a `/gracias` en éxito, o a `/` con errores de sesión | Endpoint público del formulario de captación. `tipo_necesidad` debe coincidir con `TipoNecesidad` enum. |
+| `GET` | `/gracias` | — | `200` HTML de confirmación | Pantalla de confirmación post-envío, pública y genérica, sin datos personales. |
 
 ## Compatibility Notes
 - El formulario público usa submit tradicional HTML, no JSON.
-- Mientras TASK-005 no exista, el éxito vuelve a `/` con mensaje flash.
+- El éxito redirige a `/gracias` con PRG; los errores vuelven a `/`.
+- GET /gracias es seguro para acceso directo y refresco.

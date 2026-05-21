@@ -6,26 +6,27 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-function payloadValido(array $overrides = []): array
-{
-    return array_merge([
-        'nombre' => 'Ada Lovelace',
-        'email' => 'ada@example.com',
-        'telefono' => '+34 600 123 123',
-        'empresa' => 'Analytical Engines',
-        'tipo_necesidad' => 'Consulta',
-        'mensaje' => 'Necesito una propuesta para el formulario.',
-        'consentimiento' => '1',
-    ], $overrides);
+if (! function_exists('payloadValido')) {
+    function payloadValido(array $overrides = []): array
+    {
+        return array_merge([
+            'nombre' => 'Ada Lovelace',
+            'email' => 'ada@example.com',
+            'telefono' => '+34 600 123 123',
+            'empresa' => 'Analytical Engines',
+            'tipo_necesidad' => 'Consulta',
+            'mensaje' => 'Necesito una propuesta para el formulario.',
+            'consentimiento' => '1',
+        ], $overrides);
+    }
 }
 
-test('POST / crea un lead válido', function () {
+test('POST / crea un lead válido y redirige a confirmación', function () {
     $response = $this
         ->withHeader('User-Agent', 'Pest Test Agent')
         ->post('/', payloadValido());
 
-    $response->assertRedirect('/');
-    $response->assertSessionHas('status');
+    $response->assertRedirect('/gracias');
 
     expect(Lead::count())->toBe(1);
 
