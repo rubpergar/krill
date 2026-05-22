@@ -88,6 +88,12 @@
                 </button>
             </div>
         </form>
+
+        <div class="mt-6 text-center">
+            <a href="/admin/login" class="text-sm text-gray-400 hover:text-gray-600">
+                Panel de administración
+            </a>
+        </div>
     </div>
 </body>
 </html>
