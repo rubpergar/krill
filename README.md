@@ -71,6 +71,7 @@ flowchart LR
 
 - [OpenCode](https://opencode.ai) — the skeleton is designed around its commands, agents, and configuration.
 - Context7 MCP — required if you want to use the `context7-mcp` skill for up-to-date library, SDK, and framework documentation.
+- Node.js — needed if you want to validate `agents/docs/design.md` with `npx @google/design.md lint agents/docs/design.md` during bootstrap or later UI documentation updates.
 
 ## Installation
 

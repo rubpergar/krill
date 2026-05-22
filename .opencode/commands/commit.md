@@ -89,6 +89,13 @@ Never commit: secrets, `.env` files with real values, API keys, tokens, credenti
 
 Before each commit, verify the staged diff with `git diff --cached`. If it contains unrelated changes, unstage with `git restore --staged <file>` and split.
 
+### 6. Push to remote
+
+Once all commits are done and nothing is staged, push to the active branch:
+```bash
+git push
+```
+
 ## Final check
 
 When finished, run `git status --short`. Then report in as few words as possible:
@@ -96,4 +103,4 @@ When finished, run `git status --short`. Then report in as few words as possible
 - files intentionally left uncommitted
 - anything skipped for safety
 
-Done means clean semantic history, not just zero pending files.
+Done means clean semantic history pushed to remote, not just zero pending files.

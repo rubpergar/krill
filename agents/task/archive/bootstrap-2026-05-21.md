@@ -10,6 +10,17 @@ Configure the agent with enough verified context to work without avoidable uncer
 
 Limited to agent and workflow files (`AGENTS.md`, `agents/**`, `.opencode/**`) unless the user explicitly expands scope.
 
+## Document Preservation Rules
+
+- During bootstrap, do not delete, replace wholesale, or restructure files under `agents/docs/`.
+- Treat documents in `agents/docs/` as stable templates to be filled in place with verified information.
+- If information cannot be found during repository exploration or user confirmation, leave the corresponding fields blank unless the template explicitly expects another placeholder such as `not available`.
+- Do not remove or clear `agents/docs/debt.md` or `agents/docs/decisions.md` just because they are empty or have no applicable content yet. Empty initial state is valid.
+- Do not remove or clear `agents/docs/testing.md` even when the project has no test tooling yet. Record unavailable commands as `not available`.
+- If the project already has a frontend/UI, fill `agents/docs/design.md` using its existing template. Keep the YAML block and document structure intact, and validate with `npx @google/design.md lint agents/docs/design.md` when Node.js is available.
+- If the project does not have a frontend/UI, keep `agents/docs/design.md` in place and mark it `Not applicable` without restructuring the file.
+- When bootstrap uncertainty could lead to accidental deletion, reorganization, or fabricated content, stop and ask the user before proceeding.
+
 ## Approval Rules
 
 - **Skeleton mode**: editing agent configuration files does not require user approval. The agent may write to `AGENTS.md`, `agents/**`, and `.opencode/**` freely during bootstrap.
@@ -30,6 +41,8 @@ Uses the `/bootstrap` command (`.opencode/commands/bootstrap.md`), which:
 4. Writes source-of-truth docs with confirmed facts only
 5. Runs a readiness check
 6. Offers transition to project mode if ready
+
+Document handling during this path is additive and in-place: preserve existing templates, keep unknown fields blank, and prefer `not available` only where the target document explicitly expects it.
 
 **Readiness criteria:**
 - Product identity (name, domain, users, goal) confirmed by user

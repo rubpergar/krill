@@ -14,9 +14,16 @@ If `$ARGUMENTS` is provided, use it as a seed to pre-fill answers and reduce the
 
 - Do not modify product source code, configuration, or dependencies during adoption.
 - Write only to `AGENTS.md`, `agents/`, and agent files.
+- Do not delete, move, or restructure files under `agents/docs/` during bootstrap.
+- Preserve the existing template structure of `agents/docs/*` files and fill them in place.
 - Classify each finding as `detected` (observed), `inferred` (needs confirmation), or `missing` (not found).
 - Unconfirmed fields are marked `pending confirmation`.
 - User-approved assumptions are marked `user-approved assumption: <description>`.
+- If information cannot be verified, leave the target fields blank unless the document explicitly expects `not available`.
+- Do not clear or delete `agents/docs/debt.md` or `agents/docs/decisions.md` just because they are empty. Empty initial content is valid.
+- Do not clear or delete `agents/docs/testing.md` when the project has no testing, lint, typecheck, or build tooling. Record those commands as `not available`.
+- If the repository has frontend/UI code, fill `agents/docs/design.md` using its current template and keep the YAML block intact. Validate with `npx @google/design.md lint agents/docs/design.md` when Node.js is available.
+- If bootstrap uncertainty could cause accidental deletion, reorganization, or fabricated content, stop and ask the user before writing.
 - If the repository is empty or has no product code, inform the user this command is for existing project adoption and suggest the new project initialization path from `agents/docs/bootstrap.md`.
 
 ## Flow
@@ -95,6 +102,8 @@ Ask if the project needs:
 - `agents/docs/design.md` (UI?)
 - `agents/docs/decisions.md` (ADR?)
 
+If a document already exists, preserve it in place and fill only the fields supported by verified information.
+
 ### 5. Phase 4 — Fill Source-of-Truth Docs
 
 Write only facts confirmed by the user. Never write unconfirmed inferences as authoritative.
@@ -107,15 +116,16 @@ Write only facts confirmed by the user. Never write unconfirmed inferences as au
 
 **5.2 `agents/docs/testing.md`:**
 - Test commands, locations, services, env vars
+- When a command or tool does not exist yet, write `not available` instead of deleting rows, sections, or the file
 
 **5.3 Additional Documents (per 4.6):**
 - `agents/docs/api.md`: base URL, routes, auth, formats, errors
 - `agents/db/schema.sql`: DB type, schema, migrations, connection
 - `agents/db/domain.md`: vocabulary, entities, business rules
-- `agents/docs/design.md`: components, styles, a11y, tokens
-- `agents/docs/decisions.md`: existing ADRs
+- `agents/docs/design.md`: components, styles, a11y, tokens, using the existing template and preserving blank unknown fields
+- `agents/docs/decisions.md`: existing ADRs, without deleting the file if there are none yet
 
-Mark unused files as `Not applicable`.
+Mark unused files as `Not applicable` only when the document template explicitly supports that state. Otherwise preserve the file and leave unknown fields blank.
 
 ### 6. Phase 5 — Mark Uncertainty
 
@@ -128,6 +138,7 @@ Before writing, distinguish:
 Confirmed fields → written as-is.
 Assumed fields → written with note `user-approved assumption: <description>`.
 Pending fields → not written as authoritative; marked `pending confirmation`.
+If there is any doubt about how to represent missing information without altering the template safely, ask the user before editing.
 
 ### 7. Readiness Check
 
