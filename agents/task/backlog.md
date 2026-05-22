@@ -17,8 +17,6 @@ When the task is complete and the user approves closeout, move the task to `## D
 ## Current
 
 ## To do
-- TASK-008: Resource Lead — listado paginado con columnas
-- TASK-009: Filtros combinables en listado (estado, tipo, texto, fecha, responsable)
 - TASK-010: Vista detalle de solicitud
 - TASK-011: Cambio de estado con registro en auditoría
 - TASK-012: Notas internas en detalle de solicitud
@@ -43,3 +41,5 @@ When the task is complete and the user approves closeout, move the task to `## D
 - TASK-005: Pantalla de confirmación post-envío
 - TASK-006: Anti-spam básico (honeypot + rate limiting)
 - TASK-007: Autenticación Filament (login, logout, protección de rutas)
+- TASK-008: Resource Lead — listado paginado con columnas
+- TASK-009: Filtros combinables en listado (estado, tipo, texto, fecha, responsable)
