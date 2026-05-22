@@ -5,10 +5,14 @@ namespace App\Filament\Resources;
 use App\Enums\LeadStatus;
 use App\Enums\TipoNecesidad;
 use App\Filament\Resources\LeadResource\Pages\ListLeads;
+use App\Filament\Resources\LeadResource\Pages\ViewLead;
 use App\Models\Lead;
+use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
@@ -27,6 +31,83 @@ class LeadResource extends Resource
 
     protected static ?string $modelLabel = 'Solicitud';
 
+    public static function infolist(Schema $schema): Schema
+    {
+        return $schema
+            ->columns(2)
+            ->components([
+                Infolists\Components\TextEntry::make('nombre')
+                    ->label('Nombre'),
+                Infolists\Components\TextEntry::make('email')
+                    ->label('Email'),
+                Infolists\Components\TextEntry::make('telefono')
+                    ->label('Teléfono')
+                    ->placeholder('—'),
+                Infolists\Components\TextEntry::make('empresa')
+                    ->label('Empresa')
+                    ->placeholder('—'),
+                Infolists\Components\TextEntry::make('tipo_necesidad')
+                    ->label('Tipo de necesidad')
+                    ->badge()
+                    ->formatStateUsing(fn (mixed $state): ?string => $state instanceof TipoNecesidad ? $state->value : $state),
+                Infolists\Components\TextEntry::make('estado')
+                    ->label('Estado')
+                    ->badge()
+                    ->formatStateUsing(fn (mixed $state): ?string => $state instanceof LeadStatus ? $state->value : $state),
+                Infolists\Components\TextEntry::make('responsable.name')
+                    ->label('Responsable')
+                    ->placeholder('—'),
+                Infolists\Components\TextEntry::make('origen')
+                    ->label('Origen')
+                    ->placeholder('—'),
+                Infolists\Components\TextEntry::make('consentimiento_aceptado')
+                    ->label('Consentimiento')
+                    ->formatStateUsing(fn (bool $state): string => $state ? 'Aceptado' : 'No aceptado'),
+                Infolists\Components\TextEntry::make('consentimiento_fecha')
+                    ->label('Fecha de consentimiento')
+                    ->dateTime('d/m/Y H:i')
+                    ->placeholder('—'),
+                Infolists\Components\TextEntry::make('created_at')
+                    ->label('Creado')
+                    ->dateTime('d/m/Y H:i'),
+                Infolists\Components\TextEntry::make('mensaje')
+                    ->label('Mensaje')
+                    ->columnSpanFull()
+                    ->placeholder('—'),
+                Infolists\Components\TextEntry::make('notas_vacias')
+                    ->label('Notas internas')
+                    ->state('Sin notas internas todavía.')
+                    ->columnSpanFull()
+                    ->hidden(fn (Lead $record): bool => $record->notas()->exists()),
+                Infolists\Components\RepeatableEntry::make('notas')
+                    ->label('Notas internas')
+                    ->state(fn (Lead $record): array => $record->notas()
+                        ->with('usuario')
+                        ->latest()
+                        ->get()
+                        ->map(fn ($nota): array => [
+                            'contenido' => $nota->contenido,
+                            'usuario' => ['name' => $nota->usuario?->name],
+                            'created_at' => $nota->created_at,
+                        ])
+                        ->all())
+                    ->schema([
+                        Infolists\Components\TextEntry::make('usuario.name')
+                            ->label('Autor')
+                            ->placeholder('—'),
+                        Infolists\Components\TextEntry::make('created_at')
+                            ->label('Fecha')
+                            ->dateTime('d/m/Y H:i'),
+                        Infolists\Components\TextEntry::make('contenido')
+                            ->label('Nota')
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(2)
+                    ->columnSpanFull()
+                    ->hidden(fn (Lead $record): bool => ! $record->notas()->exists()),
+            ]);
+    }
+
     public static function table(Table $table): Table
     {
         return $table
@@ -41,9 +122,28 @@ class LeadResource extends Resource
                     ->label('Empresa')
                     ->placeholder('—'),
                 TextColumn::make('tipo_necesidad')
-                    ->label('Tipo de necesidad'),
+                    ->label('Tipo de necesidad')
+                    ->badge()
+                    ->color(fn (mixed $state): string => match ($state instanceof TipoNecesidad ? $state->value : $state) {
+                        TipoNecesidad::Consulta->value => 'info',
+                        TipoNecesidad::Presupuesto->value => 'warning',
+                        TipoNecesidad::Colaboracion->value => 'primary',
+                        TipoNecesidad::Soporte->value => 'gray',
+                        TipoNecesidad::Otro->value => 'secondary',
+                        default => 'gray',
+                    }),
                 TextColumn::make('estado')
-                    ->label('Estado'),
+                    ->label('Estado')
+                    ->badge()
+                    ->color(fn (mixed $state): string => match ($state instanceof LeadStatus ? $state->value : $state) {
+                        LeadStatus::Nuevo->value => 'gray',
+                        LeadStatus::Revisado->value => 'info',
+                        LeadStatus::Contactado->value => 'warning',
+                        LeadStatus::EnSeguimiento->value => 'primary',
+                        LeadStatus::Convertido->value => 'success',
+                        LeadStatus::Descartado->value => 'danger',
+                        default => 'gray',
+                    }),
                 TextColumn::make('responsable.name')
                     ->label('Responsable')
                     ->placeholder('—'),
@@ -51,6 +151,11 @@ class LeadResource extends Resource
                     ->label('Creado')
                     ->dateTime('d/m/Y H:i')
                     ->sortable(),
+            ])
+            ->recordActions([
+                Action::make('view')
+                    ->label('Ver')
+                    ->url(fn (Lead $record): string => static::getUrl('view', ['record' => $record])),
             ])
             ->defaultSort('created_at', 'desc')
             ->paginated()
@@ -110,6 +215,7 @@ class LeadResource extends Resource
     {
         return [
             'index' => ListLeads::route('/'),
+            'view' => ViewLead::route('/{record}'),
         ];
     }
 }
