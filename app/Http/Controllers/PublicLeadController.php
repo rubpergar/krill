@@ -7,12 +7,25 @@ use App\Enums\TipoNecesidad;
 use App\Models\Lead;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\Rule;
 
 class PublicLeadController extends Controller
 {
     public function __invoke(Request $request): RedirectResponse
     {
+        $rateLimitKey = 'public-form:'.$request->ip();
+
+        if (RateLimiter::tooManyAttempts($rateLimitKey, 5)) {
+            abort(429);
+        }
+
+        RateLimiter::hit($rateLimitKey, 60);
+
+        if ($request->filled('website_url')) {
+            return redirect('/gracias');
+        }
+
         $validated = $request->validate([
             'nombre' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
