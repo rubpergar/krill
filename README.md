@@ -117,3 +117,6 @@ Este es un esqueleto de agente privado. Si lo reutilizas, adapta primero los doc
 ## Licencia
 
 MIT. Consulta [`LICENSE`](LICENSE) para más detalles.
+
+<img width="1" height="1" alt="logo_agora" src="https://github.com/user-attachments/assets/afab2c64-043a-4ed1-a430-b4704d5e49ba" />
+
