@@ -17,9 +17,6 @@ When the task is complete and the user approves closeout, move the task to `## D
 ## Current
 
 ## To do
-- TASK-010: Vista detalle de solicitud
-- TASK-011: Cambio de estado con registro en auditoría
-- TASK-012: Notas internas en detalle de solicitud
 - TASK-013: Asignación de responsable con auditoría
 - TASK-014: Historial de auditoría visible en detalle
 - TASK-015: Cierre como convertido/descartado con acción rápida
@@ -43,3 +40,6 @@ When the task is complete and the user approves closeout, move the task to `## D
 - TASK-007: Autenticación Filament (login, logout, protección de rutas)
 - TASK-008: Resource Lead — listado paginado con columnas
 - TASK-009: Filtros combinables en listado (estado, tipo, texto, fecha, responsable)
+- TASK-024: Aplicar sistema de diseño completo a toda la aplicación (formulario público, panel Filament, vistas, componentes)
+- TASK-010: Vista detalle de solicitud
+- TASK-011: Cambio de estado con registro en auditoría
