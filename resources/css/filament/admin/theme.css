@@ -1,0 +1,148 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@theme {
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-background: #f5faf8;
+    --color-surface: #ffffff;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #f0f5f2;
+    --color-surface-container: #eaefed;
+    --color-surface-container-high: #e4e9e7;
+    --color-surface-container-highest: #dee4e1;
+    --color-foreground: #0f172a;
+    --color-on-background: #171d1c;
+    --color-on-surface: #171d1c;
+    --color-on-surface-variant: #3d4947;
+    --color-border: #e2e8f0;
+    --color-outline: #6d7a77;
+    --color-outline-variant: #bcc9c6;
+    --color-primary: #0d9488;
+    --color-primary-50: #e6fffb;
+    --color-primary-100: #c9fff8;
+    --color-primary-200: #94f7ef;
+    --color-primary-300: #5ee7dc;
+    --color-primary-400: #32c7bc;
+    --color-primary-500: #1aa89e;
+    --color-primary-600: #0d9488;
+    --color-primary-700: #0b7a71;
+    --color-primary-800: #0a625b;
+    --color-primary-900: #084c47;
+    --color-primary-950: #042f2b;
+    --color-primary-container: #008378;
+    --color-on-primary: #ffffff;
+    --color-surface-tint: #006a61;
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+    --color-error: #ba1a1a;
+    --color-gray-50: #f8fbfa;
+    --color-gray-100: #f0f5f2;
+    --color-gray-200: #e4e9e7;
+    --color-gray-300: #dee4e1;
+    --color-gray-400: #bcc9c6;
+    --color-gray-500: #6d7a77;
+    --color-gray-600: #3d4947;
+    --color-gray-700: #2c3130;
+    --color-gray-800: #1f2524;
+    --color-gray-900: #171d1c;
+    --color-gray-950: #0f1312;
+}
+
+@layer base {
+    html.fi {
+        @apply min-h-dvh;
+    }
+
+    .fi-body {
+        @apply min-h-dvh bg-background text-on-background antialiased;
+    }
+
+    .fi-topbar,
+    .fi-sidebar,
+    .fi-sidebar-header-ctn,
+    .fi-sidebar-header,
+    .fi-topbar-item-btn,
+    .fi-sidebar-item-btn {
+        @apply transition-colors duration-200;
+    }
+
+    .fi-topbar {
+        @apply border-b border-outline-variant bg-surface/95 shadow-sm backdrop-blur;
+    }
+
+    .fi-sidebar {
+        @apply bg-surface-container-lowest ring-1 ring-outline-variant/60 shadow-none;
+    }
+
+    .fi-body-has-topbar .fi-sidebar-header {
+        @apply border-b border-outline-variant bg-surface px-6 shadow-none;
+    }
+
+    .fi-sidebar-nav {
+        @apply px-4 py-6;
+    }
+
+    .fi-sidebar-group-label,
+    .fi-topbar-item-label,
+    .fi-sidebar-item-label {
+        @apply text-on-surface-variant;
+    }
+
+    .fi-sidebar-item-btn,
+    .fi-topbar-item-btn {
+        @apply rounded-lg;
+    }
+
+    .fi-sidebar-item.fi-active > .fi-sidebar-item-btn,
+    .fi-sidebar-item.fi-sidebar-item-has-active-child-items > .fi-sidebar-item-btn {
+        @apply bg-primary/10;
+    }
+
+    .fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-sidebar-item-label,
+    .fi-sidebar-item.fi-sidebar-item-has-active-child-items > .fi-sidebar-item-btn > .fi-sidebar-item-label,
+    .fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-icon,
+    .fi-sidebar-item.fi-sidebar-item-has-active-child-items > .fi-sidebar-item-btn > .fi-icon,
+    .fi-topbar-item.fi-active .fi-topbar-item-label,
+    .fi-topbar-item.fi-active .fi-icon {
+        @apply text-primary;
+    }
+
+    .fi-main {
+        @apply py-6;
+    }
+
+    .fi-section,
+    .fi-page-header,
+    .fi-global-search-results-ctn,
+    .fi-modal-window {
+        @apply rounded-xl border border-outline-variant bg-surface-container-lowest shadow-sm;
+    }
+
+    .fi-section-content {
+        @apply bg-transparent;
+    }
+
+    .fi-header,
+    .fi-page-header {
+        @apply border-b border-outline-variant/70;
+    }
+
+    .fi-breadcrumbs,
+    .fi-breadcrumbs a {
+        @apply text-on-surface-variant;
+    }
+
+    .fi-input,
+    .fi-select,
+    .fi-textarea {
+        @apply rounded-lg border-outline-variant bg-surface-container-lowest text-on-surface shadow-sm;
+    }
+
+    .fi-input:focus,
+    .fi-select:focus,
+    .fi-textarea:focus {
+        @apply border-primary ring-2 ring-primary/20;
+    }
+}
