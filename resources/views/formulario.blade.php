@@ -186,7 +186,7 @@
                         value="1" @checked(old('consentimiento'))
                         class="mt-0.5 h-4 w-4 shrink-0 rounded border-outline-variant text-primary shadow-sm transition duration-200 ease-in-out focus:ring-2 focus:ring-primary/20 focus:outline-none focus:ring-offset-0">
                     <label for="consentimiento" class="text-sm leading-6 text-on-surface-variant">
-                        He leído y acepto la política de privacidad.
+                        He leído y acepto la <a href="/privacidad" class="font-medium text-primary underline underline-offset-2 hover:text-surface-tint">política de privacidad</a>.
                     </label>
                 </div>
                 @error('consentimiento')

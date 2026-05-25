@@ -14,4 +14,8 @@ Route::get('/gracias', function () {
     return view('confirmacion');
 });
 
+Route::get('/privacidad', function () {
+    return view('privacidad');
+});
+
 Route::post('/', PublicLeadController::class);
