@@ -1,8 +1,8 @@
 FROM php:8.3-cli AS php-deps
 RUN apt-get update && apt-get install -y \
-    libpq-dev libzip-dev zip unzip git \
+    libicu-dev libpq-dev libzip-dev zip unzip git \
     && rm -rf /var/lib/apt/lists/* \
-    && docker-php-ext-install pdo_pgsql zip bcmath
+    && docker-php-ext-install intl pdo_pgsql zip bcmath
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /build
 COPY composer.json composer.lock ./
@@ -18,9 +18,9 @@ RUN npm run build
 
 FROM php:8.3-cli
 RUN apt-get update && apt-get install -y \
-    libpq-dev libzip-dev zip unzip git \
+    libicu-dev libpq-dev libzip-dev zip unzip git \
     && rm -rf /var/lib/apt/lists/* \
-    && docker-php-ext-install pdo_pgsql zip bcmath
+    && docker-php-ext-install intl pdo_pgsql zip bcmath
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 COPY . .
