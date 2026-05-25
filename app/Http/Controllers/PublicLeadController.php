@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Enums\LeadStatus;
 use App\Enums\TipoNecesidad;
+use App\Mail\NewLeadNotification;
 use App\Models\Lead;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\Rule;
 
@@ -36,7 +38,7 @@ class PublicLeadController extends Controller
             'consentimiento' => ['required', 'accepted'],
         ]);
 
-        Lead::create([
+        $lead = Lead::create([
             'nombre' => $validated['nombre'],
             'email' => $validated['email'],
             'telefono' => $validated['telefono'],
@@ -50,6 +52,21 @@ class PublicLeadController extends Controller
             'consentimiento_aceptado' => true,
             'consentimiento_fecha' => now(),
         ]);
+
+        $notificationAddress = config('mail.internal_notification_address');
+
+        if (filled($notificationAddress)) {
+            try {
+                Mail::mailer('resend')
+                    ->to($notificationAddress)
+                    ->send(new NewLeadNotification($lead));
+            } catch (\Throwable $e) {
+                logger()->error('Error enviando notificación de lead', [
+                    'lead_id' => $lead->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
 
         return redirect('/gracias');
     }
