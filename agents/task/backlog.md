@@ -15,14 +15,11 @@ When work starts on a current task, create:
 When the task is complete and the user approves closeout, move the task to `## Done` and move its task files to `agents/task/archive/` in the same step.
 
 ## Current
+- TASK-019: Pruebas de seguridad, revisión de privacidad y documentación básica
 
 
 ## To do
-- TASK-017: Dashboard con métricas básicas
 - TASK-018: Acuse de recibo al solicitante (opcional)
-- TASK-019: Pruebas de seguridad, revisión de privacidad y documentación básica
-- TASK-020: Resource Usuarios Filament (CRUD, roles, activar/desactivar)
-- TASK-021: Archivar/eliminar solicitudes con permisos
 - TASK-022: Exportación de solicitudes a CSV (opcional)
 - TASK-023: Despliegue (pendiente — pospuesto)
 
@@ -45,3 +42,7 @@ When the task is complete and the user approves closeout, move the task to `## D
 - TASK-014: Historial de auditoría visible en detalle
 - TASK-015: Cierre como convertido/descartado con acción rápida
 - TASK-016: Notificación por email interno con Resend
+- TASK-017: Dashboard con métricas básicas
+- TASK-020: Resource Usuarios Filament (CRUD, roles, activar/desactivar)
+- TASK-021: Archivar/eliminar solicitudes con permisos
+- TASK-019: Pruebas de seguridad, revisión de privacidad y documentación básica
