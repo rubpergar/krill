@@ -6,6 +6,7 @@ use App\Enums\LeadStatus;
 use App\Enums\TipoNecesidad;
 use App\Filament\Resources\LeadResource\Pages\ListLeads;
 use App\Filament\Resources\LeadResource\Pages\ViewLead;
+use App\Models\EventoAuditoria;
 use App\Models\Lead;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
