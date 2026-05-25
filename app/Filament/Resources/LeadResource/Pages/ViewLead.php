@@ -6,6 +6,7 @@ use App\Enums\LeadStatus;
 use App\Filament\Resources\LeadResource;
 use App\Models\EventoAuditoria;
 use App\Models\NotaInterna;
+use App\Models\User;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -65,6 +66,52 @@ class ViewLead extends ViewRecord
                         'lead_id' => $this->record->getKey(),
                         'usuario_id' => auth()->id(),
                         'contenido' => trim($data['contenido']),
+                    ]);
+
+                    $this->record->refresh();
+                }),
+            Action::make('assignResponsable')
+                ->label('Asignar responsable')
+                ->form([
+                    Select::make('responsable_id')
+                        ->label('Responsable')
+                        ->options(function (): array {
+                            $users = User::query()
+                                ->where('activo', true)
+                                ->pluck('name', 'id')
+                                ->toArray();
+
+                            return ['' => 'Sin responsable'] + $users;
+                        })
+                        ->native(false),
+                ])
+                ->action(function (array $data): void {
+                    $selectedId = blank($data['responsable_id']) ? null : (int) $data['responsable_id'];
+                    $currentId = $this->record->responsable_id;
+
+                    if ($currentId === $selectedId) {
+                        return;
+                    }
+
+                    $previousName = $currentId !== null
+                        ? User::find($currentId)?->name ?? ''
+                        : '';
+
+                    $nextName = $selectedId !== null
+                        ? User::find($selectedId)?->name ?? 'Sin responsable'
+                        : 'Sin responsable';
+
+                    $this->record->update([
+                        'responsable_id' => $selectedId,
+                    ]);
+
+                    EventoAuditoria::create([
+                        'lead_id' => $this->record->getKey(),
+                        'usuario_id' => auth()->id(),
+                        'accion' => 'asignacion',
+                        'campo' => 'responsable_id',
+                        'valor_anterior' => $previousName,
+                        'valor_nuevo' => $nextName,
                     ]);
 
                     $this->record->refresh();
