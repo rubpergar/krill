@@ -195,6 +195,60 @@ class LeadResource extends Resource
                 Action::make('view')
                     ->label('Ver')
                     ->url(fn (Lead $record): string => static::getUrl('view', ['record' => $record])),
+                Action::make('convert')
+                    ->label('Convertir')
+                    ->color('success')
+                    ->icon('heroicon-o-check-circle')
+                    ->requiresConfirmation()
+                    ->action(function (Lead $record): void {
+                        $previousValue = $record->estado instanceof LeadStatus
+                            ? $record->estado->value
+                            : $record->estado;
+
+                        if ($previousValue === LeadStatus::Convertido->value) {
+                            return;
+                        }
+
+                        $record->update([
+                            'estado' => LeadStatus::Convertido->value,
+                        ]);
+
+                        EventoAuditoria::create([
+                            'lead_id' => $record->getKey(),
+                            'usuario_id' => auth()->id(),
+                            'accion' => 'cambio_estado',
+                            'campo' => 'estado',
+                            'valor_anterior' => $previousValue,
+                            'valor_nuevo' => LeadStatus::Convertido->value,
+                        ]);
+                    }),
+                Action::make('discard')
+                    ->label('Descartar')
+                    ->color('danger')
+                    ->icon('heroicon-o-x-circle')
+                    ->requiresConfirmation()
+                    ->action(function (Lead $record): void {
+                        $previousValue = $record->estado instanceof LeadStatus
+                            ? $record->estado->value
+                            : $record->estado;
+
+                        if ($previousValue === LeadStatus::Descartado->value) {
+                            return;
+                        }
+
+                        $record->update([
+                            'estado' => LeadStatus::Descartado->value,
+                        ]);
+
+                        EventoAuditoria::create([
+                            'lead_id' => $record->getKey(),
+                            'usuario_id' => auth()->id(),
+                            'accion' => 'cambio_estado',
+                            'campo' => 'estado',
+                            'valor_anterior' => $previousValue,
+                            'valor_nuevo' => LeadStatus::Descartado->value,
+                        ]);
+                    }),
             ])
             ->defaultSort('created_at', 'desc')
             ->paginated()

@@ -16,9 +16,59 @@ class ViewLead extends ViewRecord
 {
     protected static string $resource = LeadResource::class;
 
+    public function markAsConverted(): void
+    {
+        $this->quickClose(LeadStatus::Convertido);
+    }
+
+    public function markAsDiscarded(): void
+    {
+        $this->quickClose(LeadStatus::Descartado);
+    }
+
+    private function quickClose(LeadStatus $targetStatus): void
+    {
+        $previousValue = $this->record->estado instanceof LeadStatus
+            ? $this->record->estado->value
+            : $this->record->estado;
+
+        $targetValue = $targetStatus->value;
+
+        if ($previousValue === $targetValue) {
+            return;
+        }
+
+        $this->record->update([
+            'estado' => $targetValue,
+        ]);
+
+        EventoAuditoria::create([
+            'lead_id' => $this->record->getKey(),
+            'usuario_id' => auth()->id(),
+            'accion' => 'cambio_estado',
+            'campo' => 'estado',
+            'valor_anterior' => $previousValue,
+            'valor_nuevo' => $targetValue,
+        ]);
+
+        $this->record->refresh();
+    }
+
     protected function getHeaderActions(): array
     {
         return [
+            Action::make('markAsConverted')
+                ->label('Marcar como convertido')
+                ->color('success')
+                ->icon('heroicon-o-check-circle')
+                ->requiresConfirmation()
+                ->action(fn () => $this->markAsConverted()),
+            Action::make('markAsDiscarded')
+                ->label('Marcar como descartado')
+                ->color('danger')
+                ->icon('heroicon-o-x-circle')
+                ->requiresConfirmation()
+                ->action(fn () => $this->markAsDiscarded()),
             Action::make('changeStatus')
                 ->label('Cambiar estado')
                 ->form([
