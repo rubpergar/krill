@@ -16,18 +16,15 @@ When the task is complete and the user approves closeout, move the task to `## D
 
 ## Current
 
+
 ## To do
-- TASK-013: Asignación de responsable con auditoría
-- TASK-014: Historial de auditoría visible en detalle
-- TASK-015: Cierre como convertido/descartado con acción rápida
-- TASK-016: Notificación por email interno con Resend
 - TASK-017: Dashboard con métricas básicas
 - TASK-018: Acuse de recibo al solicitante (opcional)
-- TASK-019: Despliegue (pendiente — pospuesto)
+- TASK-019: Pruebas de seguridad, revisión de privacidad y documentación básica
 - TASK-020: Resource Usuarios Filament (CRUD, roles, activar/desactivar)
 - TASK-021: Archivar/eliminar solicitudes con permisos
 - TASK-022: Exportación de solicitudes a CSV (opcional)
-- TASK-023: Pruebas de seguridad, revisión de privacidad y documentación básica
+- TASK-023: Despliegue (pendiente — pospuesto)
 
 ## Done
 
@@ -43,3 +40,8 @@ When the task is complete and the user approves closeout, move the task to `## D
 - TASK-024: Aplicar sistema de diseño completo a toda la aplicación (formulario público, panel Filament, vistas, componentes)
 - TASK-010: Vista detalle de solicitud
 - TASK-011: Cambio de estado con registro en auditoría
+- TASK-012: Notas internas en detalle de solicitud
+- TASK-013: Asignación de responsable con auditoría
+- TASK-014: Historial de auditoría visible en detalle
+- TASK-015: Cierre como convertido/descartado con acción rápida
+- TASK-016: Notificación por email interno con Resend
