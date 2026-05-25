@@ -57,6 +57,27 @@ class ViewLead extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+            Action::make('archive')
+                ->label('Archivar')
+                ->color('warning')
+                ->icon('heroicon-o-archive-box')
+                ->requiresConfirmation()
+                ->hidden(fn (): bool => $this->record->archivado)
+                ->action(fn () => LeadResource::archiveLead($this->record)),
+            Action::make('restore')
+                ->label('Restaurar')
+                ->color('info')
+                ->icon('heroicon-o-arrow-path')
+                ->requiresConfirmation()
+                ->hidden(fn (): bool => ! $this->record->archivado)
+                ->action(fn () => LeadResource::restoreLead($this->record)),
+            Action::make('deleteLead')
+                ->label('Eliminar')
+                ->color('danger')
+                ->icon('heroicon-o-trash')
+                ->requiresConfirmation()
+                ->hidden(fn (): bool => ! LeadResource::canDeleteLead($this->record))
+                ->action(fn () => LeadResource::deleteLead($this->record)),
             Action::make('markAsConverted')
                 ->label('Marcar como convertido')
                 ->color('success')

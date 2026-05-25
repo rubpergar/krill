@@ -36,3 +36,6 @@ Un Lead puede no tener responsable. Un EventoAuditoria puede no tener usuario_id
 - El consentimiento debe ser aceptado explícitamente para guardar
 - Si falla el email interno, el lead se guarda igualmente
 - Los cambios de estado y asignaciones se registran siempre en EventoAuditoria
+- Usuarios internos activos pueden archivar y restaurar solicitudes
+- Solo administradores activos pueden eliminar físicamente solicitudes ya archivadas
+- La eliminación física de una solicitud borra sus notas y eventos asociados por cascada

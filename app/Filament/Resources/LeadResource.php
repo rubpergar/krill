@@ -8,6 +8,7 @@ use App\Filament\Resources\LeadResource\Pages\ListLeads;
 use App\Filament\Resources\LeadResource\Pages\ViewLead;
 use App\Models\EventoAuditoria;
 use App\Models\Lead;
+use App\Models\User;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
@@ -195,6 +196,27 @@ class LeadResource extends Resource
                 Action::make('view')
                     ->label('Ver')
                     ->url(fn (Lead $record): string => static::getUrl('view', ['record' => $record])),
+                Action::make('archive')
+                    ->label('Archivar')
+                    ->color('warning')
+                    ->icon('heroicon-o-archive-box')
+                    ->requiresConfirmation()
+                    ->hidden(fn (Lead $record): bool => $record->archivado)
+                    ->action(fn (Lead $record): null => static::archiveLead($record)),
+                Action::make('restore')
+                    ->label('Restaurar')
+                    ->color('info')
+                    ->icon('heroicon-o-arrow-path')
+                    ->requiresConfirmation()
+                    ->hidden(fn (Lead $record): bool => ! $record->archivado)
+                    ->action(fn (Lead $record): null => static::restoreLead($record)),
+                Action::make('deleteLead')
+                    ->label('Eliminar')
+                    ->color('danger')
+                    ->icon('heroicon-o-trash')
+                    ->requiresConfirmation()
+                    ->hidden(fn (Lead $record): bool => ! static::canDeleteLead($record))
+                    ->action(fn (Lead $record): null => static::deleteLead($record)),
                 Action::make('convert')
                     ->label('Convertir')
                     ->color('success')
@@ -253,6 +275,21 @@ class LeadResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->paginated()
             ->filters([
+                SelectFilter::make('archivado')
+                    ->label('Archivo')
+                    ->options([
+                        'active' => 'Activas',
+                        'archived' => 'Archivadas',
+                        'all' => 'Todas',
+                    ])
+                    ->default('active')
+                    ->query(function (Builder $query, array $data): Builder {
+                        return match ($data['value'] ?? 'active') {
+                            'archived' => $query->where('archivado', true),
+                            'all' => $query,
+                            default => $query->where('archivado', false),
+                        };
+                    }),
                 SelectFilter::make('estado')
                     ->label('Estado')
                     ->options(array_column(LeadStatus::cases(), 'value', 'value')),
@@ -302,6 +339,72 @@ class LeadResource extends Resource
                     ->label('Responsable')
                     ->relationship('responsable', 'name'),
             ]);
+    }
+
+    public static function archiveLead(Lead $record): null
+    {
+        if ($record->archivado) {
+            return null;
+        }
+
+        $record->update(['archivado' => true]);
+        static::recordArchiveEvent($record, 'archivado', 'false', 'true');
+
+        return null;
+    }
+
+    public static function restoreLead(Lead $record): null
+    {
+        if (! $record->archivado) {
+            return null;
+        }
+
+        $record->update(['archivado' => false]);
+        static::recordArchiveEvent($record, 'restaurado', 'true', 'false');
+
+        return null;
+    }
+
+    public static function deleteLead(Lead $record): null
+    {
+        if (! static::canDeleteLead($record)) {
+            return null;
+        }
+
+        EventoAuditoria::create([
+            'lead_id' => $record->getKey(),
+            'usuario_id' => auth()->id(),
+            'accion' => 'eliminado',
+            'campo' => 'registro',
+            'valor_anterior' => (string) $record->getKey(),
+            'valor_nuevo' => null,
+        ]);
+
+        $record->delete();
+
+        return null;
+    }
+
+    public static function canDeleteLead(Lead $record): bool
+    {
+        $user = auth()->user();
+
+        return $record->archivado
+            && $user instanceof User
+            && $user->activo
+            && $user->rol === 'admin';
+    }
+
+    private static function recordArchiveEvent(Lead $record, string $action, string $previousValue, string $nextValue): void
+    {
+        EventoAuditoria::create([
+            'lead_id' => $record->getKey(),
+            'usuario_id' => auth()->id(),
+            'accion' => $action,
+            'campo' => 'archivado',
+            'valor_anterior' => $previousValue,
+            'valor_nuevo' => $nextValue,
+        ]);
     }
 
     public static function getPages(): array
