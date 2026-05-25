@@ -106,6 +106,44 @@ class LeadResource extends Resource
                     ->columns(2)
                     ->columnSpanFull()
                     ->hidden(fn (Lead $record): bool => ! $record->notas()->exists()),
+                Infolists\Components\TextEntry::make('eventos_vacios')
+                    ->label('Historial de auditoría')
+                    ->state('Sin eventos de auditoría todavía.')
+                    ->columnSpanFull()
+                    ->hidden(fn (Lead $record): bool => $record->eventos()->exists()),
+                Infolists\Components\RepeatableEntry::make('eventos')
+                    ->label('Historial de auditoría')
+                    ->state(fn (Lead $record): array => $record->eventos()
+                        ->with('usuario')
+                        ->latest()
+                        ->get()
+                        ->map(fn ($evento): array => [
+                            'accion' => $evento->accion,
+                            'campo' => $evento->campo,
+                            'valor_anterior' => $evento->valor_anterior,
+                            'valor_nuevo' => $evento->valor_nuevo,
+                            'usuario' => ['name' => $evento->usuario?->name ?? 'Sistema'],
+                            'created_at' => $evento->created_at,
+                        ])
+                        ->all())
+                    ->schema([
+                        Infolists\Components\TextEntry::make('accion')
+                            ->label('Acción'),
+                        Infolists\Components\TextEntry::make('campo')
+                            ->label('Campo'),
+                        Infolists\Components\TextEntry::make('valor_anterior')
+                            ->label('Valor anterior'),
+                        Infolists\Components\TextEntry::make('valor_nuevo')
+                            ->label('Valor nuevo'),
+                        Infolists\Components\TextEntry::make('usuario.name')
+                            ->label('Autor'),
+                        Infolists\Components\TextEntry::make('created_at')
+                            ->label('Fecha')
+                            ->dateTime('d/m/Y H:i'),
+                    ])
+                    ->columns(3)
+                    ->columnSpanFull()
+                    ->hidden(fn (Lead $record): bool => ! $record->eventos()->exists()),
             ]);
     }
 
