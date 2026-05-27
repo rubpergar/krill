@@ -17,9 +17,6 @@ When the task is complete and the user approves closeout, move the task to `## D
 ## Current
 
 ## To do
-- TASK-005: Implementar gestión simple de stock y aviso de stock bajo
-- TASK-006: Crear dashboard básico con métricas principales
-- TASK-007: Añadir validación, tests y ajustes finales
 
 ## Done
 
@@ -27,3 +24,6 @@ When the task is complete and the user approves closeout, move the task to `## D
 - TASK-002: Crear base del panel privado y navegación
 - TASK-003: Implementar CRUD de categorías
 - TASK-004: Implementar CRUD de productos con búsqueda y filtros
+- TASK-005: Implementar gestión simple de stock y aviso de stock bajo
+- TASK-006: Crear dashboard básico con métricas principales
+- TASK-007: Añadir validación, tests y ajustes finales
