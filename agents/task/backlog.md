@@ -16,10 +16,7 @@ When the task is complete and the user approves closeout, move the task to `## D
 
 ## Current
 
-- TASK-003: Implementar CRUD de categorías
-
 ## To do
-- TASK-004: Implementar CRUD de productos con búsqueda y filtros
 - TASK-005: Implementar gestión simple de stock y aviso de stock bajo
 - TASK-006: Crear dashboard básico con métricas principales
 - TASK-007: Añadir validación, tests y ajustes finales
@@ -28,3 +25,5 @@ When the task is complete and the user approves closeout, move the task to `## D
 
 - TASK-001: Definir modelo de datos y persistencia
 - TASK-002: Crear base del panel privado y navegación
+- TASK-003: Implementar CRUD de categorías
+- TASK-004: Implementar CRUD de productos con búsqueda y filtros
