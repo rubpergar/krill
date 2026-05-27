@@ -1,0 +1,76 @@
+<h2 class="text-2xl font-bold mb-6">
+  <%= product ? 'Editar Producto' : 'Nuevo Producto' %>
+</h2>
+
+<% if (error) { %>
+  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+    <%= error %>
+  </div>
+<% } %>
+
+<form method="POST" action="/products<%= product ? `/${product.id}` : '' %>" class="max-w-lg">
+  <div class="mb-4">
+    <label for="name" class="block text-sm font-medium mb-1">Nombre *</label>
+    <input
+      type="text" id="name" name="name"
+      value="<%= formData.name %>"
+      class="w-full border border-gray-300 rounded px-3 py-2"
+      placeholder="Nombre del producto"
+    />
+  </div>
+  <div class="mb-4">
+    <label for="sku" class="block text-sm font-medium mb-1">SKU *</label>
+    <input
+      type="text" id="sku" name="sku"
+      value="<%= formData.sku %>"
+      class="w-full border border-gray-300 rounded px-3 py-2"
+      placeholder="Código único del producto"
+    />
+  </div>
+  <div class="mb-4">
+    <label for="description" class="block text-sm font-medium mb-1">Descripción</label>
+    <textarea
+      id="description" name="description"
+      class="w-full border border-gray-300 rounded px-3 py-2"
+      placeholder="Descripción opcional"
+      rows="3"
+    ><%= formData.description %></textarea>
+  </div>
+  <div class="mb-4">
+    <label for="category_id" class="block text-sm font-medium mb-1">Categoría</label>
+    <select id="category_id" name="category_id" class="w-full border border-gray-300 rounded px-3 py-2">
+      <option value="">Sin categoría</option>
+      <% categories.forEach(function(cat) { %>
+        <option value="<%= cat.id %>" <%= Number(formData.category_id) === cat.id ? 'selected' : '' %>><%= cat.name %></option>
+      <% }); %>
+    </select>
+  </div>
+  <div class="flex gap-4 mb-4">
+    <div class="flex-1">
+      <label for="stock" class="block text-sm font-medium mb-1">Stock</label>
+      <input
+        type="number" id="stock" name="stock"
+        value="<%= formData.stock %>"
+        class="w-full border border-gray-300 rounded px-3 py-2"
+        min="0"
+      />
+    </div>
+    <div class="flex-1">
+      <label for="min_stock" class="block text-sm font-medium mb-1">Stock mínimo</label>
+      <input
+        type="number" id="min_stock" name="min_stock"
+        value="<%= formData.min_stock %>"
+        class="w-full border border-gray-300 rounded px-3 py-2"
+        min="0"
+      />
+    </div>
+  </div>
+  <div class="flex gap-2">
+    <a href="/products" class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-100">
+      Cancelar
+    </a>
+    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+      <%= product ? 'Actualizar' : 'Crear' %>
+    </button>
+  </div>
+</form>
