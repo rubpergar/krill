@@ -1,0 +1,22 @@
+<h2 class="text-2xl font-bold mb-6">Dashboard</h2>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+  <div class="bg-white rounded-lg border border-gray-200 p-4">
+    <p class="text-sm text-gray-500">Total Productos</p>
+    <p class="text-3xl font-bold text-gray-900"><%= metrics.totalProducts %></p>
+  </div>
+  <div class="bg-white rounded-lg border border-gray-200 p-4">
+    <p class="text-sm text-gray-500">Productos Activos</p>
+    <p class="text-3xl font-bold text-green-600"><%= metrics.activeProducts %></p>
+  </div>
+  <div class="bg-white rounded-lg border border-gray-200 p-4">
+    <p class="text-sm text-gray-500">Categorías</p>
+    <p class="text-3xl font-bold text-gray-900"><%= metrics.categories %></p>
+  </div>
+  <div class="bg-white rounded-lg border border-gray-200 p-4">
+    <p class="text-sm text-gray-500">Stock Bajo</p>
+    <p class="text-3xl font-bold text-red-600"><%= metrics.lowStock %></p>
+  </div>
+</div>
+
+<p class="text-gray-600">Panel principal de inventario. Usa la navegación lateral para gestionar productos y categorías.</p>

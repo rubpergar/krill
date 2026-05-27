@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - Inventory Manager</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <div class="flex h-screen">
+    <%- include('partials/nav') %>
+    <main class="flex-1 overflow-auto p-6">
+      <%- body %>
+    </main>
+  </div>
+</body>
+</html>

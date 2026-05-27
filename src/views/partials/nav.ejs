@@ -1,0 +1,23 @@
+<nav class="w-56 bg-white border-r border-gray-200 p-4 flex flex-col">
+  <h1 class="text-lg font-bold mb-6 text-gray-900">Inventory</h1>
+  <ul class="space-y-2">
+    <li>
+      <a href="/"
+        class="block px-3 py-2 rounded-md text-sm <%= currentPath === '/' ? 'bg-blue-100 text-blue-700 font-medium' : 'text-gray-600 hover:bg-gray-100' %>">
+        Dashboard
+      </a>
+    </li>
+    <li>
+      <a href="/products"
+        class="block px-3 py-2 rounded-md text-sm <%= currentPath === '/products' ? 'bg-blue-100 text-blue-700 font-medium' : 'text-gray-600 hover:bg-gray-100' %>">
+        Productos
+      </a>
+    </li>
+    <li>
+      <a href="/categories"
+        class="block px-3 py-2 rounded-md text-sm <%= currentPath === '/categories' ? 'bg-blue-100 text-blue-700 font-medium' : 'text-gray-600 hover:bg-gray-100' %>">
+        Categorías
+      </a>
+    </li>
+  </ul>
+</nav>
