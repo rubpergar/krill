@@ -130,6 +130,74 @@ export const productRoutes = new Hono()
       return c.html(html);
     }
 
+    if (isNaN(stock)) {
+      const allCategories = await db
+        .select()
+        .from(categories)
+        .where(eq(categories.active, 1))
+        .orderBy(categories.name);
+      const html = await render("products/form", {
+        title: "Nuevo Producto",
+        currentPath: "/products",
+        product: null,
+        categories: allCategories,
+        formData,
+        error: "El stock debe ser un número válido",
+      });
+      return c.html(html);
+    }
+
+    if (stock < 0) {
+      const allCategories = await db
+        .select()
+        .from(categories)
+        .where(eq(categories.active, 1))
+        .orderBy(categories.name);
+      const html = await render("products/form", {
+        title: "Nuevo Producto",
+        currentPath: "/products",
+        product: null,
+        categories: allCategories,
+        formData,
+        error: "El stock no puede ser negativo",
+      });
+      return c.html(html);
+    }
+
+    if (isNaN(minStock)) {
+      const allCategories = await db
+        .select()
+        .from(categories)
+        .where(eq(categories.active, 1))
+        .orderBy(categories.name);
+      const html = await render("products/form", {
+        title: "Nuevo Producto",
+        currentPath: "/products",
+        product: null,
+        categories: allCategories,
+        formData,
+        error: "El stock mínimo debe ser un número válido",
+      });
+      return c.html(html);
+    }
+
+    if (minStock < 0) {
+      const allCategories = await db
+        .select()
+        .from(categories)
+        .where(eq(categories.active, 1))
+        .orderBy(categories.name);
+      const html = await render("products/form", {
+        title: "Nuevo Producto",
+        currentPath: "/products",
+        product: null,
+        categories: allCategories,
+        formData,
+        error: "El stock mínimo no puede ser negativo",
+      });
+      return c.html(html);
+    }
+
     try {
       await db.insert(products).values({
         name,
@@ -313,6 +381,74 @@ export const productRoutes = new Hono()
         categories: allCategories,
         formData,
         error: "El SKU es obligatorio",
+      });
+      return c.html(html);
+    }
+
+    if (isNaN(stock)) {
+      const allCategories = await db
+        .select()
+        .from(categories)
+        .where(eq(categories.active, 1))
+        .orderBy(categories.name);
+      const html = await render("products/form", {
+        title: "Editar Producto",
+        currentPath: "/products",
+        product: existing,
+        categories: allCategories,
+        formData,
+        error: "El stock debe ser un número válido",
+      });
+      return c.html(html);
+    }
+
+    if (stock < 0) {
+      const allCategories = await db
+        .select()
+        .from(categories)
+        .where(eq(categories.active, 1))
+        .orderBy(categories.name);
+      const html = await render("products/form", {
+        title: "Editar Producto",
+        currentPath: "/products",
+        product: existing,
+        categories: allCategories,
+        formData,
+        error: "El stock no puede ser negativo",
+      });
+      return c.html(html);
+    }
+
+    if (isNaN(minStock)) {
+      const allCategories = await db
+        .select()
+        .from(categories)
+        .where(eq(categories.active, 1))
+        .orderBy(categories.name);
+      const html = await render("products/form", {
+        title: "Editar Producto",
+        currentPath: "/products",
+        product: existing,
+        categories: allCategories,
+        formData,
+        error: "El stock mínimo debe ser un número válido",
+      });
+      return c.html(html);
+    }
+
+    if (minStock < 0) {
+      const allCategories = await db
+        .select()
+        .from(categories)
+        .where(eq(categories.active, 1))
+        .orderBy(categories.name);
+      const html = await render("products/form", {
+        title: "Editar Producto",
+        currentPath: "/products",
+        product: existing,
+        categories: allCategories,
+        formData,
+        error: "El stock mínimo no puede ser negativo",
       });
       return c.html(html);
     }

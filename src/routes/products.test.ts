@@ -142,6 +142,81 @@ describe("products CRUD", () => {
     expect(text).toContain("Ya existe un producto con ese SKU");
   });
 
+  it("POST /products with negative stock shows validation error", async () => {
+    const res = await app.request("/products", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        name: "Test", sku: "TST-NEG",
+        stock: "-5", min_stock: "2",
+      }).toString(),
+    });
+    expect(res.status).toBe(200);
+    const text = await res.text();
+    expect(text).toContain("Nuevo Producto");
+    expect(text).toContain("El stock no puede ser negativo");
+  });
+
+  it("POST /products with negative minimum stock shows validation error", async () => {
+    const res = await app.request("/products", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        name: "Test", sku: "TST-MNEG",
+        stock: "5", min_stock: "-1",
+      }).toString(),
+    });
+    expect(res.status).toBe(200);
+    const text = await res.text();
+    expect(text).toContain("Nuevo Producto");
+    expect(text).toContain("El stock mínimo no puede ser negativo");
+  });
+
+  it("POST /products with non-numeric stock shows validation error", async () => {
+    const res = await app.request("/products", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        name: "Test", sku: "TST-NAN",
+        stock: "abc", min_stock: "2",
+      }).toString(),
+    });
+    expect(res.status).toBe(200);
+    const text = await res.text();
+    expect(text).toContain("Nuevo Producto");
+    expect(text).toContain("El stock debe ser un número válido");
+  });
+
+  it("POST /products/:id with negative stock shows validation error", async () => {
+    const res = await app.request("/products/1", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        name: "Televisor 4K", sku: "TV-001",
+        stock: "-5", min_stock: "2",
+      }).toString(),
+    });
+    expect(res.status).toBe(200);
+    const text = await res.text();
+    expect(text).toContain("Editar Producto");
+    expect(text).toContain("El stock no puede ser negativo");
+  });
+
+  it("POST /products/:id with negative minimum stock shows validation error", async () => {
+    const res = await app.request("/products/1", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        name: "Televisor 4K", sku: "TV-001",
+        stock: "5", min_stock: "-3",
+      }).toString(),
+    });
+    expect(res.status).toBe(200);
+    const text = await res.text();
+    expect(text).toContain("Editar Producto");
+    expect(text).toContain("El stock mínimo no puede ser negativo");
+  });
+
   it("GET /products/:id/edit returns 200 with prefilled form", async () => {
     const res = await app.request("/products/1/edit");
     expect(res.status).toBe(200);
