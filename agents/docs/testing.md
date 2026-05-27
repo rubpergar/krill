@@ -9,19 +9,19 @@ This file defines project-specific testing logistics. Use `agents/skills/test-dr
 ### Fast (TDD cycle / pre-commit)
 | Purpose | Command |
 |---|---|
-| Targeted unit | |
-| Full unit | |
-| Lint | |
-| Typecheck | |
+| Targeted unit | `pnpm test -- <pattern>` |
+| Full unit | `pnpm test` |
+| Lint | `pnpm lint` |
+| Typecheck | `pnpm typecheck` |
 
 ### Slow (pre-merge / CI)
 | Purpose | Command |
 |---|---|
-| Integration | |
-| E2E | |
-| Build | |
-| Full validation | |
-| Coverage report | |
+| Integration | not available |
+| E2E | not available |
+| Build | `pnpm build` |
+| Full validation | not available |
+| Coverage report | not available |
 | DESIGN.md lint | `npx @google/design.md lint agents/docs/design.md` (requires Node.js; optional — skip if unavailable) |
 
 ## Test Levels
@@ -34,24 +34,24 @@ This file defines project-specific testing logistics. Use `agents/skills/test-dr
 ## Coverage
 | Item | Configuration |
 |---|---|
-| Tool | |
-| Threshold | |
-| Command | |
-| Excluded paths | |
-| Fail on below threshold | yes / no |
+| Tool | vitest |
+| Threshold | not configured |
+| Command | `pnpm test -- --coverage` |
+| Excluded paths | not configured |
+| Fail on below threshold | not configured |
 
 ## Environment
-- Required services:
-- Required environment variables:
-- Reset/cleanup:
+- Required services: none
+- Required environment variables: none
+- Reset/cleanup: not configured
 
 ## Fixtures
 | Type | Location | When used |
 |---|---|---|
-| Unit (factories, builders, mocks) | | Unit tests |
-| Integration (seed data, DB snapshots) | | Integration tests |
-| E2E (test users, sandbox data) | | E2E tests |
-| Shared utilities | | All levels |
+| Unit (factories, builders, mocks) | not configured | Unit tests |
+| Integration (seed data, DB snapshots) | not configured | Integration tests |
+| E2E (test users, sandbox data) | not configured | E2E tests |
+| Shared utilities | not configured | All levels |
 
 ## External Services Strategy
 | Level | Strategy |
@@ -61,9 +61,9 @@ This file defines project-specific testing logistics. Use `agents/skills/test-dr
 | E2E | Staging or sandbox environment |
 
 ## Test Locations
-- Unit:
-- Integration:
-- E2E:
+- Unit: `src/**/*.test.ts`
+- Integration: not configured
+- E2E: not configured
 
 ## TDD Coordination
 - Read and apply the TDD skill once before implementation code when the task changes behavior or refactors behavior-preserving code.
