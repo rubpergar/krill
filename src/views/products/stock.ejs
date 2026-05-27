@@ -1,0 +1,44 @@
+<h2 class="text-2xl font-bold mb-2">Ajustar Stock</h2>
+<p class="text-gray-600 mb-6">
+  Producto: <strong><%= product.name %></strong> |
+  SKU: <%= product.sku %> |
+  Stock actual: <strong><%= product.stock %></strong>
+</p>
+
+<% if (error) { %>
+  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+    <%= error %>
+  </div>
+<% } %>
+
+<form method="POST" action="/products/<%= product.id %>/stock" class="max-w-sm">
+  <div class="mb-4">
+    <label class="block text-sm font-medium mb-1">Operación</label>
+    <div class="flex gap-4">
+      <label class="flex items-center gap-2">
+        <input type="radio" name="operation" value="add" checked class="accent-blue-600" />
+        <span>Añadir</span>
+      </label>
+      <label class="flex items-center gap-2">
+        <input type="radio" name="operation" value="remove" class="accent-blue-600" />
+        <span>Retirar</span>
+      </label>
+    </div>
+  </div>
+  <div class="mb-4">
+    <label for="quantity" class="block text-sm font-medium mb-1">Cantidad</label>
+    <input
+      type="number" id="quantity" name="quantity"
+      class="w-full border border-gray-300 rounded px-3 py-2"
+      min="1" value="1"
+    />
+  </div>
+  <div class="flex gap-2">
+    <a href="/products" class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-100">
+      Cancelar
+    </a>
+    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+      Ajustar
+    </button>
+  </div>
+</form>

@@ -179,4 +179,100 @@ describe("products CRUD", () => {
     const res = await app.request("/products/999/toggle", { method: "POST" });
     expect(res.status).toBe(404);
   });
+
+  it("GET /products/:id/stock returns 200 with form showing product name and stock", async () => {
+    const res = await app.request("/products/1/stock");
+    expect(res.status).toBe(200);
+    const text = await res.text();
+    expect(text).toContain("Ajustar Stock");
+    expect(text).toContain("Televisor 4K");
+    expect(text).toContain("10");
+  });
+
+  it("GET /products/:id/stock with invalid id returns 404", async () => {
+    const res = await app.request("/products/999/stock");
+    expect(res.status).toBe(404);
+  });
+
+  it("POST /products/:id/stock with add operation increments stock", async () => {
+    const res = await app.request("/products/1/stock", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ operation: "add", quantity: "5" }).toString(),
+    });
+    expect(res.status).toBe(302);
+    expect(res.headers.get("Location")).toBe("/products?success=stock_updated");
+  });
+
+  it("POST /products/:id/stock with remove operation decrements stock", async () => {
+    const res = await app.request("/products/1/stock", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ operation: "remove", quantity: "3" }).toString(),
+    });
+    expect(res.status).toBe(302);
+    expect(res.headers.get("Location")).toBe("/products?success=stock_updated");
+  });
+
+  it("POST /products/:id/stock with remove > current stock shows error", async () => {
+    const res = await app.request("/products/1/stock", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ operation: "remove", quantity: "999" }).toString(),
+    });
+    expect(res.status).toBe(200);
+    const text = await res.text();
+    expect(text).toContain("Stock insuficiente");
+  });
+
+  it("POST /products/:id/stock with quantity <= 0 shows error", async () => {
+    const res = await app.request("/products/1/stock", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ operation: "add", quantity: "0" }).toString(),
+    });
+    expect(res.status).toBe(200);
+    const text = await res.text();
+    expect(text).toContain("La cantidad debe ser mayor a cero");
+  });
+
+  it("POST /products/:id/stock with invalid id returns 404", async () => {
+    const res = await app.request("/products/999/stock", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ operation: "add", quantity: "5" }).toString(),
+    });
+    expect(res.status).toBe(404);
+  });
+
+  it("GET /products?low_stock=1 filters products with stock <= min_stock", async () => {
+    await app.request("/products", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        name: "Mouse", sku: "MOU-001",
+        stock: "1", min_stock: "5",
+      }).toString(),
+    });
+    const res = await app.request("/products?low_stock=1");
+    expect(res.status).toBe(200);
+    const text = await res.text();
+    expect(text).toContain("Mouse");
+    expect(text).not.toContain("Televisor");
+  });
+
+  it("GET /products?low_stock=1&q= combines filters", async () => {
+    const res = await app.request("/products?low_stock=1&q=Mou");
+    expect(res.status).toBe(200);
+    const text = await res.text();
+    expect(text).toContain("Mouse");
+    expect(text).not.toContain("Televisor");
+  });
+
+  it("GET /products list shows Stock bajo badge for low stock products", async () => {
+    const res = await app.request("/products");
+    expect(res.status).toBe(200);
+    const text = await res.text();
+    expect(text).toContain("Stock bajo");
+  });
 });

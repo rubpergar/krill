@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { eq, like, and, or } from "drizzle-orm";
+import { eq, like, and, or, lte } from "drizzle-orm";
 import { db } from "../db/index";
 import { products, categories } from "../db/schema";
 import { render } from "../lib/render";
@@ -8,6 +8,7 @@ export const productRoutes = new Hono()
   .get("/", async (c) => {
     const q = c.req.query("q");
     const categoryFilter = c.req.query("category");
+    const lowStock = c.req.query("low_stock");
     const success = c.req.query("success");
     const catId = categoryFilter ? parseInt(categoryFilter, 10) : NaN;
 
@@ -40,6 +41,9 @@ export const productRoutes = new Hono()
     if (!isNaN(catId)) {
       conditions.push(eq(products.categoryId, catId));
     }
+    if (lowStock === "1") {
+      conditions.push(lte(products.stock, products.minStock));
+    }
 
     const allProducts =
       conditions.length > 0
@@ -59,6 +63,7 @@ export const productRoutes = new Hono()
       categories: allCategories,
       q: q || "",
       categoryFilter: categoryFilter || "",
+      lowStock: lowStock === "1",
       success,
     });
     return c.html(html);
@@ -158,6 +163,71 @@ export const productRoutes = new Hono()
       }
       throw e;
     }
+  })
+  .get("/:id/stock", async (c) => {
+    const id = parseInt(c.req.param("id"), 10);
+    const [product] = await db
+      .select()
+      .from(products)
+      .where(eq(products.id, id))
+      .limit(1);
+    if (!product) {
+      return c.notFound();
+    }
+    const html = await render("products/stock", {
+      title: "Ajustar Stock",
+      currentPath: "/products",
+      product,
+      error: null,
+    });
+    return c.html(html);
+  })
+  .post("/:id/stock", async (c) => {
+    const id = parseInt(c.req.param("id"), 10);
+    const [product] = await db
+      .select()
+      .from(products)
+      .where(eq(products.id, id))
+      .limit(1);
+    if (!product) {
+      return c.notFound();
+    }
+
+    const body = await c.req.parseBody();
+    const operation = body.operation as string;
+    const quantity = parseInt((body.quantity as string) || "0", 10);
+
+    if (quantity <= 0) {
+      const html = await render("products/stock", {
+        title: "Ajustar Stock",
+        currentPath: "/products",
+        product,
+        error: "La cantidad debe ser mayor a cero",
+      });
+      return c.html(html);
+    }
+
+    if (operation === "remove" && product.stock < quantity) {
+      const html = await render("products/stock", {
+        title: "Ajustar Stock",
+        currentPath: "/products",
+        product,
+        error: `Stock insuficiente. Stock actual: ${product.stock}`,
+      });
+      return c.html(html);
+    }
+
+    const newStock =
+      operation === "remove"
+        ? product.stock - quantity
+        : product.stock + quantity;
+
+    await db
+      .update(products)
+      .set({ stock: newStock })
+      .where(eq(products.id, id));
+
+    return c.redirect("/products?success=stock_updated");
   })
   .get("/:id/edit", async (c) => {
     const id = parseInt(c.req.param("id"), 10);

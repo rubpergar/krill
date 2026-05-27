@@ -5,16 +5,17 @@
     <% if (success === 'created') { %>Producto creado exitosamente.<% } %>
     <% if (success === 'updated') { %>Producto actualizado exitosamente.<% } %>
     <% if (success === 'toggled') { %>Estado de producto actualizado.<% } %>
+    <% if (success === 'stock_updated') { %>Stock actualizado exitosamente.<% } %>
   </div>
 <% } %>
 
-<form method="GET" action="/products" class="mb-4 flex gap-2 items-end">
+<form method="GET" action="/products" class="mb-4 flex gap-2 items-end flex-wrap">
   <div>
     <label for="q" class="block text-xs text-gray-500 mb-1">Buscar</label>
     <input
       type="text" id="q" name="q" value="<%= q %>"
       placeholder="Nombre o SKU..."
-      class="border border-gray-300 rounded px-3 py-2 text-sm w-64"
+      class="border border-gray-300 rounded px-3 py-2 text-sm w-48"
     />
   </div>
   <div>
@@ -26,8 +27,21 @@
       <% }); %>
     </select>
   </div>
-  <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">Buscar</button>
-  <a href="/products" class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-100">Limpiar</a>
+  <div>
+    <label class="block text-xs text-gray-500 mb-1">&nbsp;</label>
+    <label class="flex items-center gap-1 text-sm">
+      <input type="checkbox" name="low_stock" value="1" <%= lowStock ? 'checked' : '' %> onchange="this.form.submit()" class="accent-blue-600" />
+      Solo stock bajo
+    </label>
+  </div>
+  <div>
+    <label class="block text-xs text-gray-500 mb-1">&nbsp;</label>
+    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">Buscar</button>
+  </div>
+  <div>
+    <label class="block text-xs text-gray-500 mb-1">&nbsp;</label>
+    <a href="/products" class="inline-block px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-100">Limpiar</a>
+  </div>
 </form>
 
 <a href="/products/new" class="inline-block mb-4 px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
@@ -54,7 +68,12 @@
           <td class="py-2"><%= p.name %></td>
           <td class="py-2 text-sm text-gray-600"><%= p.sku %></td>
           <td class="py-2 text-sm text-gray-600"><%= p.categoryName || '-' %></td>
-          <td class="py-2"><%= p.stock %></td>
+          <td class="py-2">
+            <%= p.stock %>
+            <% if (p.stock <= p.minStock) { %>
+              <span class="ml-1 inline-block bg-red-100 text-red-700 text-xs px-2 py-0.5 rounded font-medium" title="Stock mínimo: <%= p.minStock %>">Stock bajo</span>
+            <% } %>
+          </td>
           <td class="py-2">
             <% if (p.active) { %>
               <span class="text-green-600 text-sm">Activo</span>
@@ -64,6 +83,7 @@
           </td>
           <td class="py-2 flex gap-2">
             <a href="/products/<%= p.id %>/edit" class="text-blue-600 hover:underline text-sm">Editar</a>
+            <a href="/products/<%= p.id %>/stock" class="text-blue-600 hover:underline text-sm">Stock</a>
             <form method="POST" action="/products/<%= p.id %>/toggle" class="inline">
               <button type="submit" class="text-gray-600 hover:underline text-sm">
                 <%= p.active ? 'Desactivar' : 'Activar' %>
