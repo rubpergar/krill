@@ -9,8 +9,8 @@ Copy to `agents/task/TASK-XXX-checklist.md` after the task plan is approved. Do 
 ## Rules
 - Work in order unless blocked.
 - Keep items derived from the approved plan.
-- **ALL checkboxes must start `[ ]` (unchecked). Never pre-mark items when generating the checklist.**
-- Mark completed items during implementation only.
+- ALL checkboxes must start `[ ]` (unchecked). Never pre-mark items when generating the checklist.
+- Mark completed items during implementation and closeout only.
 
 ## Checklist
 
@@ -18,6 +18,7 @@ Copy to `agents/task/TASK-XXX-checklist.md` after the task plan is approved. Do 
 - [ ] Re-read the approved plan and referenced source-of-truth docs (do not skip even if read during planning).
 - [ ] Load and apply `agents/skills/test-driven-development/SKILL.md`, or record why it does not apply.
 - [ ] Verify no open questions block implementation.
+- [ ] Set the plan status to `in_progress` before the first implementation change.
 
 ### 2. TDD Ledger
 Track each behavior/subtask from the plan through RED → GREEN → REFACTOR cycles.
@@ -42,22 +43,18 @@ Use `Not applicable` when the task does not affect the database.
 - [ ] Backup or recovery expectation documented for destructive or risky changes.
 - [ ] Pre-check and post-check validation queries or steps recorded when needed.
 
-### 5. Validation (→ validated)
+### 5. Validation (still `in_progress`)
 - [ ] Targeted tests:
 - [ ] Full test suite:
 - [ ] Lint:
 - [ ] Typecheck:
 - [ ] Build:
-- [ ] DoD validated criteria checked:
+- [ ] DoD `in_progress` criteria checked:
 
-### 6. Closeout (→ closed)
+### 6. Closeout (→ `closed`)
 - [ ] Ask user before marking backlog task done.
+- [ ] Update the plan status to `closed` before archiving task files.
 - [ ] Move task files to `agents/task/archive/` after user approves.
-
-## States Reached
-- [ ] Implemented (sections 1-3 complete)
-- [ ] Validated (section 5 complete)
-- [ ] Closed (section 6 complete + user approval)
 
 ## Resume Notes
 ...

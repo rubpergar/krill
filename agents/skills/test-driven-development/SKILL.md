@@ -218,6 +218,16 @@ After green only:
 
 Keep tests green. Don't add behavior.
 
+### SIMPLICITY GATE - Keep It Maintainable
+
+Before moving on, prefer the simplest design that still passes the current tests.
+
+- If a simpler implementation passes, prefer it.
+- Introduce an interface only when there are 2 or more real implementations, or the approved plan explicitly requires it.
+- Extract a helper or adapter only when there are 2 or more real consumers with repeated logic.
+- If some production code exists only to make tests easier, stop and question whether it belongs in production at all.
+- Keep code in one place until real duplication or variation appears.
+
 ### Repeat
 
 Next failing test for next feature.
