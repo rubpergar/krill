@@ -9,27 +9,32 @@ Rules:
 - If `## Current` has zero or multiple tasks, stop and ask the user to select or create one.
 - Extract the task ID (TASK-XXX) from the backlog entry.
 - Verify that `agents/task/TASK-XXX-plan.md` exists. If not, stop and suggest running `/plan` first.
-- Set the plan status to `approved` in `agents/task/TASK-XXX-plan.md` (using this command implies the plan is ready).
+- If the plan is still `draft`, set the plan status to `approved` in `agents/task/TASK-XXX-plan.md` (using this command implies the plan is ready).
 - Read `agents/task/checklist.md` for the checklist template structure.
 - Derive checklist items from the approved plan only. Do not add items that are not covered by the plan.
-- **ALL checklist items must start `[ ]` (unchecked). Never pre-mark items when generating.**
+- ALL checklist items must start `[ ]` (unchecked). Never pre-mark items when generating.
 - If the task affects the database, include checklist items for DB schema updates, DB change log updates, backup/recovery checks, and migration validation.
-- Read and apply `agents/skills/test-driven-development/SKILL.md` once at the start of implementation and follow the RED → GREEN → REFACTOR cycle.
+- Read and apply `agents/skills/test-driven-development/SKILL.md` once at the start of implementation.
+- Follow the RED → GREEN → REFACTOR cycle from the TDD skill during implementation.
+- After each GREEN pass, run the lightweight quality gate from `AGENTS.md`: prefer the simplest passing design, avoid premature abstractions, and question production code that exists only to support tests.
 - Read `agents/docs/testing.md` for project-specific test, lint, typecheck, and build commands.
 - Mark checklist items as they are completed during implementation.
 - Do not change files outside the approved scope.
 - Register out-of-scope findings in `agents/docs/debt.md` instead of modifying them.
 - If test-first work is not feasible for a specific item, stop and document why unless the exception is already in the approved plan.
+- After implementation and validation, run one independent final review scoped to the approved plan, checklist, and task changes. Prefer a separate subagent or fresh review context when available.
+- Follow `AGENTS.md` for the canonical implementation workflow, TDD quality gate, and independent final review policy.
 
 Flow:
 1. Read `agents/task/backlog.md` and confirm exactly one task under `## Current`.
 2. Verify `agents/task/TASK-XXX-plan.md` exists. If not, stop.
-3. Set plan status to `approved`.
+3. Set plan status to `approved` if needed, then set it to `in_progress` before implementation starts.
 4. Read the approved plan and `agents/task/checklist.md`.
-5. Generate `agents/task/TASK-XXX-checklist.md` with items derived from the plan.
-6. Read and apply `agents/skills/test-driven-development/SKILL.md`.
-7. Read `agents/docs/testing.md` for validation commands.
-8. Implement following the checklist order and TDD cycles.
-9. Mark completed items in the checklist as you go.
-10. When implementation is complete, run validation commands from `agents/docs/testing.md`.
-11. Report the final state: checklist progress, validation results, and any open items or debt registered.
+5. Generate or update `agents/task/TASK-XXX-checklist.md` with items derived from the plan.
+6. Read and apply `agents/skills/test-driven-development/SKILL.md` and `agents/docs/testing.md`.
+7. Implement following the checklist order and the canonical workflow from `AGENTS.md`.
+8. Mark completed items in the checklist as you go.
+9. When implementation is complete, run validation commands from `agents/docs/testing.md`.
+10. Run the independent final review required by `AGENTS.md`. If issues are found, fix them before ending `/implement`.
+11. Leave the plan in `in_progress` until `/closeout` finishes.
+12. Report the final state: checklist progress, validation results, review outcome, and any open items or debt registered.

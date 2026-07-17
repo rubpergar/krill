@@ -39,9 +39,9 @@ Role selection guide:
 - Unknown or mixed technical request -> `senior software engineer`
 
 Output format:
-1. `Rol recomendado:` one line.
-2. `Prompt optimizado:` a single fenced code block containing the final prompt.
-3. `Suposiciones o huecos:` only if there are important missing details the user should complete.
+1. `Recommended role:` one line.
+2. `Optimized prompt:` a single fenced code block containing the final prompt.
+3. `Assumptions or gaps:` only if there are important missing details the user should complete.
 
 Prompt construction requirements:
 - Start the prompt with the selected role.
