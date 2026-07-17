@@ -35,10 +35,10 @@ Role selection guide:
 - Unknown or mixed technical request -> `senior software engineer`
 
 Output format:
-1. `Rol recomendado:` one line.
-2. `Prompt optimizado:` a single fenced code block containing the final optimized prompt that will be executed.
-3. `Ejecucion:` execute that optimized prompt immediately after presenting it.
-4. `Suposiciones o huecos:` only if important details are missing and execution cannot safely continue.
+1. `Recommended role:` one line.
+2. `Optimized prompt:` a single fenced code block containing the final optimized prompt that will be executed.
+3. `Execution:` execute that optimized prompt immediately after presenting it.
+4. `Assumptions or gaps:` only if important details are missing and execution cannot safely continue.
 
 Prompt construction requirements:
 - Start the optimized prompt with the selected role.
@@ -57,6 +57,5 @@ Execution requirements:
 Flow:
 1. Read `$ARGUMENTS` and identify the real task.
 2. Infer the best expert role.
-3. Build the optimized prompt.
-4. Present the optimized prompt.
-5. Execute it immediately.
+3. Build the optimized prompt (skip outputting it to save tokens).
+4. Execute it immediately.

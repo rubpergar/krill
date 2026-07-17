@@ -27,9 +27,10 @@ Uses the `/bootstrap` command (`.opencode/commands/bootstrap.md`), which:
 1. Inspects the repository structure and stack
 2. Interviews the user to confirm findings and fill gaps
 3. Detects existing DB schema and DB change log files and updates the Source of Truth Map paths in `AGENTS.md` when appropriate
-4. Writes source-of-truth docs with confirmed facts only
-5. Runs a readiness check
-6. Offers transition to project mode if ready
+4. Detects project-level agent runtime config such as `opencode.json` plugins and MCPs when present
+5. Writes source-of-truth docs with confirmed facts only
+6. Runs a readiness check
+7. Offers transition to project mode if ready
 
 **Readiness criteria:**
 - Product identity (name, domain, users, goal) confirmed by user

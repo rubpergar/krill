@@ -46,6 +46,8 @@ If there is no product code, stop and inform the user.
 
 **2.7 Config** — Review `.gitignore`, `.dockerignore`, `Dockerfile`, `docker-compose.yml`, `.env.example` (template only, never `.env`), style config (`.editorconfig`, `.prettierrc`, `tsconfig.json`, etc.), linter config (ESLint, Prettier, Ruff, rustfmt, clippy, golangci-lint, RuboCop, etc.).
 
+**2.8 Agent runtime** — If `opencode.json` or equivalent agent config exists, inspect configured plugins and MCPs. Treat them as `detected` only when they are declared in project config, not because they may exist globally on the machine.
+
 ### 3. Phase 2 — Summary
 
 Present findings in three groups:
@@ -54,7 +56,7 @@ Present findings in three groups:
 |---|---|
 | **Detected** (observed) | Stack, PM, test tool, CI, linters |
 | **Inferred** (needs confirmation) | Probable commands, framework, architecture |
-| **Missing** (needs user) | Product identity, deployment, DB, external services |
+| **Missing** (needs user) | Product identity, deployment, DB, external services, agent runtime not declared in project |
 
 ### 4. Phase 3 — Confirmation Questions
 
@@ -82,13 +84,16 @@ Present detected/inferred ones. Ask for the real command for each purpose. Use `
 **4.3 Stack:**
 Confirm: runtime, framework, PM, database, test tools, deployment, external services.
 
-**4.4 Critical Modules:**
+**4.4 Agent runtime:**
+Confirm project-level plugins and MCPs available to the agent. If detected from `opencode.json`, present them for confirmation. If not declared in project config, leave them blank unless the user explicitly wants to record them as project capabilities.
+
+**4.5 Critical Modules:**
 Key services, entry points, sensitive areas.
 
-**4.5 Restrictions:**
+**4.6 Restrictions:**
 Security (auth, payments, PII), performance, deployment limits, code standards, branch/release workflows.
 
-**4.6 Additional Documents:**
+**4.7 Additional Documents:**
 Ask if the project needs:
 - `agents/docs/api.md` (API?)
 - `agents/db/schema.sql` + `agents/db/domain.md` (DB/model?)
@@ -102,6 +107,7 @@ Write only facts confirmed by the user. Never write unconfirmed inferences as au
 **5.1 `AGENTS.md`:**
 - Fill `## Project` (Product, Domain, Users, Goal)
 - Fill `## Stack` (Runtime/framework, Package manager, Database, Test tools, Deployment, External services)
+- Fill `## Agent Runtime` (Plugins, MCPs) when confirmed
 - Fill `## Commands` with confirmed commands
 - Fill `## Project Structure` with primary routes and their purpose
 

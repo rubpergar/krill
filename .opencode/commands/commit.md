@@ -71,6 +71,16 @@ After each commit, check remaining changes with `git status --short`. Stop only 
 - unrelated or unsafe changes are left unstaged on purpose
 - the user must decide what to do with ambiguous changes
 
+### 6. Push to remote
+
+Once all commits are done and nothing intended for this work is left staged, push to the active branch:
+
+```bash
+git push
+```
+
+If the push fails because the branch has no upstream or the remote rejects it, stop and report the exact blocker instead of guessing a workaround.
+
 ## Splitting rules
 
 Split commits when changes are unrelated:
