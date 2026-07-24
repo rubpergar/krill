@@ -97,7 +97,17 @@ digraph tdd_cycle {
 
 ### RED - Write Failing Test
 
-Write one minimal test showing what should happen.
+Write tests covering all behavior categories before moving to GREEN. For each method or feature:
+  - At least one positive/happy-path test.
+  - At least one negative test (invalid input, precondition violation, error handling).
+  - Edge cases (boundaries, null, empty, zero, overflow, extreme values).
+  - Invariants (post-conditions, consistent state, resource cleanup).
+
+Apply equivalence partitioning and boundary value analysis to choose test values.
+
+Order by dependency: start with leaf / isolated methods (pure logic), then composable methods, then integration points. This gives faster feedback and avoids mocking blockers early.
+
+Write one test at a time following the cycle, but do not mark the feature complete until all categories are covered.
 
 <Good>
 ```typescript
@@ -133,9 +143,10 @@ Vague name, tests mock not code
 </Bad>
 
 **Requirements:**
-- One behavior
-- Clear name
+- One behavior per test
+- Clear name describing the scenario and category
 - Real code (no mocks unless unavoidable)
+- Full battery required per method: positive + negative + edge + invariant
 
 ### Verify RED - Watch It Fail
 
@@ -228,9 +239,22 @@ Before moving on, prefer the simplest design that still passes the current tests
 - If some production code exists only to make tests easier, stop and question whether it belongs in production at all.
 - Keep code in one place until real duplication or variation appears.
 
+### BATTERY CHECK - Completeness Gate
+
+Before going to the next feature, check whether the current method/feature has coverage across all categories:
+
+- [ ] Positive case(s) covered
+- [ ] Negative case(s) covered
+- [ ] Edge case(s) covered
+- [ ] Invariant(s) covered
+
+Missing a category? Go back to RED and write the next test for that category. Do not skip to the next feature until the battery is complete.
+
+All covered? Proceed to the next feature.
+
 ### Repeat
 
-Next failing test for next feature.
+Next failing test for next feature or next category for the current feature.
 
 ## Good Tests
 
@@ -371,7 +395,10 @@ Before marking work complete:
 - [ ] All tests pass
 - [ ] Output pristine (no errors, warnings)
 - [ ] Tests use real code (mocks only if unavoidable)
-- [ ] Edge cases and errors covered
+- [ ] Positive cases covered (happy path)
+- [ ] Negative cases covered (error handling, invalid input, broken preconditions)
+- [ ] Edge cases covered (boundaries, empty, null, overflow, extreme values)
+- [ ] Invariants covered (post-conditions, state consistency, resource cleanup)
 
 Can't check all boxes? Review: is this pre-existing code without tests? Add regression tests. Otherwise, you skipped TDD — restart with TDD discipline for new code.
 
