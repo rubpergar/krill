@@ -208,5 +208,14 @@ Non-validation commands:
 - The project should define the preferred comment language during bootstrap or in its source-of-truth docs. Until then, follow the dominant repository language if one exists.
 - Move detailed conventions into source-of-truth docs when they become durable project rules.
 
+## Quality Standards
+- Design code to be maintainable and extensible without overengineering the current requirement.
+- Keep modules and functions focused on a clear responsibility.
+- Avoid duplication, but do not introduce abstractions without at least two real consumers or an explicit task requirement.
+- Preserve existing public contracts unless the approved plan explicitly changes them.
+- Add or update tests for every behavior change, including relevant edge cases and error paths.
+- Consider performance, security, observability, and compatibility when they are relevant to the change.
+- Prefer incremental changes that can be reviewed, tested, and rolled back independently.
+
 ## Project Structure
 Add only primary routes with their purpose.
