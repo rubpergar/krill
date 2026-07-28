@@ -16,7 +16,7 @@ Rules:
 - Use the conversation context (planning discussion, /prompt-run output, user clarifications) to fill every section of the plan template.
 - Do not invent requirements, APIs, DB structures, or technical facts that were not discussed or confirmed.
 - If critical information is missing from the conversation, list it under `## Open Questions` instead of guessing.
-- Keep `## Status` as `draft` while planning is still in progress so the user can review and approve before implementation.
+- Keep the plan status as `draft` while planning is in progress. When no blocking open questions remain, ask the user whether the plan is ready for approval. Only after an explicit affirmative answer may this command change the status to `approved`.
 - Create the plan early and refine it iteratively. Do not wait until every question is answered before writing the first draft.
 - If a plan file already exists for this task, update it with any new discussion points instead of overwriting blindly.
 - Prefer asking one high-leverage planning question at a time.
@@ -36,3 +36,5 @@ Flow:
 6. Ask the next highest-value unresolved question.
 7. After each user answer, update the draft plan and continue until the user confirms the plan is complete.
 8. When pausing, show the current plan progress and the remaining open questions that block approval.
+9. When no blocking questions remain, summarize the plan and ask whether the user wants to approve it for implementation.
+10. If the user explicitly approves, change the plan status from `draft` to `approved`. Otherwise leave it as `draft` and continue planning or report the remaining refinements.

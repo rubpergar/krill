@@ -130,7 +130,7 @@ Product implementation starts only when there is exactly one task under `## Curr
    - Resolve behavior, data, security, API, and user-facing UX questions before implementation.
    - If the task affects the database, record DB impact, migration, rollback, compatibility, validation, recovery, and required doc updates in the task plan.
    - If a durable decision may be needed, include an ADR proposal in the plan instead of writing directly to `agents/docs/decisions.md`.
-   - Do not implement until the user approves the task-specific plan.
+    - Keep the plan in `draft` while it is being refined. When no blocking questions remain, ask the user whether it is ready for approval. Only after explicit confirmation may the agent change its status to `approved`.
 
 3. Checklist
    - Create/update `agents/task/TASK-XXX-checklist.md` from `agents/task/checklist.md`.
@@ -142,7 +142,7 @@ Product implementation starts only when there is exactly one task under `## Curr
    - Read the approved task plan, checklist, `agents/docs/testing.md`, and relevant source-of-truth files.
    - Use `agents/docs/testing.md` only for project-specific commands, locations, fixtures, and validation requirements.
    - Before each implementation block, re-read only the relevant plan sections, checklist items, and source files.
-   - Set the plan status to `in_progress` when implementation starts and keep it there until closeout is approved.
+    - `/implement` may only start from an `approved` plan; set the plan status to `in_progress` immediately before the first implementation change and keep it there until closeout is approved.
    - After each GREEN pass, run a lightweight quality gate: prefer the simplest passing design, remove real duplication, avoid premature abstractions, and question test-only production code.
    - After implementation and validation, run one independent final review scoped to the approved plan, checklist, and task changes. Prefer a separate subagent or fresh review context when available.
    - Do not spawn subagents for every small RED/GREEN step. Use them for context-heavy checkpoints.

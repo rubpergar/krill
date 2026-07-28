@@ -9,7 +9,8 @@ Rules:
 - If `## Current` has zero or multiple tasks, stop and ask the user to select or create one.
 - Extract the task ID (TASK-XXX) from the backlog entry.
 - Verify that `agents/task/TASK-XXX-plan.md` exists. If not, stop and suggest running `/plan` first.
-- If the plan is still `draft`, set the plan status to `approved` in `agents/task/TASK-XXX-plan.md` (using this command implies the plan is ready).
+- Read the plan status before making any changes. If it is `draft`, stop and ask the user to review the plan and change `## Status` to `approved` manually when it is ready. Never approve a draft implicitly through `/implement`.
+- If the plan status is not `approved`, stop and report that implementation can only start from an `approved` plan.
 - Read `agents/task/checklist.md` for the checklist template structure.
 - Derive checklist items from the approved plan only. Do not add items that are not covered by the plan.
 - ALL checklist items must start `[ ]` (unchecked). Never pre-mark items when generating.
@@ -28,13 +29,14 @@ Rules:
 Flow:
 1. Read `agents/task/backlog.md` and confirm exactly one task under `## Current`.
 2. Verify `agents/task/TASK-XXX-plan.md` exists. If not, stop.
-3. Set plan status to `approved` if needed, then set it to `in_progress` before implementation starts.
-4. Read the approved plan and `agents/task/checklist.md`.
-5. Generate or update `agents/task/TASK-XXX-checklist.md` with items derived from the plan.
-6. Read and apply `agents/skills/test-driven-development/SKILL.md` and `agents/docs/testing.md`.
-7. Implement following the checklist order and the canonical workflow from `AGENTS.md`.
-8. Mark completed items in the checklist as you go.
-9. When implementation is complete, run validation commands from `agents/docs/testing.md`.
-10. Run the independent final review required by `AGENTS.md`. If issues are found, fix them before ending `/implement`.
-11. Leave the plan in `in_progress` until `/closeout` finishes.
-12. Report the final state: checklist progress, validation results, review outcome, and any open items or debt registered.
+3. Verify the plan status is `approved`; otherwise stop before editing anything.
+4. Set the plan status to `in_progress` before implementation starts.
+5. Read the approved plan and `agents/task/checklist.md`.
+6. Generate or update `agents/task/TASK-XXX-checklist.md` with items derived from the plan.
+7. Read and apply `agents/skills/test-driven-development/SKILL.md` and `agents/docs/testing.md`.
+8. Implement following the checklist order and the canonical workflow from `AGENTS.md`.
+9. Mark completed items in the checklist as you go.
+10. When implementation is complete, run validation commands from `agents/docs/testing.md`.
+11. Run the independent final review required by `AGENTS.md`. If issues are found, fix them before ending `/implement`.
+12. Leave the plan in `in_progress` until `/closeout` finishes.
+13. Report the final state: checklist progress, validation results, review outcome, and any open items or debt registered.
