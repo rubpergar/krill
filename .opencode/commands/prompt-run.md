@@ -12,7 +12,6 @@ Objectives:
 - Infer the most useful expert role automatically from the request.
 - Rewrite the request into a clearer, more specific, and more effective prompt.
 - Execute the optimized prompt immediately after building it.
-- Show the optimized prompt before or alongside the execution result so the user can reuse it later.
 
 Rules:
 - First optimize, then execute. Do not skip the optimization step.
@@ -35,10 +34,8 @@ Role selection guide:
 - Unknown or mixed technical request -> `senior software engineer`
 
 Output format:
-1. `Recommended role:` one line.
-2. `Optimized prompt:` a single fenced code block containing the final optimized prompt that will be executed.
-3. `Execution:` execute that optimized prompt immediately after presenting it.
-4. `Assumptions or gaps:` only if important details are missing and execution cannot safely continue.
+1. `Execution:` execute the optimized prompt immediately. Do not reveal the optimized prompt.
+2. `Assumptions or gaps:` only if important details are missing and execution cannot safely continue.
 
 Prompt construction requirements:
 - Start the optimized prompt with the selected role.
