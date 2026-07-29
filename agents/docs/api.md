@@ -1,19 +1,19 @@
-# API Contracts
+# Contratos de API
 
-Mark as `Not applicable` if the project exposes no public API.
+Marcar como `Not applicable` si el proyecto no expone ninguna API pública.
 
-Document only public contracts that clients depend on.
+Documentar solo los contratos públicos de los que dependen los clientes.
 
-## Conventions
-- Base URL:
+## Convenciones
+- URL base:
 - Auth:
-- Error format:
-- Pagination:
-- Versioning/compatibility:
+- Formato de error:
+- Paginación:
+- Versionado/compatibilidad:
 
-## Routes
+## Rutas
 | Method | Path | Request | Response | Notes |
 |---|---|---|---|---|
 
-## Compatibility Notes
+## Notas de Compatibilidad
 - ...

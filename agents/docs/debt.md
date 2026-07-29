@@ -1,25 +1,25 @@
-# Technical Debt
+# Deuda Técnica (Technical Debt)
 
-Registry of bugs, issues, improvements, or incidents the agent finds while working on a task that are outside the current task's scope.
+Registro de bugs, incidencias, mejoras o incidentes que el agente encuentra mientras trabaja en una tarea y que están fuera del alcance de la tarea actual.
 
-When the agent encounters something relevant but out of scope, it must log it here instead of modifying it without permission. The user periodically reviews the log and decides whether to create a formal task.
+Cuando el agente encuentra algo relevante pero fuera del alcance, debe registrarlo aquí en lugar de modificarlo sin permiso. El usuario revisa periódicamente el registro y decide si crear una tarea formal.
 
-## Statuses
-- `open`: pending user review.
-- `dismissed`: the user decided not to address it.
+## Estados
+- `open`: pendiente de revisión del usuario.
+- `dismissed`: el usuario decidió no abordarlo.
 
-## Format
+## Formato
 
 ```md
-## DBT-XXX: Short title
-Date: YYYY-MM-DD
-Status: open | dismissed
-Risk: low | medium | high
-Impact: low | medium | high
-Suggested priority: low | medium | high | critical
-Evidence: Related file(s), line(s), or link.
-Description: Explanation of the problem.
-Recommendation: What to do to resolve it.
+## DBT-XXX: Título breve
+Fecha: YYYY-MM-DD
+Estado: open | dismissed
+Riesgo: low | medium | high
+Impacto: low | medium | high
+Prioridad sugerida: low | medium | high | critical
+Evidencia: archivo(s), línea(s) o enlace relacionado.
+Descripción: explicación del problema.
+Recomendación: qué hacer para resolverlo.
 ```
 
-## Log
+## Registro
