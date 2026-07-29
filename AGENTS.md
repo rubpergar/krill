@@ -1,221 +1,220 @@
 # AGENTS.md
 
-This repository starts as an agent skeleton and can be prepared for active project work.
+Este repositorio comienza como un esqueleto de agente y puede prepararse para trabajo activo en un proyecto.
 
-## Mode
+## Modo
 
-Current mode: `skeleton`.
+Modo actual: `skeleton`.
 
-This repository is in agent bootstrap mode. Product feature implementation is not allowed.
+Este repositorio está en modo de arranque de agente. No se permite la implementación de funcionalidades de producto.
 
-For skeleton-mode scope, required setup information, validation, and transition to project mode, follow `agents/docs/bootstrap.md`. After transition to project mode, the archived bootstrap is at `agents/task/archive/bootstrap-*.md` (historical reference only).
+Para el alcance del modo esqueleto, la información de configuración necesaria, validación y transición al modo proyecto, sigue `agents/docs/bootstrap.md`. Tras la transición al modo proyecto, el arranque archivado está en `agents/task/archive/bootstrap-*.md` (solo referencia histórica).
 
-Do not modify product source code or unrelated files unless the bootstrap docs explicitly allow it or the user explicitly requests it.
+No modifiques código fuente del producto ni archivos no relacionados, a menos que los documentos de arranque lo permitan explícitamente o que el usuario lo solicite explícitamente.
 
-## Project
-Fill this section during bootstrap. Leave fields blank only while they are unknown or not configured yet.
-- Product:
-- Domain:
-- Users:
-- Goal:
+## Proyecto
+Rellena esta sección durante el arranque. Deja los campos en blanco solo si aún se desconocen o no están configurados.
+- Producto:
+- Dominio:
+- Usuarios:
+- Objetivo:
 
 ## Stack
-Fill only what applies during bootstrap.
+Rellena solo lo que corresponda durante el arranque.
 - Runtime/framework:
-- Package manager:
-- Database:
-- Test tools:
-- Deployment:
-- External services:
+- Gestor de paquetes:
+- Base de datos:
+- Herramientas de prueba:
+- Despliegue:
+- Servicios externos:
 
-## Operating Rules
-- In skeleton mode, editing agent configuration files (`AGENTS.md`, `agents/**`, `.opencode/**`) does not require user approval. The Source of Truth Map approval column only applies in project mode.
-- Before modifying a source-of-truth document in project mode, check the **Approval needed?** column in the Source of Truth Map to determine if explicit approval is needed.
-- Product behavior changes require the SDD workflow below.
-- Template/agent-maintenance changes may be done directly when the user explicitly asks.
-- Skeleton maintenance is not product implementation and does not require a backlog task, plan, or checklist unless the user asks for that workflow.
-- New project initialization in `skeleton` mode requires explicit user approval and must follow `agents/docs/bootstrap.md`.
-- Exploratory, advisory, review-only, or planning-only requests do not change code unless the user asks for edits.
-- Keep changes scoped to the active task or the explicitly requested maintenance.
-- Prefer updating stable source-of-truth docs over duplicating instructions.
-- Project source-of-truth docs and approved task plans override skill guidance when they conflict.
-- Treat blank fields, placeholder markers, and `not available` commands as missing configuration, not as instructions to improvise.
-- Archived bootstrap documents are historical references only and must not be followed unless the user explicitly requests bootstrap maintenance or review.
+## Reglas Operativas
+- En modo esqueleto, editar archivos de configuración del agente (`AGENTS.md`, `agents/**`, `.opencode/**`) no requiere aprobación del usuario. La columna de Aprobación necesaria del Mapa de Fuentes de Verdad solo aplica en modo proyecto.
+- Antes de modificar un documento fuente de verdad en modo proyecto, revisa la columna **¿Aprobación necesaria?** en el Mapa de Fuentes de Verdad para determinar si se necesita aprobación explícita.
+- Los cambios de comportamiento del producto requieren el flujo SDD que se indica a continuación.
+- Los cambios de plantilla/mantenimiento de agente pueden realizarse directamente cuando el usuario lo solicite explícitamente.
+- El mantenimiento del esqueleto no es implementación de producto y no requiere una tarea en backlog, plan ni lista de verificación, a menos que el usuario solicite ese flujo.
+- La inicialización de un nuevo proyecto en modo `skeleton` requiere aprobación explícita del usuario y debe seguir `agents/docs/bootstrap.md`.
+- Las solicitudes exploratorias, de asesoría, solo de revisión o solo de planificación no modifican código a menos que el usuario solicite ediciones.
+- Mantén los cambios limitados a la tarea activa o al mantenimiento solicitado explícitamente.
+- Prefiere actualizar documentos fuente de verdad estables en lugar de duplicar instrucciones.
+- Los documentos fuente de verdad del proyecto y los planes de tarea aprobados tienen prioridad sobre las guías de skills cuando entren en conflicto.
+- Trata los campos en blanco, los marcadores de placeholder y los comandos `not available` como configuración faltante, no como instrucciones para improvisar.
+- Los documentos de arranque archivados son solo referencia histórica y no deben seguirse a menos que el usuario solicite explícitamente mantenimiento o revisión del arranque.
 
-## Token Budget
-- Communicate with the user in Spanish unless they request another language.
-- Keep progress updates brief and only send them for meaningful discoveries, blockers, edits, or validation results.
-- Avoid restating context already present in the conversation.
-- Prefer concise final responses: outcome, changed files, validation, and relevant caveats.
-- Do not use intentionally degraded or overly terse language if it reduces correctness or clarity.
-- Use subagents selectively: prefer them for heavy exploration, cross-repo comparison, independent final review, or tightly scoped analysis that would otherwise bloat the main context. Do not offload every small TDD step.
-- Read the smallest useful set of files for the current decision. Do not reload large documents or broad file sets when a narrower read will do.
-- When switching from exploration to implementation, carry forward only the distilled facts needed for the current step.
-- Prefer targeted file reads and focused diffs over re-reading whole files after every change.
-- If the task grows, summarize the current state in the task plan/checklist instead of keeping all details only in conversation memory.
-- For large repos or multi-repo work, split discovery into parallel sub-tasks and keep the main thread focused on decisions and integration.
+## Presupuesto de Tokens
+- Comunícate con el usuario en español a menos que solicite otro idioma.
+- Mantén las actualizaciones de progreso breves y envíalas solo para descubrimientos importantes, bloqueos, ediciones o resultados de validación.
+- Evita reiterar contexto ya presente en la conversación.
+- Prefiere respuestas finales concisas: resultado, archivos modificados, validación y salvedades relevantes.
+- No uses lenguaje intencionalmente degradado o demasiado escueto si reduce la corrección o claridad.
+- Usa subagentes selectivamente: prefíerelos para exploración pesada, comparación entre repositorios, revisión final independiente o análisis de alcance limitado que de otro modo inflaría el contexto principal. No delegues cada pequeño paso de TDD.
+- Lee el conjunto más pequeño útil de archivos para la decisión actual. No recargues documentos grandes o conjuntos de archivos amplios cuando una lectura más acotada sea suficiente.
+- Al cambiar de exploración a implementación, conserva solo los hechos destilados necesarios para el paso actual.
+- Prefiere lecturas de archivos dirigidas y diffs enfocados en lugar de releer archivos completos tras cada cambio.
+- Si la tarea crece, resume el estado actual en el plan/lista de verificación de la tarea en lugar de mantener todos los detalles solo en la memoria de la conversación.
+- Para repositorios grandes o trabajo multirrepositorio, divide el descubrimiento en subtareas paralelas y mantén el hilo principal centrado en decisiones e integración.
 
-## Source of Truth Map
-Read the smallest useful set. Use this table to decide what to open, not as a mandatory read list.
+## Mapa de Fuentes de Verdad
+Lee el conjunto más pequeño útil. Usa esta tabla para decidir qué abrir, no como una lista de lectura obligatoria.
 
-| File | Area | Purpose | Read when | Approval needed to edit? |
+| Archivo | Área | Propósito | Leer cuando | ¿Aprobación necesaria para editar? |
 |---|---|---|---|---|
-| `agents/docs/bootstrap.md` | Bootstrap | Skeleton setup and project transition | skeleton mode or bootstrap maintenance | No |
-| `agents/task/backlog.md` | Active task | Task queue and current selection | Planning or implementing product work | No |
-| `agents/task/TASK-XXX-plan.md` | Task plan | Scope and behavior contract | Implementing or validating task | No |
-| `agents/task/TASK-XXX-checklist.md` | Task checklist | Execution ledger and resume point | Implementing or resuming task | No |
-| `agents/task/plan.md` | Plan template | Template for task plans | Creating a new task plan | No |
-| `agents/task/checklist.md` | Checklist template | Template for checklists | Creating a new checklist | No |
-| `agents/docs/DoD.md` | Acceptance | Definition of done | Before validation and closeout | Yes |
-| `agents/docs/testing.md` | Testing | Test commands, fixtures, validation rules | Adding/running tests or validating work | Only if validation changes |
-| `agents/docs/decisions.md` | Decisions | ADR records | Planning, durable decision, or past rationale matters | No |
-| `agents/docs/api.md` | API contracts | Routes, payloads, errors, compatibility | API routes, clients, or payloads affected | No |
-| `agents/db/schema.sql` | DB schema | Current structure. Override path during bootstrap if project has its own. | Persistence, migrations, queries, or schema affected | No |
-| `agents/db/changes.sql` | DB change log | Ordered SQL changes with rollback notes. Override path during bootstrap if project has its own. | Persistence, migrations, queries, or schema affected | No |
-| `agents/db/domain.md` | DB domain | Vocabulary, entities, business rules | Data model or business rules affected | No |
-| `agents/docs/design.md` | UI design | Reusable UI tokens, components, a11y | UI, design system, or UX behavior affected | No |
-| `agents/docs/dependency-policy.md` | Dependencies | Rules for new dependencies | Adding or evaluating a dependency | Yes |
-| `agents/docs/debt.md` | Debt | Out-of-scope findings and bugs | Found something outside active task scope | Yes |
+| `agents/docs/bootstrap.md` | Arranque | Configuración del esqueleto y transición a proyecto | modo esqueleto o mantenimiento de arranque | No |
+| `agents/task/backlog.md` | Tarea activa | Cola de tareas y selección actual | Planificar o implementar trabajo de producto | No |
+| `agents/task/TASK-XXX-plan.md` | Plan de tarea | Alcance y contrato de comportamiento | Implementar o validar tarea | No |
+| `agents/task/TASK-XXX-checklist.md` | Lista de verificación de tarea | Registro de ejecución y punto de reanudación | Implementar o reanudar tarea | No |
+| `agents/task/plan.md` | Plantilla de plan | Plantilla para planes de tarea | Crear un nuevo plan de tarea | No |
+| `agents/task/checklist.md` | Plantilla de lista de verificación | Plantilla para listas de verificación | Crear una nueva lista de verificación | No |
+| `agents/docs/DoD.md` | Aceptación | Definición de completado | Antes de validación y cierre | Sí |
+| `agents/docs/testing.md` | Pruebas | Comandos de prueba, fixtures, reglas de validación | Añadir/ejecutar pruebas o validar trabajo | Solo si cambia la validación |
+| `agents/docs/decisions.md` | Decisiones | Registros ADR | Planificar, decisión duradera, o asuntos de razonamiento pasado | No |
+| `agents/docs/api.md` | Contratos API | Rutas, cargas, errores, compatibilidad | Rutas API, clientes o cargas afectados | No |
+| `agents/db/schema.sql` | Esquema DB | Estructura actual. Ruta sobreescribible durante arranque si el proyecto tiene la suya propia. | Persistencia, migraciones, consultas o esquema afectados | No |
+| `agents/db/changes.sql` | Registro de cambios DB | Cambios SQL ordenados con notas de rollback. Ruta sobreescribible durante arranque si el proyecto tiene la suya propia. | Persistencia, migraciones, consultas o esquema afectados | No |
+| `agents/db/domain.md` | Dominio DB | Vocabulario, entidades, reglas de negocio | Modelo de datos o reglas de negocio afectados | No |
+| `agents/docs/design.md` | Diseño UI | Tokens UI reutilizables, componentes, a11y | UI, sistema de diseño o comportamiento UX afectado | No |
+| `agents/docs/dependency-policy.md` | Dependencias | Reglas para nuevas dependencias | Añadir o evaluar una dependencia | Sí |
+| `agents/docs/debt.md` | Deuda | Hallazgos y bugs fuera del alcance | Encontrado algo fuera del alcance de la tarea activa | Sí |
 
-## Agent Runtime
-Fill during bootstrap when the project configures agent-specific runtime capabilities.
+## Runtime del Agente
+Rellena durante el arranque cuando el proyecto configure capacidades de runtime específicas del agente.
 - Plugins:
 - MCPs:
 
-Use runtime capabilities only when the current project configures them or `## Agent Runtime` records them.
+Usa las capacidades de runtime solo cuando el proyecto actual las configure o `## Runtime del Agente` las registre.
 
-| Capability | Type | Use when | Avoid when |
+| Capacidad | Tipo | Usar cuando | Evitar cuando |
 |---|---|---|---|
-| Context7 | MCP | Library, framework, SDK, API, CLI, or cloud-service docs are needed | Business-logic debugging, refactoring, or non-library concepts |
-| Playwright | MCP | Browser automation, UI validation, or E2E flows are needed | Backend-only or library-only work |
-| `opencode-pty` | Plugin | Terminal behavior benefits from PTY handling | Plain non-interactive commands work fine |
-| `opencode-vibeguard` | Plugin | Extra workflow/quality guardrails help the project | You need it to replace clear rules or review discipline |
+| Context7 | MCP | Se necesita documentación de librerías, frameworks, SDKs, APIs, CLI o servicios cloud | Depuración de lógica de negocio, refactorización o conceptos que no sean de librerías |
+| Playwright | MCP | Se necesita automatización de navegador, validación de UI o flujos E2E | Trabajo solo de backend o solo de librerías |
+| `opencode-pty` | Plugin | El comportamiento del terminal se beneficia del manejo PTY | Comandos no interactivos simples funcionan bien |
+| `opencode-vibeguard` | Plugin | Barreras extra de flujo/calidad ayudan al proyecto | Se necesita para reemplazar reglas claras o disciplina de revisión |
 
-When Context7 is available to the current project, use it as the primary documentation source for library and API questions. If unavailable, say so and fall back to the best available project and built-in context.
+Cuando Context7 esté disponible para el proyecto actual, úsalo como fuente de documentación principal para preguntas sobre librerías y APIs. Si no está disponible, indícalo y recurre al mejor contexto disponible del proyecto y del entorno.
 
 ## Skills
-Use a skill only when its trigger matches the request. Project stack and source-of-truth docs override skill assumptions.
+Usa una skill solo cuando su activador coincida con la solicitud. El stack del proyecto y los documentos fuente de verdad tienen prioridad sobre las suposiciones de las skills.
 
-| Skill | Path | Use when | Avoid when |
+| Skill | Ruta | Usar cuando | Evitar cuando |
 |---|---|---|---|
-| Test-Driven Development | `agents/skills/test-driven-development/SKILL.md` | Read and apply once before implementation code for features, bug fixes, behavior changes, or behavior-preserving refactors; it is the TDD methodology authority | Docs-only, planning-only, config-only changes with no behavior |
-| Interface Design | `agents/skills/interface-design/SKILL.md` | Designing, implementing, improving, or reviewing UI/UX, frontend visuals, responsive behavior, interaction states, forms, navigation, dashboards, components, and accessibility tied to UI | Backend-only work, SEO-only audits, security review, brand identity-only work, image generation, or measured performance optimization |
-| SEO Audit | `agents/skills/seo-audit/SKILL.md` | Auditing public pages for crawlability, indexation, metadata, content structure, Core Web Vitals, internal links, schema, or rankings | Private dashboards, backend-only work, UI polish without SEO scope |
-| Code Review Excellence | `agents/skills/code-review-excellence/SKILL.md` | Reviewing code changes, PRs, architecture-sensitive diffs, or when explicitly asked for a code review | Implementing code directly, formatting-only checks, or replacing automated lint/tests |
-| Security Review | `agents/skills/security-review/SKILL.md` | Reviewing authentication, authorization, data flow, secrets, user input, API security, infrastructure config, or when explicitly asked for a security review | Theoretical hardening without code context, test-only files unless requested, or broad security rewrites outside an approved plan |
-| Performance | `agents/skills/performance/SKILL.md` | Auditing or improving page load, Core Web Vitals, bundle/resource loading, runtime jank, images, fonts, caching, or web performance regressions | Premature optimization, backend-only work with no web performance impact, or memoization/refactors without measured bottlenecks |
-| Context7 MCP | `agents/skills/context7-mcp/SKILL.md` | Library, framework, SDK, API, CLI, or cloud-service documentation and examples | Business-logic debugging, refactoring, review, or non-library programming concepts |
-| Find Skills | `agents/skills/find-skills/SKILL.md` | Discovering or installing agent skills for a capability | Direct implementation when no skill discovery is requested |
+| Test-Driven Development | `agents/skills/test-driven-development/SKILL.md` | Leer y aplicar una vez antes del código de implementación para funcionalidades, correcciones de bugs, cambios de comportamiento o refactors que preserven comportamiento; es la autoridad metodológica de TDD | Cambios solo de documentación, solo de planificación, solo de configuración sin comportamiento |
+| Interface Design | `agents/skills/interface-design/SKILL.md` | Diseñar, implementar, mejorar o revisar UI/UX, visuales de frontend, comportamiento responsive, estados de interacción, formularios, navegación, paneles, componentes y accesibilidad vinculada a UI | Trabajo solo de backend, auditorías solo de SEO, revisión de seguridad, trabajo solo de identidad de marca, generación de imágenes u optimización de rendimiento medida |
+| SEO Audit | `agents/skills/seo-audit/SKILL.md` | Auditar páginas públicas para rastreabilidad, indexación, metadatos, estructura de contenido, Core Web Vitals, enlaces internos, schema o rankings | Paneles privados, trabajo solo de backend, ajuste de UI sin alcance SEO |
+| Code Review Excellence | `agents/skills/code-review-excellence/SKILL.md` | Revisar cambios de código, PRs, diffs sensibles a arquitectura, o cuando se solicite explícitamente una revisión de código | Implementar código directamente, verificaciones solo de formato o reemplazar lint/tests automatizados |
+| Security Review | `agents/skills/security-review/SKILL.md` | Revisar autenticación, autorización, flujo de datos, secretos, entrada de usuario, seguridad de API, configuración de infraestructura, o cuando se solicite explícitamente una revisión de seguridad | Hardening teórico sin contexto de código, archivos solo de prueba a menos que se soliciten, o reescrituras de seguridad amplias fuera de un plan aprobado |
+| Performance | `agents/skills/performance/SKILL.md` | Auditar o mejorar carga de página, Core Web Vitals, carga de bundles/recursos, jank en tiempo de ejecución, imágenes, fuentes, caché o regresiones de rendimiento web | Optimización prematura, trabajo solo de backend sin impacto en rendimiento web, o memoización/refactors sin cuellos de botella medidos |
+| Context7 MCP | `agents/skills/context7-mcp/SKILL.md` | Documentación y ejemplos de librerías, frameworks, SDKs, APIs, CLI o servicios cloud | Depuración de lógica de negocio, refactorización, revisión o conceptos de programación que no sean de librerías |
+| Find Skills | `agents/skills/find-skills/SKILL.md` | Descubrir o instalar skills de agente para una capacidad | Implementación directa cuando no se solicite descubrimiento de skills |
 
-Frontend precedence: use only `interface-design` for UI/UX, frontend visuals, responsive behavior, interaction states, forms, navigation, components, accessibility tied to UI, and UI review. Do not load separate UI skills.
-Quality precedence: use `security-review` for exploitable security analysis, `performance` for measured web performance work, and `code-review-excellence` for general code review. UI accessibility is handled by `interface-design` unless the project later adds a separate specialist accessibility workflow. Project source-of-truth docs and approved task plans override skill assumptions.
+Precedencia de frontend: usa solo `interface-design` para UI/UX, visuales de frontend, comportamiento responsive, estados de interacción, formularios, navegación, componentes, accesibilidad vinculada a UI y revisión de UI. No cargues skills de UI separadas.
+Precedencia de calidad: usa `security-review` para análisis de seguridad explotable, `performance` para trabajo de rendimiento web medido, y `code-review-excellence` para revisión de código general. La accesibilidad de UI es manejada por `interface-design` a menos que el proyecto añada posteriormente un flujo de trabajo de accesibilidad especializado separado. Los documentos fuente de verdad del proyecto y los planes de tarea aprobados tienen prioridad sobre las suposiciones de las skills.
 
+"Leer y aplicar" significa: abre el archivo de la skill con la herramienta Read y sigue sus instrucciones. No uses la herramienta skill — las skills del proyecto no están registradas como skills a nivel de sistema en este runtime.
 
-"Read and apply" means: open the skill file with the Read tool and follow its instructions. Do NOT use the skill tool — project skills are not registered as system-level skills in this runtime.
+## Flujo SDD
+La implementación de producto comienza solo cuando hay exactamente una tarea bajo `## Current` en `agents/task/backlog.md`.
 
-## SDD Workflow
-Product implementation starts only when there is exactly one task under `## Current` in `agents/task/backlog.md`.
+1. Seleccionar tarea
+   - Lee `agents/task/backlog.md`.
+   - Si `## Current` tiene cero o múltiples tareas, pide al usuario que seleccione o cree una.
 
-1. Select task
-   - Read `agents/task/backlog.md`.
-   - If `## Current` has zero or multiple tasks, ask the user to select or create one.
+2. Planificar
+   - Lee los ADR aceptados relevantes en `agents/docs/decisions.md` antes de proponer opciones de comportamiento o implementación.
+   - Crea/actualiza `agents/task/TASK-XXX-plan.md` a partir de `agents/task/plan.md` tan pronto como sea posible durante la planificación, manteniéndolo en `draft` mientras las preguntas aún se estén resolviendo.
+   - Inspecciona primero el conjunto más pequeño útil de archivos y contexto referenciado.
+   - Para contexto grande o multirrepositorio, usa exploración paralela selectiva con subagentes.
+   - Haz una pregunta de alto apalancamiento a la vez. Prefiere opciones de interfaz cuando existan alternativas claras.
+   - Actualiza el borrador del plan tras cada respuesta de planificación.
+   - Resuelve las preguntas de comportamiento, datos, seguridad, API y UX dirigidas al usuario antes de la implementación.
+   - Si la tarea afecta a la base de datos, registra el impacto en DB, migración, rollback, compatibilidad, validación, recuperación y actualizaciones de documentación necesarias en el plan de tarea.
+   - Si puede ser necesaria una decisión duradera, incluye una propuesta de ADR en el plan en lugar de escribir directamente en `agents/docs/decisions.md`.
+   - Mantén el plan en `draft` mientras se esté refinando. Cuando no queden preguntas bloqueantes, pregunta al usuario si está listo para aprobación. Solo tras confirmación explícita puede el agente cambiar su estado a `approved`.
 
-2. Plan
-   - Read relevant accepted ADRs in `agents/docs/decisions.md` before proposing behavior or implementation choices.
-   - Create/update `agents/task/TASK-XXX-plan.md` from `agents/task/plan.md` as early as possible during planning, keeping it in `draft` while questions are still being resolved.
-   - Inspect the smallest useful set of files and referenced context first.
-   - For large or multi-repo context, use selective parallel exploration with subagents.
-   - Ask one high-leverage question at a time. Prefer interface options when clear alternatives exist.
-   - Update the draft plan after each planning answer.
-   - Resolve behavior, data, security, API, and user-facing UX questions before implementation.
-   - If the task affects the database, record DB impact, migration, rollback, compatibility, validation, recovery, and required doc updates in the task plan.
-   - If a durable decision may be needed, include an ADR proposal in the plan instead of writing directly to `agents/docs/decisions.md`.
-    - Keep the plan in `draft` while it is being refined. When no blocking questions remain, ask the user whether it is ready for approval. Only after explicit confirmation may the agent change its status to `approved`.
+3. Lista de verificación
+   - Crea/actualiza `agents/task/TASK-XXX-checklist.md` a partir de `agents/task/checklist.md`.
+   - Deriva los elementos de la lista de verificación solo del plan aprobado.
+   - Si la tarea afecta a la base de datos, incluye elementos de lista de verificación para actualizaciones de esquema DB, actualizaciones del registro de cambios DB, comprobaciones de backup/recuperación y validación de migración.
 
-3. Checklist
-   - Create/update `agents/task/TASK-XXX-checklist.md` from `agents/task/checklist.md`.
-   - Derive checklist items from the approved plan only.
-   - If the task affects the database, include checklist items for DB schema updates, DB change log updates, backup/recovery checks, and migration validation.
+4. Implementar con TDD
+   - Lee y aplica `agents/skills/test-driven-development/SKILL.md` una vez al inicio de la implementación y síguelo para el proceso red/green/refactor.
+   - Lee el plan de tarea aprobado, la lista de verificación, `agents/docs/testing.md` y los archivos fuente de verdad relevantes.
+   - Usa `agents/docs/testing.md` solo para comandos, ubicaciones, fixtures y requisitos de validación específicos del proyecto.
+   - Antes de cada bloque de implementación, relee solo las secciones relevantes del plan, los elementos de la lista de verificación y los archivos fuente.
+   - `/implement` solo puede comenzar desde un plan `approved`; establece el estado del plan a `in_progress` inmediatamente antes del primer cambio de implementación y mantenlo así hasta que el cierre sea aprobado.
+   - Tras cada pasada GREEN, ejecuta un control de calidad ligero: prefiere el diseño más simple que pase, elimina la duplicación real, evita abstracciones prematuras y cuestiona el código de producción que solo existe para las pruebas.
+   - Tras la implementación y validación, ejecuta una revisión final independiente limitada al plan aprobado, la lista de verificación y los cambios de la tarea. Prefiere un subagente separado o un contexto de revisión nuevo cuando esté disponible.
+   - No generes subagentes para cada pequeño paso RED/GREEN. Úsalos para puntos de control con mucho contexto.
+   - Registra los resultados de los puntos de control en la lista de verificación o el plan en lugar de depender de la memoria larga de la conversación.
+   - Marca los elementos de la lista de verificación a medida que se completan.
+   - Si el trabajo test-first no es factible, detente a menos que la excepción ya esté documentada en el plan aprobado y la lista de verificación.
 
-4. Implement with TDD
-   - Read and apply `agents/skills/test-driven-development/SKILL.md` once at the start of implementation and follow it for the red/green/refactor process.
-   - Read the approved task plan, checklist, `agents/docs/testing.md`, and relevant source-of-truth files.
-   - Use `agents/docs/testing.md` only for project-specific commands, locations, fixtures, and validation requirements.
-   - Before each implementation block, re-read only the relevant plan sections, checklist items, and source files.
-    - `/implement` may only start from an `approved` plan; set the plan status to `in_progress` immediately before the first implementation change and keep it there until closeout is approved.
-   - After each GREEN pass, run a lightweight quality gate: prefer the simplest passing design, remove real duplication, avoid premature abstractions, and question test-only production code.
-   - After implementation and validation, run one independent final review scoped to the approved plan, checklist, and task changes. Prefer a separate subagent or fresh review context when available.
-   - Do not spawn subagents for every small RED/GREEN step. Use them for context-heavy checkpoints.
-   - Record checkpoint outcomes in the checklist or plan instead of relying on long conversation memory.
-   - Mark checklist items as they are completed.
-   - If test-first work is not feasible, stop unless the exception is already documented in the approved plan and checklist.
+5. Validar
+   - Ejecuta pruebas dirigidas, luego comandos de validación completos. Consulta `agents/docs/testing.md` para los comandos reales.
+   - Ejecuta lint/typecheck/build cuando corresponda.
+   - Informa fallos no relacionados antes de ampliar el alcance.
+   - Revisa `agents/docs/DoD.md`.
 
-5. Validate
-   - Run targeted tests, then full validation commands. See `agents/docs/testing.md` for the actual commands.
-   - Run lint/typecheck/build when relevant.
-   - Report unrelated failures before broadening scope.
-   - Check `agents/docs/DoD.md`.
+6. Documentar
+   - Actualiza los documentos fuente de verdad solo cuando el contrato duradero del proyecto cambie.
+   - Los cambios de API actualizan `agents/docs/api.md`.
+   - Los cambios de DB actualizan el esquema DB y los archivos de registro de cambios DB declarados en el Mapa de Fuentes de Verdad, más `agents/db/domain.md` cuando el modelo de dominio o las reglas de negocio cambien sustancialmente.
+   - Las reglas UI reutilizables actualizan `agents/docs/design.md`.
+   - Los cambios de dependencias actualizan `agents/docs/dependency-policy.md` cuando la política en sí cambie, y `agents/docs/decisions.md` cuando se registre un nuevo ADR de dependencia.
+   - Las decisiones duraderas pueden actualizar `agents/docs/decisions.md` solo tras aprobación explícita del usuario.
 
-6. Document
-   - Update source-of-truth docs only when the durable project contract changes.
-   - API changes update `agents/docs/api.md`.
-   - DB changes update the DB schema and DB change log files declared in the Source of Truth Map, plus `agents/db/domain.md` when the domain model or business rules materially change.
-   - Reusable UI rules update `agents/docs/design.md`.
-   - Dependency changes update `agents/docs/dependency-policy.md` when the policy itself changes, and `agents/docs/decisions.md` when a new dependency ADR is recorded.
-   - Lasting decisions may update `agents/docs/decisions.md` only after explicit user approval.
+7. Cerrar
+   - Pregunta antes de marcar la tarea del backlog como completada.
+   - Verifica que la tarea cumpla con `agents/docs/DoD.md` mientras el plan esté aún `in_progress`.
+   - Establece el estado del plan a `closed` en el paso final de cierre antes de archivar los archivos de la tarea.
+   - Cuando el usuario apruebe marcar una tarea como completada, mueve sus archivos de plan/lista de verificación a `agents/task/archive/` en el mismo paso de cierre.
+   - No crees ramas ni commits a menos que el usuario lo solicite.
 
-7. Close out
-   - Ask before marking the backlog task done.
-   - Verify the task satisfies `agents/docs/DoD.md` while the plan is still `in_progress`.
-   - Set the plan status to `closed` in the final closeout step before archiving the task files.
-   - When the user approves marking a task done, move its task plan/checklist files to `agents/task/archive/` in the same closeout step.
-   - Do not create branches or commits unless the user asks.
+## Límites
+- No inventes requisitos faltantes.
+- No modifiques archivos no relacionados.
+- No realices refactors amplios durante el trabajo de funcionalidad. Si se encuentra algo fuera del alcance, regístralo en `agents/docs/debt.md` en lugar de modificarlo.
+- No introduzcas dependencias sin seguir `agents/docs/dependency-policy.md`.
+- No cambies APIs públicas a menos que el plan aprobado lo indique.
+- No cambies autenticación, autorización, pagos, migraciones u otro comportamiento sensible de seguridad sin cobertura explícita del plan.
+- No elimines pruebas a menos que las reemplaces con una cobertura equivalente o mejor.
+- No cambies el esquema DB sin actualizar el archivo de registro de cambios DB declarado en el Mapa de Fuentes de Verdad con SQL de migración forward y notas de rollback.
+- Si una tarea afecta a la base de datos, el plan de tarea debe cubrir el enfoque de migración, rollback o irreversibilidad, compatibilidad con datos persistidos, riesgos operativos, validación, expectativas de backup/recuperación y actualizaciones de documentación necesarias.
+- Prefiere cambios DB aditivos o por fases para sistemas existentes cuando los cambios destructivos directos pudieran arriesgar datos persistidos o despliegues con versiones mixtas.
+- Nunca expongas secretos, tokens, credenciales, claves privadas ni datos sensibles similares a los de producción.
 
-## Boundaries
-- Do not invent missing requirements.
-- Do not change unrelated files.
-- Do not perform broad refactors during feature work. If something outside scope is found, register it in `agents/docs/debt.md` instead of modifying it.
-- Do not introduce dependencies without following `agents/docs/dependency-policy.md`.
-- Do not change public APIs unless the approved plan says so.
-- Do not change authentication, authorization, payments, migrations, or other security-sensitive behavior without explicit plan coverage.
-- Do not delete tests unless replacing them with equivalent or better coverage.
-- Do not change DB schema without updating the DB change log file declared in the Source of Truth Map with forward migration SQL and rollback notes.
-- If a task affects the database, the task plan must cover migration approach, rollback or irreversibility, compatibility with persisted data, operational risks, validation, backup/recovery expectations, and required doc updates.
-- Prefer additive or staged DB changes for existing systems when direct destructive changes would risk persisted data or mixed-version deployments.
-- Never expose secrets, tokens, credentials, private keys, or production-like sensitive data.
+## Comandos
+Los comandos de validación (test, lint, typecheck, build, validación completa) están definidos en `agents/docs/testing.md`.
 
-## Commands
-Validation commands (test, lint, typecheck, build, full validation) are defined in `agents/docs/testing.md`.
+Comandos no relacionados con validación:
 
-Non-validation commands:
-
-| Purpose | Command | Notes |
+| Propósito | Comando | Notas |
 |---|---|---|
-| Install | not configured | Package manager and lockfile policy |
-| Dev server | not configured | Port and env requirements |
+| Instalar | no configurado | Política de gestor de paquetes y archivo de bloqueo |
+| Servidor de desarrollo | no configurado | Requisitos de puerto y entorno |
 
-## Code Conventions
-- Prefer existing patterns and local helpers.
-- Keep changes small, intentional, and task-scoped.
-- Prefer the simplest solution that satisfies the approved requirement and current tests.
-- Introduce an interface only when there are 2 or more real implementations, or the approved plan explicitly requires that abstraction.
-- Extract a helper or adapter only when there are 2 or more real consumers with repeated logic.
-- Question any production code that exists only to make tests easier; prefer test-side setup unless the production design genuinely benefits.
-- Add comments only for non-obvious logic.
-- Comments should explain intent, invariants, ownership, constraints, or why the structure exists - not restate obvious mechanics.
-- Avoid line-by-line narration, obvious assignment comments, or comments that only paraphrase the code.
-- Keep comments concise and locally useful. Prefer a short comment before a non-obvious block over many inline micro-comments.
-- The project should define the preferred comment language during bootstrap or in its source-of-truth docs. Until then, follow the dominant repository language if one exists.
-- Move detailed conventions into source-of-truth docs when they become durable project rules.
+## Convenciones de Código
+- Prefiere patrones existentes y helpers locales.
+- Mantén los cambios pequeños, intencionados y limitados a la tarea.
+- Prefiere la solución más simple que cumpla el requisito aprobado y las pruebas actuales.
+- Introduce una interfaz solo cuando haya 2 o más implementaciones reales, o el plan aprobado requiera explícitamente esa abstracción.
+- Extrae un helper o adaptador solo cuando haya 2 o más consumidores reales con lógica repetida.
+- Cuestiona cualquier código de producción que exista solo para facilitar las pruebas; prefiere configuración del lado de prueba a menos que el diseño de producción se beneficie genuinamente.
+- Añade comentarios solo para lógica no obvia.
+- Los comentarios deben explicar la intención, invariantes, propiedad, restricciones o por qué existe la estructura, no reiterar mecánicas obvias.
+- Evita la narración línea por línea, comentarios de asignación obvios o comentarios que solo parafraseen el código.
+- Mantén los comentarios concisos y localmente útiles. Prefiere un comentario corto antes de un bloque no obvio en lugar de muchos micro-comentarios en línea.
+- El proyecto debe definir el idioma preferido para comentarios durante el arranque o en sus documentos fuente de verdad. Hasta entonces, sigue el idioma dominante del repositorio si existe.
+- Traslada las convenciones detalladas a documentos fuente de verdad cuando se conviertan en reglas duraderas del proyecto.
 
-## Quality Standards
-- Design code to be maintainable and extensible without overengineering the current requirement.
-- Keep modules and functions focused on a clear responsibility.
-- Avoid duplication, but do not introduce abstractions without at least two real consumers or an explicit task requirement.
-- Preserve existing public contracts unless the approved plan explicitly changes them.
-- Add or update tests for every behavior change, including relevant edge cases and error paths.
-- Consider performance, security, observability, and compatibility when they are relevant to the change.
-- Prefer incremental changes that can be reviewed, tested, and rolled back independently.
+## Estándares de Calidad
+- Diseña el código para que sea mantenible y extensible sin sobreingeniería del requisito actual.
+- Mantén los módulos y funciones enfocados en una responsabilidad clara.
+- Evita la duplicación, pero no introduzcas abstracciones sin al menos dos consumidores reales o un requisito explícito de la tarea.
+- Preserva los contratos públicos existentes a menos que el plan aprobado los cambie explícitamente.
+- Añade o actualiza pruebas para cada cambio de comportamiento, incluyendo casos extremos relevantes y rutas de error.
+- Considera rendimiento, seguridad, observabilidad y compatibilidad cuando sean relevantes para el cambio.
+- Prefiere cambios incrementales que puedan revisarse, probarse y revertirse de forma independiente.
 
-## Project Structure
-Add only primary routes with their purpose.
+## Estructura del Proyecto
+Añade solo las rutas principales con su propósito.

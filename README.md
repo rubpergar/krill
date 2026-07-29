@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  An agent skeleton for disciplined development with <strong>OpenCode</strong>, SDD, TDD, and docs as source of truth.
+  Un esqueleto de agente para desarrollo disciplinado con <strong>OpenCode</strong>, SDD, TDD y documentación como fuente de verdad.
 </p>
 
 <p align="center">
@@ -13,16 +13,16 @@
 
 ---
 
-## What It Is
+## Qué Es
 
-**Krill** is a workspace template for development agents. It enables an agent to step into a project with clear rules, traceable tasks, and disciplined validation — before touching a single line of product code.
+**Krill** es una plantilla de espacio de trabajo para agentes de desarrollo. Permite que un agente entre en un proyecto con reglas claras, tareas trazables y validación disciplinada — antes de tocar una sola línea de código de producto.
 
-The repository is currently in **skeleton mode**: no product code yet. It is ready to be adopted into an existing project or used to initialize a new one through the bootstrap workflow.
+El repositorio está actualmente en **modo esqueleto**: aún no hay código de producto. Está listo para ser adoptado en un proyecto existente o utilizado para inicializar uno nuevo mediante el flujo de arranque.
 
-## Workflow
+## Flujo de Trabajo
 
 <details>
-<summary>Full workflow</summary>
+<summary>Flujo de trabajo completo</summary>
 
 ```mermaid
 flowchart LR
@@ -138,90 +138,90 @@ flowchart LR
 
 </details>
 
-## What's Included
+## Qué Incluye
 
-| Area | Contents |
+| Área | Contenidos |
 |---|---|
-| Agent rules | `AGENTS.md` with mode, boundaries, SDD/TDD workflow, and source-of-truth map |
-| OpenCode commands | Bootstrap, planning, implementation, closeout, testing, semantic commits, prompt tools, README, and trivial-change fast path |
-| Tasks | Backlog, plans, checklists, and archive under `agents/task/` |
-| Documentation | DoD, testing, API, DB, decisions, debt, design, and dependency policy |
-| Skills | TDD, code review, security, performance, SEO, UI, Context7 MCP, and skill discovery |
+| Reglas del agente | `AGENTS.md` con modo, límites, flujo SDD/TDD y mapa de fuentes de verdad |
+| Comandos OpenCode | Arranque, planificación, implementación, cierre, pruebas, commits semánticos, herramientas de prompt, README y ruta rápida para cambios triviales |
+| Tareas | Backlog, planes, listas de verificación y archivo bajo `agents/task/` |
+| Documentación | DoD, pruebas, API, DB, decisiones, deuda, diseño y política de dependencias |
+| Skills | TDD, revisión de código, seguridad, rendimiento, SEO, UI, Context7 MCP y descubrimiento de skills |
 
-## Commands
+## Comandos
 
-| Command | Purpose |
+| Comando | Propósito |
 |---|---|
-| [`/bootstrap`](.opencode/commands/bootstrap.md) | Adopt the skeleton into an existing project and prepare transition to project mode |
-| [`/plan`](.opencode/commands/plan.md) | Create or refine the active task plan from conversation context |
-| [`/implement`](.opencode/commands/implement.md) | Generate the checklist and execute the approved task with TDD |
-| [`/closeout`](.opencode/commands/closeout.md) | Close the active task, archive task files, and finalize durable docs |
-| [`/test`](.opencode/commands/test.md) | Auto-discover test surface, expand coverage, and validate test changes |
-| [`/commit`](.opencode/commands/commit.md) | Group changes into semantic commits and push |
-| [`/skip-sdd-tdd`](.opencode/commands/skip-sdd-tdd.md) | Quick implementation of trivial, non-behavioral changes (bypasses SDD/TDD) |
-| [`/prompt`](.opencode/commands/prompt.md) | Convert a rough request into an optimized prompt (output only, no execution) |
-| [`/prompt-run`](.opencode/commands/prompt-run.md) | Convert a rough request into an optimized prompt and execute it |
-| [`/readme`](.opencode/commands/readme.md) | Regenerate the README from the actual project state |
+| [`/bootstrap`](.opencode/commands/bootstrap.md) | Adoptar el esqueleto en un proyecto existente y preparar la transición a modo proyecto |
+| [`/plan`](.opencode/commands/plan.md) | Crear o refinar el plan de la tarea activa a partir del contexto de la conversación |
+| [`/implement`](.opencode/commands/implement.md) | Generar la lista de verificación y ejecutar la tarea aprobada con TDD |
+| [`/closeout`](.opencode/commands/closeout.md) | Cerrar la tarea activa, archivar archivos de tarea y finalizar documentos duraderos |
+| [`/test`](.opencode/commands/test.md) | Auto-descubrir superficie de prueba, ampliar cobertura y validar cambios de prueba |
+| [`/commit`](.opencode/commands/commit.md) | Agrupar cambios en commits semánticos y hacer push |
+| [`/skip-sdd-tdd`](.opencode/commands/skip-sdd-tdd.md) | Implementación rápida de cambios triviales sin comportamiento (omite SDD/TDD) |
+| [`/prompt`](.opencode/commands/prompt.md) | Convertir una solicitud aproximada en un prompt optimizado (solo salida, sin ejecución) |
+| [`/prompt-run`](.opencode/commands/prompt-run.md) | Convertir una solicitud aproximada en un prompt optimizado y ejecutarlo |
+| [`/readme`](.opencode/commands/readme.md) | Regenerar el README desde el estado real del proyecto |
 
-## Requirements
+## Requisitos
 
-- [OpenCode](https://opencode.ai) — the skeleton is designed around its commands, agents, and configuration.
-- Context7 MCP — required if you want to use the `context7-mcp` skill for up-to-date library, SDK, and framework documentation.
+- [OpenCode](https://opencode.ai) — el esqueleto está diseñado en torno a sus comandos, agentes y configuración.
+- Context7 MCP — necesario si quieres usar la skill `context7-mcp` para documentación actualizada de librerías, SDKs y frameworks.
 
-## Optional Integrations
+## Integraciones Opcionales
 
-Use these only when they materially improve the project using `Krill`.
+Úsalas solo cuando mejoren materialmente el proyecto usando `Krill`.
 
-| Complement | Type | Useful for |
+| Complemento | Tipo | Útil para |
 |---|---|---|
-| Context7 | MCP | Current docs for libraries, frameworks, SDKs, CLIs, and cloud services |
-| Playwright | MCP | Browser automation, UI validation, E2E flows |
-| `opencode-pty` | Plugin | Better terminal/session handling for command-heavy workflows |
-| `opencode-vibeguard` | Plugin | Extra quality/governance friction against sloppy agent execution |
+| Context7 | MCP | Documentación actualizada de librerías, frameworks, SDKs, CLIs y servicios cloud |
+| Playwright | MCP | Automatización de navegador, validación de UI, flujos E2E |
+| `opencode-pty` | Plugin | Mejor manejo de terminal/sesión para flujos con muchos comandos |
+| `opencode-vibeguard` | Plugin | Barrera extra de calidad/gobernanza contra ejecución descuidada del agente |
 
-Configure them in the consuming project's OpenCode setup only if that project benefits from them.
+Configúralos en la configuración de OpenCode del proyecto consumidor solo si ese proyecto se beneficia de ellos.
 
-## Installation
+## Instalación
 
-Clone the repository at the root of the workspace where you want to prepare the agent:
+Clona el repositorio en la raíz del espacio de trabajo donde quieras preparar el agente:
 
 ```bash
 git clone https://github.com/rubpergar/krill.git
 cd krill
 ```
 
-To adopt the skeleton into an **existing project**:
+Para adoptar el esqueleto en un **proyecto existente**:
 
 ```bash
 /bootstrap
 ```
 
-If you are starting a **new project** with no code yet, follow the incremental path described in [`agents/docs/bootstrap.md`](agents/docs/bootstrap.md).
+Si estás comenzando un **nuevo proyecto** sin código aún, sigue la ruta incremental descrita en [`agents/docs/bootstrap.md`](agents/docs/bootstrap.md).
 
-## Structure
+## Estructura
 
 ```text
 krill/
 ├── .opencode/
-│   └── commands/        # Custom OpenCode commands
-├── agents/              # Source-of-truth docs, tasks, DB, and agent skills
-├── AGENTS.md            # Main operating rules
-├── LICENSE              # MIT license
-├── README.md            # Project presentation
-└── skills-lock.json     # Skill provenance and integrity hashes
+│   └── commands/        # Comandos personalizados de OpenCode
+├── agents/              # Documentos fuente de verdad, tareas, DB y skills de agente
+├── AGENTS.md            # Reglas operativas principales
+├── LICENSE              # Licencia MIT
+├── README.md            # Presentación del proyecto
+└── skills-lock.json     # Hashes de procedencia e integridad de skills
 ```
 
-## Current Status
+## Estado Actual
 
-- Mode: `skeleton`.
-- No product stack configured yet.
-- No install, test, lint, typecheck, or build commands defined for product code.
-- Feature implementation is blocked until bootstrap is complete and the repo transitions to `project mode`.
+- Modo: `skeleton`.
+- Aún no hay stack de producto configurado.
+- No hay comandos de instalación, prueba, lint, typecheck ni build definidos para el código de producto.
+- La implementación de funcionalidades está bloqueada hasta que el arranque esté completo y el repositorio transicione a `modo proyecto`.
 
-## Contributing
+## Contribuir
 
-This is a private agent skeleton. If you reuse it, adapt the source-of-truth docs to your project first, and avoid introducing product code until bootstrap is finished.
+Este es un esqueleto de agente privado. Si lo reutilizas, adapta primero los documentos fuente de verdad a tu proyecto y evita introducir código de producto hasta que el arranque haya finalizado.
 
-## License
+## Licencia
 
-MIT. See [`LICENSE`](LICENSE) for details.
+MIT. Consulta [`LICENSE`](LICENSE) para más detalles.

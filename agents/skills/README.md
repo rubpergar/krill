@@ -1,19 +1,19 @@
-# Skills Provenance
+# Procedencia de Skills
 
-This directory contains optional agent skills used by the skeleton. Skills are loaded only when their trigger matches the task.
+Este directorio contiene skills de agente opcionales utilizadas por el esqueleto. Las skills se cargan solo cuando su activador coincide con la tarea.
 
-The canonical skills lock file is `skills-lock.json` in the repository root. It is the technical install record: it stores the upstream source, source path, and computed hash for each active skill. Keep it unless the skill installation mechanism is replaced, because this README is a human-facing license/provenance summary rather than a lock file.
+El archivo canónico de bloqueo de skills es `skills-lock.json` en la raíz del repositorio. Es el registro técnico de instalación: almacena la fuente upstream, la ruta de origen y el hash calculado para cada skill activa. Consérvalo a menos que se reemplace el mecanismo de instalación de skills, porque este README es un resumen de licencia/procedencia orientado a humanos, no un archivo de bloqueo.
 
-## License Policy
-- Keep each skill's original license and attribution files with the skill.
-- Before modifying a skill, check its front matter, local `LICENSE`/`NOTICE` files, this README, and the root `skills-lock.json`.
-- Internal company adaptations are allowed when the upstream license permits modification, but keep attribution and mark substantial changes.
-- Do not redistribute, publish, sell, or deliver this skeleton externally until all included skill licenses and notices have been reviewed.
-- If a skill has no local license file but its upstream repository license is known, preserve the upstream reference here and consider copying the license file into the skill directory.
-- This file is not legal advice; it is a working checklist so the agent does not assume permissions that are not present or recorded.
+## Política de Licencias
+- Mantén los archivos de licencia y atribución originales de cada skill junto con la skill.
+- Antes de modificar una skill, revisa su front matter, los archivos locales `LICENSE`/`NOTICE`, este README y el `skills-lock.json` raíz.
+- Las adaptaciones internas de la empresa están permitidas cuando la licencia upstream permita la modificación, pero conserva la atribución y marca los cambios sustanciales.
+- No redistribuyas, publiques, vendas ni entregues este esqueleto externamente hasta que se hayan revisado todas las licencias y avisos de las skills incluidas.
+- Si una skill no tiene un archivo de licencia local pero se conoce la licencia de su repositorio upstream, conserva la referencia upstream aquí y considera copiar el archivo de licencia al directorio de la skill.
+- Este archivo no es asesoría legal; es una lista de verificación de trabajo para que el agente no asuma permisos que no están presentes o registrados.
 
-## Modification Notes
-For substantial edits to a third-party skill, add a short note near the top of the modified skill:
+## Notas de Modificación
+Para ediciones sustanciales a una skill de terceros, añade una nota breve cerca del inicio de la skill modificada:
 
 ```md
 ## Internal Modifications
@@ -24,73 +24,73 @@ Distribution: Internal use only unless licenses are reviewed before redistributi
 Original source/license: <source and license>
 ```
 
-## Skill References
+## Referencias de Skills
 
 ### `code-review-excellence`
-- Local path: `agents/skills/code-review-excellence/`
-- Lock source: `wshobson/agents`
-- Lock source path: `plugins/developer-essentials/skills/code-review-excellence/SKILL.md`
-- Local license signal: no local license/front matter license found.
-- Upstream license checked: MIT License in `https://github.com/wshobson/agents/blob/main/LICENSE`.
-- Practical status: modification and internal commercial use are allowed under MIT; add local attribution/license reference before external redistribution.
+- Ruta local: `agents/skills/code-review-excellence/`
+- Fuente de bloqueo: `wshobson/agents`
+- Ruta de fuente de bloqueo: `plugins/developer-essentials/skills/code-review-excellence/SKILL.md`
+- Señal de licencia local: no se encontró licencia local/front matter.
+- Licencia upstream verificada: Licencia MIT en `https://github.com/wshobson/agents/blob/main/LICENSE`.
+- Estado práctico: se permiten modificación y uso comercial interno bajo MIT; añade referencia de atribución/licencia local antes de la redistribución externa.
 
 ### `context7-mcp`
-- Local path: `agents/skills/context7-mcp/`
-- Lock source: `upstash/context7` (GitHub; see `skills-lock.json`).
-- Lock source path (local copy): `<user-home-dir>/.agents/skills/context7-mcp/SKILL.md` (resolved during installation).
-- Local license signal: no local license/front matter license found.
-- Upstream license checked: not available from current repository metadata.
-- Practical status: treat as internal-only until provenance is recorded. This skill requires Context7 MCP tooling configured in the agent runtime; do not store API keys or credentials in this repository.
+- Ruta local: `agents/skills/context7-mcp/`
+- Fuente de bloqueo: `upstash/context7` (GitHub; consulta `skills-lock.json`).
+- Ruta de fuente de bloqueo (copia local): `<user-home-dir>/.agents/skills/context7-mcp/SKILL.md` (resuelta durante la instalación).
+- Señal de licencia local: no se encontró licencia local/front matter.
+- Licencia upstream verificada: no disponible desde los metadatos actuales del repositorio.
+- Estado práctico: tratar como solo interno hasta que se registre la procedencia. Esta skill requiere la herramienta Context7 MCP configurada en el runtime del agente; no almacenes claves API ni credenciales en este repositorio.
 
 ### `find-skills`
-- Local path: `agents/skills/find-skills/`
-- Lock source: `vercel-labs/skills` (GitHub; see `skills-lock.json`).
-- Lock source path (local copy): `<user-home-dir>/.agents/skills/find-skills/SKILL.md` (resolved during installation).
-- Local license signal: no local license/front matter license found.
-- Upstream license checked: not available from current repository metadata.
-- Practical status: treat as internal-only until provenance is recorded.
+- Ruta local: `agents/skills/find-skills/`
+- Fuente de bloqueo: `vercel-labs/skills` (GitHub; consulta `skills-lock.json`).
+- Ruta de fuente de bloqueo (copia local): `<user-home-dir>/.agents/skills/find-skills/SKILL.md` (resuelta durante la instalación).
+- Señal de licencia local: no se encontró licencia local/front matter.
+- Licencia upstream verificada: no disponible desde los metadatos actuales del repositorio.
+- Estado práctico: tratar como solo interno hasta que se registre la procedencia.
 
 ### `interface-design`
-- Local path: `agents/skills/interface-design/`
-- Lock source: internal consolidation.
-- Lock source path: `agents/skills/interface-design/SKILL.md`
-- Origin: consolidates and replaces the former `ui-ux-pro-max`, `frontend-design`, `web-design-guidelines`, and `accessibility` skills to avoid UI overlap and reduce token/resource usage.
-- Source material provenance: `ui-ux-pro-max` from `nextlevelbuilder/ui-ux-pro-max-skill` (MIT), `frontend-design` from `anthropics/skills` (local Apache-2.0 license file was present before consolidation), `web-design-guidelines` from `vercel-labs/agent-skills` / `vercel-labs/web-interface-guidelines` (MIT), and `accessibility` from `addyosmani/web-quality-skills` (MIT).
-- Practical status: internal skeleton guidance adapted from previously installed skills; review original license obligations before external redistribution.
+- Ruta local: `agents/skills/interface-design/`
+- Fuente de bloqueo: consolidación interna.
+- Ruta de fuente de bloqueo: `agents/skills/interface-design/SKILL.md`
+- Origen: consolida y reemplaza las antiguas skills `ui-ux-pro-max`, `frontend-design`, `web-design-guidelines` y `accessibility` para evitar solapamiento de UI y reducir el uso de tokens/recursos.
+- Procedencia del material fuente: `ui-ux-pro-max` de `nextlevelbuilder/ui-ux-pro-max-skill` (MIT), `frontend-design` de `anthropics/skills` (había un archivo de licencia local Apache-2.0 antes de la consolidación), `web-design-guidelines` de `vercel-labs/agent-skills` / `vercel-labs/web-interface-guidelines` (MIT), y `accessibility` de `addyosmani/web-quality-skills` (MIT).
+- Estado práctico: guía interna del esqueleto adaptada de skills previamente instaladas; revisa las obligaciones de licencia originales antes de la redistribución externa.
 
 ### `performance`
-- Local path: `agents/skills/performance/`
-- Lock source: `addyosmani/web-quality-skills`
-- Lock source path: `skills/performance/SKILL.md`
-- Local license signal: `license: MIT` in `SKILL.md` front matter.
-- Upstream license checked: MIT License in `https://github.com/addyosmani/web-quality-skills/blob/main/LICENSE`.
-- Practical status: modification and internal commercial use are allowed under MIT; keep copyright/license notices when redistributing substantial portions.
+- Ruta local: `agents/skills/performance/`
+- Fuente de bloqueo: `addyosmani/web-quality-skills`
+- Ruta de fuente de bloqueo: `skills/performance/SKILL.md`
+- Señal de licencia local: `license: MIT` en front matter de `SKILL.md`.
+- Licencia upstream verificada: Licencia MIT en `https://github.com/addyosmani/web-quality-skills/blob/main/LICENSE`.
+- Estado práctico: se permiten modificación y uso comercial interno bajo MIT; conserva los avisos de copyright/licencia al redistribuir porciones sustanciales.
 
 ### `security-review`
-- Local path: `agents/skills/security-review/`
-- Lock source: `getsentry/skills`
-- Lock source path: `skills/security-review/SKILL.md`
-- Local license signal: `license: LICENSE` in `SKILL.md` front matter.
-- Local license file: `agents/skills/security-review/LICENSE`, documenting OWASP Cheat Sheet Series material under CC BY-SA 4.0.
-- Upstream license checked: `getsentry/skills` repository reports Apache License 2.0; this local skill also includes OWASP-derived reference material under CC BY-SA 4.0.
-- Practical status: modification and internal commercial use are allowed, but preserve attribution. If redistributing adapted OWASP-derived material, follow CC BY-SA 4.0 attribution and ShareAlike obligations; for Sentry-origin material, follow Apache-2.0 notices.
+- Ruta local: `agents/skills/security-review/`
+- Fuente de bloqueo: `getsentry/skills`
+- Ruta de fuente de bloqueo: `skills/security-review/SKILL.md`
+- Señal de licencia local: `license: LICENSE` en front matter de `SKILL.md`.
+- Archivo de licencia local: `agents/skills/security-review/LICENSE`, documentando material de OWASP Cheat Sheet Series bajo CC BY-SA 4.0.
+- Licencia upstream verificada: el repositorio `getsentry/skills` reporta Licencia Apache 2.0; esta skill local también incluye material de referencia derivado de OWASP bajo CC BY-SA 4.0.
+- Estado práctico: se permiten modificación y uso comercial interno, pero conserva la atribución. Si redistribuyes material adaptado derivado de OWASP, sigue las obligaciones de atribución y ShareAlike de CC BY-SA 4.0; para material de origen de Sentry, sigue los avisos de Apache-2.0.
 
 ### `seo-audit`
-- Local path: `agents/skills/seo-audit/`
-- Lock source: `coreyhaines31/marketingskills`
-- Lock source path: `skills/seo-audit/SKILL.md`
-- Local license signal: no local license/front matter license found.
-- Upstream license checked: MIT License in `https://github.com/coreyhaines31/marketingskills/blob/main/LICENSE`.
-- Practical status: modification and internal commercial use are allowed under MIT; add local attribution/license reference before external redistribution.
+- Ruta local: `agents/skills/seo-audit/`
+- Fuente de bloqueo: `coreyhaines31/marketingskills`
+- Ruta de fuente de bloqueo: `skills/seo-audit/SKILL.md`
+- Señal de licencia local: no se encontró licencia local/front matter.
+- Licencia upstream verificada: Licencia MIT en `https://github.com/coreyhaines31/marketingskills/blob/main/LICENSE`.
+- Estado práctico: se permiten modificación y uso comercial interno bajo MIT; añade referencia de atribución/licencia local antes de la redistribución externa.
 
 ### `test-driven-development`
-- Local path: `agents/skills/test-driven-development/`
-- Lock source: `obra/superpowers`
-- Lock source path: `skills/test-driven-development/SKILL.md`
-- Local license signal: no local license/front matter license found.
-- Upstream license checked: MIT License in `https://github.com/obra/superpowers/blob/main/LICENSE`.
-- Practical status: modification and internal commercial use are allowed under MIT; add local attribution/license reference before external redistribution.
+- Ruta local: `agents/skills/test-driven-development/`
+- Fuente de bloqueo: `obra/superpowers`
+- Ruta de fuente de bloqueo: `skills/test-driven-development/SKILL.md`
+- Señal de licencia local: no se encontró licencia local/front matter.
+- Licencia upstream verificada: Licencia MIT en `https://github.com/obra/superpowers/blob/main/LICENSE`.
+- Estado práctico: se permiten modificación y uso comercial interno bajo MIT; añade referencia de atribución/licencia local antes de la redistribución externa.
 
-## Retired Skill References
+## Referencias de Skills Retiradas
 
-The former `accessibility`, `frontend-design`, `ui-ux-pro-max`, and `web-design-guidelines` skills were retired in favor of `interface-design`. Their provenance is preserved in the `interface-design` entry above.
+Las antiguas skills `accessibility`, `frontend-design`, `ui-ux-pro-max` y `web-design-guidelines` fueron retiradas en favor de `interface-design`. Su procedencia se conserva en la entrada de `interface-design` más arriba.
