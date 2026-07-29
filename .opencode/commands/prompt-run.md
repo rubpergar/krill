@@ -1,58 +1,58 @@
 ---
-description: Convert a rough request into an optimized prompt and then execute it
+description: Convierte una solicitud preliminar en un prompt optimizado y luego lo ejecuta
 ---
 
-Take the user's raw request, improve it into a stronger prompt, and then execute that optimized prompt in the same command.
+Toma la solicitud original del usuario, mejórala para convertirla en un prompt más sólido y luego ejecuta ese prompt optimizado en el mismo comando.
 
-Raw request: `$ARGUMENTS`
+Solicitud original: `$ARGUMENTS`
 
-If `$ARGUMENTS` is empty, ask the user for the raw task they want to improve and execute.
+Si `$ARGUMENTS` está vacío, pide al usuario la tarea original que desea mejorar y ejecutar.
 
-Objectives:
-- Infer the most useful expert role automatically from the request.
-- Rewrite the request into a clearer, more specific, and more effective prompt.
-- Execute the optimized prompt immediately after building it.
+Objetivos:
+- Deducir automáticamente el rol experto más útil a partir de la solicitud.
+- Reformular la solicitud en un prompt más claro, específico y eficaz.
+- Ejecutar el prompt optimizado inmediatamente después de construirlo.
 
-Rules:
-- First optimize, then execute. Do not skip the optimization step.
-- Preserve the user's original intent. Improve clarity, structure, constraints, and expected output without changing the real goal.
-- Use one primary expert role that best matches the task.
-- Do not invent project facts, APIs, files, or technical constraints. If critical data is missing, ask before executing.
-- If the request is too ambiguous or risky to execute safely, stop after explaining what information is missing.
-- Use positive, direct, production-oriented instructions.
-- Do not reveal hidden reasoning or chain-of-thought.
+Reglas:
+- Primero optimizar, luego ejecutar. No omitas el paso de optimización.
+- Conserva la intención original del usuario. Mejora la claridad, estructura, restricciones y salida esperada sin cambiar el objetivo real.
+- Usa un único rol experto principal que mejor se ajuste a la tarea.
+- No inventes hechos del proyecto, APIs, archivos ni restricciones técnicas. Si faltan datos críticos, pregunta antes de ejecutar.
+- Si la solicitud es demasiado ambigua o arriesgada para ejecutarla de forma segura, detente después de explicar qué información falta.
+- Usa instrucciones positivas, directas y orientadas a la producción.
+- No reveles razonamientos ocultos ni cadenas de pensamiento.
 
-Role selection guide:
-- Architecture/system design -> `senior software architect`
-- Build or code generation -> `senior [language/framework] engineer`
-- Debugging/bug fixing -> `debugging specialist` or `senior troubleshooting engineer`
-- Code review -> `senior code reviewer`
-- Refactor/performance -> `performance and clean code engineer`
-- Testing -> `QA automation engineer`
-- Documentation -> `technical writer`
-- Security-sensitive request -> `application security reviewer`
-- Unknown or mixed technical request -> `senior software engineer`
+Guía de selección de rol:
+- Arquitectura/diseño de sistemas -> `senior software architect`
+- Construcción o generación de código -> `senior [language/framework] engineer`
+- Depuración/corrección de errores -> `debugging specialist` o `senior troubleshooting engineer`
+- Revisión de código -> `senior code reviewer`
+- Refactorización/rendimiento -> `performance and clean code engineer`
+- Pruebas -> `QA automation engineer`
+- Documentación -> `technical writer`
+- Solicitud de seguridad -> `application security reviewer`
+- Solicitud técnica mixta o desconocida -> `senior software engineer`
 
-Output format:
-1. `Execution:` execute the optimized prompt immediately. Do not reveal the optimized prompt.
-2. `Assumptions or gaps:` only if important details are missing and execution cannot safely continue.
+Formato de salida:
+1. `Execution:` ejecuta el prompt optimizado inmediatamente. No reveles el prompt optimizado.
+2. `Assumptions or gaps:` solo si faltan detalles importantes y la ejecución no puede continuar de forma segura.
 
-Prompt construction requirements:
-- Start the optimized prompt with the selected role.
-- State the exact task in 1-2 lines.
-- Include relevant context from the user request.
-- Add concrete delivery expectations when appropriate.
-- Tailor the response format to the task.
-- Preserve strong constraints already present in the request.
-- If the request is broad, add practical constraints that improve answer quality without changing the intent.
+Requisitos de construcción del prompt:
+- Comienza el prompt optimizado con el rol seleccionado.
+- Indica la tarea exacta en 1-2 líneas.
+- Incluye el contexto relevante de la solicitud del usuario.
+- Añade expectativas concretas de entrega cuando sea apropiado.
+- Adapta el formato de respuesta a la tarea.
+- Conserva las restricciones sólidas ya presentes en la solicitud.
+- Si la solicitud es amplia, añade restricciones prácticas que mejoren la calidad de la respuesta sin cambiar la intención.
 
-Execution requirements:
-- After building the optimized prompt, use it as the actual instruction to complete the task.
-- Follow repository rules, file boundaries, and safety constraints while executing.
-- If execution requires clarification, ask before making assumptions.
+Requisitos de ejecución:
+- Después de construir el prompt optimizado, úsalo como la instrucción real para completar la tarea.
+- Sigue las reglas del repositorio, los límites de archivos y las restricciones de seguridad durante la ejecución.
+- Si la ejecución requiere aclaración, pregunta antes de asumir.
 
-Flow:
-1. Read `$ARGUMENTS` and identify the real task.
-2. Infer the best expert role.
-3. Build the optimized prompt (skip outputting it to save tokens).
-4. Execute it immediately.
+Flujo:
+1. Lee `$ARGUMENTS` e identifica la tarea real.
+2. Deduce el mejor rol experto.
+3. Construye el prompt optimizado (omite mostrarlo para ahorrar tokens).
+4. Ejecútalo inmediatamente.

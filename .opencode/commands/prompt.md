@@ -1,80 +1,80 @@
 ---
-description: Convert a rough request into an optimized prompt only
+description: Convertir una solicitud preliminar en un prompt optimizado únicamente
 ---
 
-Generate an optimized prompt from the user's raw request.
+Genera un prompt optimizado a partir de la solicitud en bruto del usuario.
 
-Raw request: `$ARGUMENTS`
+Solicitud en bruto: `$ARGUMENTS`
 
-Goal:
-- Transform a vague or short instruction into a high-quality prompt that helps an agent produce better results.
-- Infer the most useful expert role automatically from the task instead of asking the user to define it manually.
-- Preserve the user's intent while adding structure, constraints, missing quality criteria, and a clearer expected output.
-- Return the optimized prompt only. Do not execute it.
+Objetivo:
+- Transformar una instrucción vaga o corta en un prompt de alta calidad que ayude a un agente a producir mejores resultados.
+- Inferir el rol experto más útil automáticamente a partir de la tarea en lugar de pedir al usuario que lo defina manualmente.
+- Preservar la intención del usuario mientras se añade estructura, restricciones, criterios de calidad faltantes y una salida esperada más clara.
+- Devolver solo el prompt optimizado. No ejecutarlo.
 
-If `$ARGUMENTS` is empty, ask the user for the raw idea or task they want to turn into a prompt.
+Si `$ARGUMENTS` está vacío, pide al usuario la idea o tarea en bruto que quiere convertir en un prompt.
 
-Rules:
-- This command never executes the task. Its only job is to output the optimized prompt.
-- Infer the primary task type from the request. Typical categories include: architecture, implementation, debugging, code review, refactoring, testing, documentation, learning, automation, analysis, and planning.
-- Choose one primary expert role that best matches the task. Use a concrete role, not a generic one. Examples: `software architect`, `senior TypeScript backend engineer`, `debugging specialist`, `security reviewer`, `technical writer`, `QA automation engineer`.
-- If the request mixes multiple goals, keep one primary role and mention any secondary perspectives only when they materially improve the result.
-- Add missing prompt structure when useful: role, objective, context, inputs, constraints, output format, acceptance criteria, and clarification clause.
-- Use positive and direct instructions.
-- Increase specificity. Replace generic wording with concrete expectations whenever the request already implies them.
-- Do not invent technical facts that the user did not provide. When critical context is missing, either infer safely from the request or insert explicit placeholders like `[completa este dato]`.
-- Prefer prompts that are actionable and production-oriented over academic or verbose prompts.
-- Avoid filler, motivational text, and generic statements like `be precise` unless followed by a concrete requirement.
-- Do not reveal hidden reasoning or chain-of-thought. Return only the useful result.
+Reglas:
+- Este comando nunca ejecuta la tarea. Su única función es generar el prompt optimizado.
+- Infiere el tipo de tarea principal a partir de la solicitud. Las categorías típicas incluyen: arquitectura, implementación, depuración, revisión de código, refactorización, testing, documentación, aprendizaje, automatización, análisis y planificación.
+- Elige un rol experto principal que mejor se ajuste a la tarea. Usa un rol concreto, no uno genérico. Ejemplos: `software architect`, `senior TypeScript backend engineer`, `debugging specialist`, `security reviewer`, `technical writer`, `QA automation engineer`.
+- Si la solicitud combina múltiples objetivos, mantén un rol principal y menciona perspectivas secundarias solo cuando mejoren materialmente el resultado.
+- Añade estructura de prompt faltante cuando sea útil: rol, objetivo, contexto, entradas, restricciones, formato de salida, criterios de aceptación y cláusula de aclaración.
+- Usa instrucciones positivas y directas.
+- Aumenta la especificidad. Reemplaza redacción genérica con expectativas concretas siempre que la solicitud ya las implique.
+- No inventes hechos técnicos que el usuario no haya proporcionado. Cuando falte contexto crítico, infiérelo de manera segura a partir de la solicitud o inserta placeholders explícitos como `[completa este dato]`.
+- Prefiere prompts que sean accionables y orientados a la producción sobre prompts académicos o verbosos.
+- Evita relleno, texto motivacional y declaraciones genéricas como `be precise` a menos que vayan seguidas de un requisito concreto.
+- No reveles razonamiento oculto ni cadena de pensamiento. Devuelve solo el resultado útil.
 
-Role selection guide:
-- Architecture/system design -> `senior software architect`
-- Build or code generation -> `senior [language/framework] engineer`
-- Debugging/bug fixing -> `debugging specialist` or `senior troubleshooting engineer`
-- Code review -> `senior code reviewer`
-- Refactor/performance -> `performance and clean code engineer`
+Guía de selección de rol:
+- Arquitectura/diseño de sistemas -> `senior software architect`
+- Construcción o generación de código -> `senior [language/framework] engineer`
+- Depuración/corrección de errores -> `debugging specialist` o `senior troubleshooting engineer`
+- Revisión de código -> `senior code reviewer`
+- Refactorización/rendimiento -> `performance and clean code engineer`
 - Testing -> `QA automation engineer`
-- Documentation -> `technical writer`
-- Security-sensitive request -> `application security reviewer`
-- Unknown or mixed technical request -> `senior software engineer`
+- Documentación -> `technical writer`
+- Solicitud sensible a seguridad -> `application security reviewer`
+- Solicitud técnica desconocida o mixta -> `senior software engineer`
 
-Output format:
-1. `Recommended role:` one line.
-2. `Optimized prompt:` a single fenced code block containing the final prompt.
-3. `Assumptions or gaps:` only if there are important missing details the user should complete.
+Formato de salida:
+1. `Recommended role:` una línea.
+2. `Optimized prompt:` un solo bloque de código delimitado que contenga el prompt final.
+3. `Assumptions or gaps:` solo si hay detalles importantes faltantes que el usuario deba completar.
 
-Prompt construction requirements:
-- Start the prompt with the selected role.
-- State the exact task in 1-2 lines.
-- Include relevant context from the user request.
-- Add concrete delivery expectations when appropriate, for example:
-  - separate code by file
-  - explain trade-offs
-  - include edge cases
-  - preserve existing behavior
-  - include validation steps
-  - ask clarifying questions before assuming critical missing information
-- Tailor the response format to the task. Examples:
-  - code generation -> files + test steps
-  - debugging -> probable causes + root cause + fix + prevention
-  - review -> findings ordered by severity
-  - architecture -> stack + structure + data model + risks
-  - testing -> scenarios + mocks + coverage summary
-  - docs -> README/API/docs structure
-- When the request already contains strong constraints, keep them and sharpen them.
-- When the request is weak or broad, add practical constraints that improve answer quality without changing the original goal.
+Requisitos de construcción del prompt:
+- Comienza el prompt con el rol seleccionado.
+- Indica la tarea exacta en 1-2 líneas.
+- Incluye contexto relevante de la solicitud del usuario.
+- Añade expectativas de entrega concretas cuando sea apropiado, por ejemplo:
+  - código separado por archivo
+  - explicar compensaciones
+  - incluir casos extremos
+  - preservar comportamiento existente
+  - incluir pasos de validación
+  - hacer preguntas aclaratorias antes de asumir información crítica faltante
+- Adapta el formato de respuesta a la tarea. Ejemplos:
+  - generación de código -> archivos + pasos de test
+  - depuración -> causas probables + causa raíz + solución + prevención
+  - revisión -> hallazgos ordenados por severidad
+  - arquitectura -> stack + estructura + modelo de datos + riesgos
+  - testing -> escenarios + mocks + resumen de cobertura
+  - documentación -> estructura de README/API/docs
+- Cuando la solicitud ya contenga restricciones sólidas, mantenlas y afínalas.
+- Cuando la solicitud sea débil o amplia, añade restricciones prácticas que mejoren la calidad de la respuesta sin cambiar el objetivo original.
 
-Quality bar for the optimized prompt:
-- Specific
-- Executable
-- Unambiguous
-- Context-aware
-- Output-oriented
-- Safe against invented assumptions
+Estándar de calidad para el prompt optimizado:
+- Específico
+- Ejecutable
+- Inequívoco
+- Consciente del contexto
+- Orientado a la salida
+- Seguro contra suposiciones inventadas
 
-Flow:
-1. Read `$ARGUMENTS` and identify the underlying task.
-2. Infer the best expert role.
-3. Extract explicit context, constraints, and desired output.
-4. Add the missing structure that would materially improve the prompt.
-5. Return the optimized prompt in the required format.
+Flujo:
+1. Lee `$ARGUMENTS` e identifica la tarea subyacente.
+2. Infiere el mejor rol experto.
+3. Extrae el contexto explícito, las restricciones y la salida deseada.
+4. Añade la estructura faltante que mejoraría materialmente el prompt.
+5. Devuelve el prompt optimizado en el formato requerido.

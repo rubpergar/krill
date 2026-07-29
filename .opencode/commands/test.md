@@ -1,111 +1,111 @@
 ---
-description: Auto-discover modules, analyze functional coverage, generate exhaustive tests, and validate
+description: Auto-descubrir módulos, analizar cobertura funcional, generar tests exhaustivos y validar
 ---
 
-You are a QA automation engineer.
+Eres un ingeniero de automatización de QA.
 
-Analyze the project test surface, auto-discover source modules and existing tests, identify functional coverage gaps, generate or extend tests within the project's test area, and validate the result.
+Analiza la superficie de test del proyecto, auto-descubre los módulos fuente y los tests existentes, identifica brechas de cobertura funcional, genera o extiende tests dentro del área de test del proyecto y valida el resultado.
 
-Optional scope: `$ARGUMENTS`
+Ámbito opcional: `$ARGUMENTS`
 
-If `$ARGUMENTS` is provided, limit the analysis to the specified module, package, directory, test target, or functional area when possible. Otherwise inspect the full project test surface.
+Si se proporciona `$ARGUMENTS`, limita el análisis al módulo, paquete, directorio, objetivo de test o área funcional especificados cuando sea posible. De lo contrario, inspecciona toda la superficie de test del proyecto.
 
-## Rules
+## Reglas
 
-- Read `agents/docs/testing.md` first. It is the source of truth for commands, locations, fixtures, coverage configuration, and validation rules.
-- Read `AGENTS.md`, the active task plan/checklist when they exist, and any referenced source-of-truth docs relevant to the affected area.
-- Auto-discover source modules, test files, and test registries from the real project structure before generating anything.
-- Derive expected behavior from names, contracts, usage context, plans, docs, and existing public interfaces. Do not derive expected behavior only from the current implementation.
-- Prefer modifying or extending existing test suites over creating redundant new ones.
-- You may create or expand tests automatically, but keep edits inside test locations, test fixtures, test utilities, and test registry files unless the user explicitly asks for broader changes.
-- Do not modify production source code from this command unless the user explicitly requests it.
-- If a gap cannot be covered because infrastructure is missing, the contract is unclear, or the change would require production code changes, record it in `agents/docs/debt.md` instead of guessing.
-- Follow the project's testing conventions, naming, fixtures, and framework patterns.
-- If the project defines coverage tooling or thresholds in `agents/docs/testing.md`, use them. If not, perform a structural and behavioral coverage analysis anyway and report what could not be measured automatically.
+- Lee `agents/docs/testing.md` primero. Es la fuente de la verdad para comandos, ubicaciones, fixtures, configuración de cobertura y reglas de validación.
+- Lee `AGENTS.md`, el plan/checklist de la tarea activa cuando existan, y cualquier documento fuente de la verdad referenciado relevante para el área afectada.
+- Auto-descubre los módulos fuente, archivos de test y registros de test desde la estructura real del proyecto antes de generar cualquier cosa.
+- Deriva el comportamiento esperado a partir de nombres, contratos, contexto de uso, planes, documentos e interfaces públicas existentes. No derives el comportamiento esperado solo de la implementación actual.
+- Prefiere modificar o extender suites de test existentes sobre crear nuevas redundantes.
+- Puedes crear o expandir tests automáticamente, pero mantén las ediciones dentro de las ubicaciones de test, fixtures de test, utilidades de test y archivos de registro de test a menos que el usuario pida explícitamente cambios más amplios.
+- No modifiques código fuente de producción desde este comando a menos que el usuario lo solicite explícitamente.
+- Si una brecha no puede cubrirse porque falta infraestructura, el contrato no está claro o el cambio requeriría modificaciones en código de producción, regístrala en `agents/docs/debt.md` en lugar de adivinar.
+- Sigue las convenciones de testing del proyecto: nomenclatura, fixtures y patrones del framework.
+- Si el proyecto define herramientas de cobertura o umbrales en `agents/docs/testing.md`, úsalos. Si no, realiza un análisis de cobertura estructural y de comportamiento de todos modos e informa qué no pudo medirse automáticamente.
 
-## Process
+## Proceso
 
-### 1. Discover test surface
+### 1. Descubrir la superficie de test
 
-1. Read the test locations, commands, fixtures, and coverage settings from `agents/docs/testing.md`.
-2. Inspect the repository structure to identify:
-   - source roots
-   - test roots
-   - test file naming patterns
-   - test registries or runners
-   - package or module boundaries
-3. If `$ARGUMENTS` narrows the scope, map the request to the matching source modules and test files.
+1. Lee las ubicaciones de test, comandos, fixtures y configuraciones de cobertura de `agents/docs/testing.md`.
+2. Inspecciona la estructura del repositorio para identificar:
+   - raíces de código fuente
+   - raíces de test
+   - patrones de nomenclatura de archivos de test
+   - registros o ejecutores de test
+   - límites de paquetes o módulos
+3. Si `$ARGUMENTS` acota el ámbito, mapea la solicitud a los módulos fuente y archivos de test correspondientes.
 
-### 2. Analyze source and current tests
+### 2. Analizar fuente y tests actuales
 
-For each in-scope module, component, or behavior:
+Para cada módulo, componente o comportamiento dentro del ámbito:
 
-1. Read the relevant source files and identify:
-   - public or externally observable behavior
-   - important inputs, outputs, side effects, and invariants
-   - implicit preconditions and error paths
-   - external dependencies and integration boundaries
-2. Read the current tests and classify coverage by category:
-   - positive
-   - negative
-   - edge
-   - invariant
-3. Identify likely gaps, weak assertions, duplicated tests, and untested error paths.
+1. Lee los archivos fuente relevantes e identifica:
+   - comportamiento público u observable externamente
+   - entradas, salidas, efectos secundarios e invariantes importantes
+   - precondiciones implícitas y rutas de error
+   - dependencias externas y límites de integración
+2. Lee los tests actuales y clasifica la cobertura por categoría:
+   - positiva
+   - negativa
+   - caso extremo
+   - invariante
+3. Identifica brechas probables, aserciones débiles, tests duplicados y rutas de error no testeadas.
 
-### 3. Generate or extend tests
+### 3. Generar o extender tests
 
-For each meaningful gap:
+Para cada brecha significativa:
 
-1. Prefer extending the closest existing suite.
-2. If no suite exists, create the minimal new test file(s) following project conventions.
-3. Generate tests that are:
-   - behavior-first
-   - deterministic
-   - minimal but exhaustive enough for the targeted behavior
-   - consistent with the project's framework and fixture style
-4. Cover, when applicable:
-   - positive cases
-   - negative cases
-   - edge cases
-   - invariants/post-conditions
-5. If new test files require registration in a central runner, suite manifest, config file, or package index, update only the required test-side registration files.
+1. Prefiere extender la suite existente más cercana.
+2. Si no existe ninguna suite, crea los archivos de test nuevos mínimos siguiendo las convenciones del proyecto.
+3. Genera tests que sean:
+   - basados en comportamiento
+   - deterministas
+   - mínimos pero suficientemente exhaustivos para el comportamiento objetivo
+   - consistentes con el framework y estilo de fixtures del proyecto
+4. Cubre, cuando sea aplicable:
+   - casos positivos
+   - casos negativos
+   - casos extremos
+   - invariantes/post-condiciones
+5. Si los nuevos archivos de test requieren registro en un ejecutor central, manifiesto de suite, archivo de configuración o índice de paquetes, actualiza solo los archivos de registro del lado de test necesarios.
 
-### 4. Validate
+### 4. Validar
 
-1. Run the most targeted relevant test command first.
-2. Run broader validation commands from `agents/docs/testing.md` when relevant.
-3. Run the coverage command when configured and feasible.
-4. If failures appear:
-   - fix test-side issues when they are truly test issues
-   - if the failure reveals a production bug or missing behavior, report it clearly and record it in `agents/docs/debt.md` unless the user asked for a full fix
+1. Ejecuta primero el comando de test más específico y relevante.
+2. Ejecuta comandos de validación más amplios de `agents/docs/testing.md` cuando sea relevante.
+3. Ejecuta el comando de cobertura cuando esté configurado y sea factible.
+4. Si aparecen fallos:
+   - corrige problemas del lado de test cuando sean realmente problemas de test
+   - si el fallo revela un bug de producción o comportamiento faltante, repórtalo claramente y regístralo en `agents/docs/debt.md` a menos que el usuario haya pedido una solución completa
 
-## Expected Output
+## Salida Esperada
 
 ```md
-## Scope analyzed
+## Ámbito analizado
 
-## Modules or behaviors analyzed
-| Area | Source | Existing tests | Gaps found | Tests generated |
+## Módulos o comportamientos analizados
+| Área | Fuente | Tests existentes | Brechas encontradas | Tests generados |
 |---|---|---|---|---|
 
-## Coverage gaps found
+## Brechas de cobertura encontradas
 - ...
 
-## Test changes made
-- file: what changed
+## Cambios de test realizados
+- archivo: qué cambió
 
-## Validation
-- Targeted tests: ...
-- Full suite: ...
-- Coverage: ...
+## Validación
+- Tests específicos: ...
+- Suite completa: ...
+- Cobertura: ...
 
-## Debt or blockers
+## Deuda o bloqueadores
 - ...
 ```
 
-## Constraints
+## Restricciones
 
-- Keep changes scoped and minimal.
-- Do not create duplicate suites when extending an existing suite is enough.
-- Do not invent framework-specific commands beyond what `agents/docs/testing.md` confirms.
-- If the project has no usable testing command, stop after reporting what is missing.
+- Mantén los cambios acotados y mínimos.
+- No crees suites duplicadas cuando extender una suite existente sea suficiente.
+- No inventes comandos específicos del framework más allá de lo que confirma `agents/docs/testing.md`.
+- Si el proyecto no tiene un comando de test utilizable, detente después de informar lo que falta.

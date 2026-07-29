@@ -1,40 +1,40 @@
 ---
-description: Create or refine the active task plan from conversation context
+description: Crear o refinar el plan de la tarea activa desde el contexto de la conversación
 ---
 
-Create or refine `agents/task/TASK-XXX-plan.md` for the active task using the planning discussion already developed in the conversation.
+Crea o refina `agents/task/TASK-XXX-plan.md` para la tarea activa usando la discusión de planificación ya desarrollada en la conversación.
 
-Rules:
-- Read `agents/task/backlog.md` and identify the single task under `## Current`.
-- If `## Current` has zero or multiple tasks, stop and ask the user to select or create one.
-- Extract the task ID (TASK-XXX) from the backlog entry.
-- Read `agents/task/plan.md` to understand the required plan structure.
-- Read relevant accepted ADRs from `agents/docs/decisions.md` before finalizing behavior or implementation choices.
-- Do not assume a special agent mode is required. This command must work correctly in the normal working mode.
-- Before asking questions, inspect the smallest useful set of files and project context needed to understand the task.
-- If the user references multiple repositories, large codebases, or supporting documents, inspect them first and parallelize exploration when useful.
-- Use the conversation context (planning discussion, /prompt-run output, user clarifications) to fill every section of the plan template.
-- Do not invent requirements, APIs, DB structures, or technical facts that were not discussed or confirmed.
-- If critical information is missing from the conversation, list it under `## Open Questions` instead of guessing.
-- Keep the plan status as `draft` while planning is in progress. When no blocking open questions remain, ask the user whether the plan is ready for approval. Only after an explicit affirmative answer may this command change the status to `approved`.
-- Create the plan early and refine it iteratively. Do not wait until every question is answered before writing the first draft.
-- If a plan file already exists for this task, update it with any new discussion points instead of overwriting blindly.
-- Prefer asking one high-leverage planning question at a time.
-- Prefer interface-based option questions over free-form chat whenever there are clear alternatives.
-- For each question, present concise options, put the recommended option first, explain the tradeoff briefly, and leave room for a custom answer when needed.
-- After each planning answer, update the draft plan immediately so the file stays in sync with the conversation.
-- If the task affects the database, fill the `## Database Impact` section with the approach discussed.
-- Populate `## Source of Truth to Read` with files relevant to the task.
-- Follow `AGENTS.md` for the canonical planning workflow and planning-question behavior.
+Reglas:
+- Lee `agents/task/backlog.md` e identifica la tarea única bajo `## Current`.
+- Si `## Current` tiene cero o múltiples tareas, detente y pide al usuario que seleccione o cree una.
+- Extrae el ID de tarea (TASK-XXX) de la entrada del backlog.
+- Lee `agents/task/plan.md` para entender la estructura requerida del plan.
+- Lee los ADRs aceptados relevantes de `agents/docs/decisions.md` antes de finalizar decisiones de comportamiento o implementación.
+- No asumas que se requiere un modo de agente especial. Este comando debe funcionar correctamente en el modo de trabajo normal.
+- Antes de hacer preguntas, inspecciona el conjunto más pequeño útil de archivos y contexto del proyecto necesario para entender la tarea.
+- Si el usuario referencia múltiples repositorios, bases de código grandes o documentos de soporte, inspecciónalos primero y paraleliza la exploración cuando sea útil.
+- Usa el contexto de la conversación (discusión de planificación, salida de /prompt-run, aclaraciones del usuario) para llenar cada sección de la plantilla del plan.
+- No inventes requisitos, APIs, estructuras de BD ni hechos técnicos que no se hayan discutido o confirmado.
+- Si falta información crítica en la conversación, enumérala bajo `## Open Questions` en lugar de adivinar.
+- Mantén el estado del plan como `draft` mientras la planificación esté en progreso. Cuando no queden preguntas abiertas bloqueantes, pregunta al usuario si el plan está listo para aprobación. Solo después de una respuesta afirmativa explícita puede este comando cambiar el estado a `approved`.
+- Crea el plan temprano y refínalo iterativamente. No esperes a que cada pregunta esté respondida antes de escribir el primer borrador.
+- Si ya existe un archivo de plan para esta tarea, actualízalo con los nuevos puntos de discusión en lugar de sobrescribir a ciegas.
+- Prefiere hacer una pregunta de planificación de alto apalancamiento a la vez.
+- Prefiere preguntas de opción basadas en interfaces sobre chat libre siempre que haya alternativas claras.
+- Para cada pregunta, presenta opciones concisas, pon la opción recomendada primero, explica la compensación brevemente y deja espacio para una respuesta personalizada cuando sea necesario.
+- Después de cada respuesta de planificación, actualiza el borrador del plan inmediatamente para que el archivo se mantenga sincronizado con la conversación.
+- Si la tarea afecta la base de datos, llena la sección `## Database Impact` con el enfoque discutido.
+- Pobla `## Source of Truth to Read` con archivos relevantes para la tarea.
+- Sigue `AGENTS.md` para el flujo de trabajo de planificación canónico y el comportamiento de preguntas de planificación.
 
-Flow:
-1. Read `agents/task/backlog.md` and confirm exactly one task under `## Current`.
-2. Read `agents/task/plan.md` for the template structure.
-3. Read `agents/docs/decisions.md` and the relevant source-of-truth files and referenced context for the active task.
-4. Synthesize the available context into the current best draft plan.
-5. Create or update `agents/task/TASK-XXX-plan.md` with status `draft`.
-6. Ask the next highest-value unresolved question.
-7. After each user answer, update the draft plan and continue until the user confirms the plan is complete.
-8. When pausing, show the current plan progress and the remaining open questions that block approval.
-9. When no blocking questions remain, summarize the plan and ask whether the user wants to approve it for implementation.
-10. If the user explicitly approves, change the plan status from `draft` to `approved`. Otherwise leave it as `draft` and continue planning or report the remaining refinements.
+Flujo:
+1. Lee `agents/task/backlog.md` y confirma exactamente una tarea bajo `## Current`.
+2. Lee `agents/task/plan.md` para la estructura de la plantilla.
+3. Lee `agents/docs/decisions.md` y los archivos fuente de la verdad relevantes y el contexto referenciado para la tarea activa.
+4. Sintetiza el contexto disponible en el mejor borrador de plan actual.
+5. Crea o actualiza `agents/task/TASK-XXX-plan.md` con estado `draft`.
+6. Pregunta la siguiente pregunta no resuelta de mayor valor.
+7. Después de cada respuesta del usuario, actualiza el borrador del plan y continúa hasta que el usuario confirme que el plan está completo.
+8. Al hacer una pausa, muestra el progreso actual del plan y las preguntas abiertas restantes que bloquean la aprobación.
+9. Cuando no queden preguntas bloqueantes, resume el plan y pregunta si el usuario quiere aprobarlo para implementación.
+10. Si el usuario aprueba explícitamente, cambia el estado del plan de `draft` a `approved`. De lo contrario, déjalo como `draft` y continúa planificando o informa los refinamientos restantes.
