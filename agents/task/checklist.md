@@ -1,60 +1,60 @@
-# Task Checklist Template
+# Plantilla de Lista de Verificación de Tarea
 
-Copy to `agents/task/TASK-XXX-checklist.md` after the task plan is approved. Do not implement from this template.
+Copia a `agents/task/TASK-XXX-checklist.md` una vez aprobado el plan de tarea. No implementes desde esta plantilla.
 
-## Source
-- Task: TASK-XXX
+## Fuente
+- Tarea: TASK-XXX
 - Plan: `agents/task/TASK-XXX-plan.md`
 
-## Rules
-- Work in order unless blocked.
-- Keep items derived from the approved plan.
-- ALL checkboxes must start `[ ]` (unchecked). Never pre-mark items when generating the checklist.
-- Mark completed items during implementation and closeout only.
+## Reglas
+- Trabaja en orden a menos que haya un bloqueo.
+- Mantén los ítems derivados del plan aprobado.
+- TODAS las casillas deben comenzar con `[ ]` (sin marcar). Nunca premarcar ítems al generar la lista de verificación.
+- Marca los ítems completados solo durante la implementación y el cierre.
 
-## Checklist
+## Lista de Verificación
 
-### 1. Context
-- [ ] Re-read the approved plan and referenced source-of-truth docs (do not skip even if read during planning).
-- [ ] Load and apply `agents/skills/test-driven-development/SKILL.md`, or record why it does not apply.
-- [ ] Verify no open questions block implementation.
-- [ ] Set the plan status to `in_progress` before the first implementation change.
+### 1. Contexto
+- [ ] Vuelve a leer el plan aprobado y las fuentes de verdad referenciadas (no lo omitas aunque se hayan leído durante la planificación).
+- [ ] Carga y aplica `agents/skills/test-driven-development/SKILL.md`, o registra por qué no aplica.
+- [ ] Verifica que ninguna pregunta abierta bloquee la implementación.
+- [ ] Establece el estado del plan a `in_progress` antes del primer cambio de implementación.
 
-### 2. TDD Ledger
-Track each behavior/subtask from the plan through RED → GREEN → REFACTOR cycles.
+### 2. Registro TDD
+Rastrea cada comportamiento/subtarea del plan a través de ciclos RED → GREEN → REFACTOR.
 
-- [ ] Behavior/subtask 1:
-- [ ] Behavior/subtask 2:
+- [ ] Comportamiento/subtarea 1:
+- [ ] Comportamiento/subtarea 2:
 - [ ] ...
 
-### 3. Scope and Docs
-- [ ] All TDD cycles complete or documented as approved exceptions.
-- [ ] Changes stayed within approved scope. No unrelated refactors.
-- [ ] Out-of-scope findings registered in `agents/docs/debt.md`.
-- [ ] Sync check: compare implemented code against affected source-of-truth docs from the plan. Discrepancies → stop and ask user. Resolve before proceeding.
-- [ ] Durable docs updated (`agents/docs/api.md`, DB files from the Source of Truth Map, `agents/docs/design.md`, etc.) as needed.
+### 3. Alcance y Documentación
+- [ ] Todos los ciclos TDD completados o documentados como excepciones aprobadas.
+- [ ] Los cambios se mantuvieron dentro del alcance aprobado. Sin refactorizaciones no relacionadas.
+- [ ] Hallazgos fuera de alcance registrados en `agents/docs/debt.md`.
+- [ ] Verificación de sincronización: compara el código implementado con las fuentes de verdad afectadas del plan. Discrepancias → detente y pregunta al usuario. Resuelve antes de continuar.
+- [ ] Documentación duradera actualizada (`agents/docs/api.md`, archivos de BD del Mapa de Fuentes de Verdad, `agents/docs/design.md`, etc.) según sea necesario.
 
-### 4. Database Change Controls
-Use `Not applicable` when the task does not affect the database.
+### 4. Controles de Cambios en Base de Datos
+Usa `No aplica` cuando la tarea no afecte la base de datos.
 
-- [ ] DB schema file from the Source of Truth Map updated to the resulting schema state.
-- [ ] DB change log file from the Source of Truth Map updated with forward SQL and rollback notes.
-- [ ] Persisted data compatibility reviewed, including backfill/default/null handling.
-- [ ] Backup or recovery expectation documented for destructive or risky changes.
-- [ ] Pre-check and post-check validation queries or steps recorded when needed.
+- [ ] Archivo de esquema de BD del Mapa de Fuentes de Verdad actualizado al estado de esquema resultante.
+- [ ] Archivo de registro de cambios de BD del Mapa de Fuentes de Verdad actualizado con SQL forward y notas de rollback.
+- [ ] Compatibilidad con datos persistidos revisada, incluyendo manejo de backfill/valores por defecto/null.
+- [ ] Expectativa de respaldo o recuperación documentada para cambios destructivos o riesgosos.
+- [ ] Consultas o pasos de validación pre-check y post-check registrados cuando sea necesario.
 
-### 5. Validation (still `in_progress`)
-- [ ] Targeted tests:
-- [ ] Full test suite:
+### 5. Validación (aún `in_progress`)
+- [ ] Pruebas específicas:
+- [ ] Suite completa de pruebas:
 - [ ] Lint:
 - [ ] Typecheck:
 - [ ] Build:
-- [ ] DoD `in_progress` criteria checked:
+- [ ] Criterios de DoD `in_progress` verificados:
 
-### 6. Closeout (→ `closed`)
-- [ ] Ask user before marking backlog task done.
-- [ ] Update the plan status to `closed` before archiving task files.
-- [ ] Move task files to `agents/task/archive/` after user approves.
+### 6. Cierre (→ `closed`)
+- [ ] Pregunta al usuario antes de marcar la tarea del backlog como completada.
+- [ ] Actualiza el estado del plan a `closed` antes de archivar los archivos de la tarea.
+- [ ] Mueve los archivos de la tarea a `agents/task/archive/` después de que el usuario lo apruebe.
 
-## Resume Notes
+## Notas de Reanudación
 ...

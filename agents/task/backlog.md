@@ -1,18 +1,18 @@
 # Backlog
 
-Use this file as the task queue. Keep only one task under `## Current`.
+Usa este archivo como la cola de tareas. Mantén solo una tarea en `## Current`.
 
-Task format:
+Formato de tarea:
 
 ```md
 - TASK-XXX: Short task title
 ```
 
-When work starts on a current task, create:
+Cuando comience el trabajo en una tarea activa, crea:
 - `agents/task/TASK-XXX-plan.md`
 - `agents/task/TASK-XXX-checklist.md`
 
-When the task is complete and the user approves closeout, move the task to `## Done` and move its task files to `agents/task/archive/` in the same step.
+Cuando la tarea esté completa y el usuario apruebe el cierre, mueve la tarea a `## Done` y traslada sus archivos a `agents/task/archive/` en el mismo paso.
 
 ## Current
 
