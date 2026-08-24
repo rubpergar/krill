@@ -34,6 +34,13 @@ Original source/license: <source and license>
 - Upstream license checked: MIT License in `https://github.com/wshobson/agents/blob/main/LICENSE`.
 - Practical status: modification and internal commercial use are allowed under MIT; add local attribution/license reference before external redistribution.
 
+### `cpp-best-practices`
+- Local path: `agents/skills/cpp-best-practices/`
+- Lock source: `internal-consolidation`
+- Lock source path: `agents/skills/cpp-best-practices/SKILL.md`
+- Origin: consolidates and adapts the group's C++/Qt coding guidance from "Performance by Design: A C++ Guide" (`@int_16h`, https://cpp-guide-for-agents.irrotational.com/) and its distilled form "C++ Performance Principles for Agents" (gist by `aean0x`, https://gist.github.com/aean0x/2d365f4782f899ac2c132e742e74542d), plus the project conventions and C++ Core Guidelines.
+- Practical status: internal guidance for C++/Qt repositories (peticiones_qmonitor, qmonitor, qthinc, nodovirtual); review original attribution before external redistribution.
+
 ### `context7-mcp`
 - Local path: `agents/skills/context7-mcp/`
 - Lock source: `upstash/context7` (GitHub; see `skills-lock.json`).
