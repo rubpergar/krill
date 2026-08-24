@@ -22,6 +22,7 @@ If `$ARGUMENTS` is provided, limit the analysis to the specified module, package
 - If a gap cannot be covered because infrastructure is missing, the contract is unclear, or the change would require production code changes, record it in `agents/docs/debt.md` instead of guessing.
 - Follow the project's testing conventions, naming, fixtures, and framework patterns.
 - If the project defines coverage tooling or thresholds in `agents/docs/testing.md`, use them. If not, perform a structural and behavioral coverage analysis anyway and report what could not be measured automatically.
+- Apply the "Valid Test Criteria" from `agents/docs/testing.md` to every test you generate, extend, or review. A test is only valid if it meets them all.
 
 ## Process
 
@@ -70,7 +71,26 @@ For each meaningful gap:
    - invariants/post-conditions
 5. If new test files require registration in a central runner, suite manifest, config file, or package index, update only the required test-side registration files.
 
-### 4. Validate
+### 4. Verify test validity
+
+For every test generated, extended, or reviewed, check it against the "Valid Test Criteria" in `agents/docs/testing.md`:
+
+- independence (runs alone, in any order, cleans only its own data, closes resources)
+- one observable behavior per test with a descriptive name
+- clean initial state (no residual state from other tests)
+- determinism (no fixed ports, no time/order dependence; async via observable conditions with bounded timeout)
+- no implicit dependencies (unit tests free of MySQL/external services/real network)
+- production isolation (no connection to production DB/services; DB helpers reject non-`_test` names before SQL)
+- fail-closed config (setup/load errors fail the test with diagnosis)
+- visible errors (prepare/exec/transactions/cleanup results checked and propagated)
+- valid-by-default builders (invalid values named explicitly and tested as negative cases)
+- public behavior assertions (observable results over mock calls when a functional result exists)
+- adapted to production seams (no test-only production APIs)
+- opt-in runner coverage documented
+
+Report any violation explicitly, even if the test passes, and fix it when it is a test-side issue. Record in `agents/docs/debt.md` anything that requires production changes to fix.
+
+### 5. Validate
 
 1. Run the most targeted relevant test command first.
 2. Run broader validation commands from `agents/docs/testing.md` when relevant.
@@ -93,6 +113,21 @@ For each meaningful gap:
 
 ## Test changes made
 - file: what changed
+
+## Criteria compliance (Valid Test Criteria)
+- [ ] Independence
+- [ ] One behavior per test
+- [ ] Clean initial state
+- [ ] Determinism / reproducibility
+- [ ] No implicit dependencies
+- [ ] Production isolation
+- [ ] Fail-closed config
+- [ ] Visible errors
+- [ ] Valid-by-default builders
+- [ ] Public behavior assertions
+- [ ] Adapted to production seams
+- [ ] Opt-in runner coverage documented
+- Violations found and how they were resolved:
 
 ## Validation
 - Targeted tests: ...
