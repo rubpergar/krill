@@ -176,12 +176,12 @@ Ask: "Do you want to transition to project mode?"
 - If yes (complete):
   - In `AGENTS.md`: change `Current mode: \`skeleton\`` to `Current mode: \`project\``
   - Replace skeleton-mode message with project-mode message (see `agents/docs/bootstrap.md`)
-  - Move `agents/docs/bootstrap.md` to `agents/task/archive/bootstrap-YYYY-MM-DD.md`
+  - Move `agents/docs/bootstrap.md` to `agents/tasks/archive/bootstrap-YYYY-MM-DD.md`
   - Confirm archived file is historical reference
 
 - If yes (partial):
   - Same transition and archive as complete, but add to project-mode message: "Pending fields: <list>. Resolve them in a task plan before working on those areas."
-  - Archive `bootstrap.md` to `agents/task/archive/bootstrap-YYYY-MM-DD.md` (historical reference; pending fields are tracked in the mode message above).
+  - Archive `bootstrap.md` to `agents/tasks/archive/bootstrap-YYYY-MM-DD.md` (historical reference; pending fields are tracked in the mode message above).
 
 - If no:
   - The partial configuration is saved. Repository stays in skeleton mode.

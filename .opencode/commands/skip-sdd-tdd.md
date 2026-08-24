@@ -2,7 +2,7 @@
 description: Quick implementation without SDD/TDD for trivial changes
 ---
 
-Implement a change directly, skipping the full SDD workflow (backlog, plan, checklist, TDD).
+Implement a change directly, skipping the full SDD workflow (task plan + execution, TDD).
 
 Requested change: `$ARGUMENTS`
 

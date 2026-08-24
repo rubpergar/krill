@@ -64,11 +64,11 @@ flowchart LR
     subgraph S[Plan - SDD]
         direction TB
         S1["/plan"]:::cmd
-        S1 --> S2["Read backlog.md\nselect active task"]:::file
+        S1 --> S2["Select task from\ntodo/ or current/"]:::file
         S2 --> S3["Read decisions.md\nreview ADRs"]:::file
-        S3 --> S4["Read plan.md\ntemplate structure"]:::file
+        S3 --> S4["Read template.md\nstructure"]:::file
         S4 --> S5["Inspect context files"]
-        S5 --> S6["Create TASK-XXX-plan.md\nstatus: draft"]:::file
+        S5 --> S6["Create TASK-XXX.md\nstatus: todo"]:::file
         S6 --> S7{"Iterate: one\nquestion at a time"}:::decision
         S7 -- "Interface options" --> S8["User selects option\nagent updates draft"]
         S8 --> S9{"More questions?"}:::decision
@@ -80,9 +80,9 @@ flowchart LR
     subgraph T[Implement - TDD]
         direction TB
         T1["/implement"]:::cmd
-        T1 --> T2["Read approved plan"]:::file
-        T2 --> T3["Read checklist.md\ntemplate"]:::file
-        T3 --> T4["Create TASK-XXX-checklist.md"]:::file
+        T1 --> T2["Read approved plan\n(TASK-XXX.md)"]:::file
+        T2 --> T3["Fill Execution section\nfrom template.md"]:::file
+        T3 --> T4["Set task: current"]
         T4 --> T5["Set plan: in_progress"]
         T5 --> T6["Load TDD skill"]:::skill
         T6 --> T7["Read testing.md\ncommands & fixtures"]:::file
@@ -98,11 +98,15 @@ flowchart LR
         T15 --> T16{"More\nbehaviors?"}:::decision
         T16 -- Yes --> T9
         T16 -- No --> T17["Run validation from\ntesting.md"]
-        T17 --> T18["Independent final review\nsubagent preferred"]
-        T18 --> T19{"Fixes\nneeded?"}:::decision
-        T19 -- Yes --> T20["Fix issues"]
+        T17 --> T18["CONVERGE: contrast code\nagainst plan & acceptance"]:::decision
+        T18 --> T19{"Diverges?"}:::decision
+        T19 -- Yes --> T20["Resolve with user"]
         T20 --> T19
-        T19 -- No --> T21["Plan: in_progress\nready for closeout"]:::state
+        T19 -- No --> T21["Independent final review\nsubagent preferred"]
+        T21 --> T22{"Fixes\nneeded?"}:::decision
+        T22 -- Yes --> T23["Fix issues"]
+        T23 --> T22
+        T22 -- No --> T24["Task: current\nready for closeout"]:::state
     end
 
     %% ==================== CLOSEOUT ====================
@@ -111,10 +115,10 @@ flowchart LR
         C1["/closeout"]:::cmd
         C1 --> C2["Verify DoD criteria"]:::file
         C2 --> C3{"User\napproves?"}:::decision
-        C3 -- Yes --> C4["Set plan: closed"]
-        C4 --> C5["Mark closeout\nitems done"]
-        C5 --> C6["Archive plan + checklist"]:::file
-        C6 --> C7["Move task to Done\nin backlog.md"]:::file
+        C3 -- Yes --> C4["Set task: done"]
+        C4 --> C5["Converge: code vs plan"]
+        C5 --> C6["Distill to\narchive/TASK-XXX.md"]:::file
+        C6 --> C7["Remove from\ncurrent/"]:::file
         C7 --> C8["Verify durable docs\nAPI, DB, design, decisions"]:::file
         C3 -- No --> C9["Resolve issues"]
         C8 --> C10["Suggest /commit"]:::cmd
@@ -144,7 +148,7 @@ flowchart LR
 |---|---|
 | Agent rules | `AGENTS.md` with mode, boundaries, SDD/TDD workflow, and source-of-truth map |
 | OpenCode commands | Bootstrap, planning, implementation, closeout, testing, semantic commits, prompt tools, README, and trivial-change fast path |
-| Tasks | Backlog, plans, checklists, and archive under `agents/task/` |
+| Tasks | Backlog index, task files, and archived summaries under `agents/tasks/` |
 | Documentation | DoD, testing, API, DB, decisions, debt, design, and dependency policy |
 | Skills | TDD, code review, security, performance, SEO, UI, Context7 MCP, and skill discovery |
 

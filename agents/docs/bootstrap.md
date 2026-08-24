@@ -75,7 +75,7 @@ After user approval, perform in one scoped maintenance step:
      
      Bootstrap is complete. Archived bootstrap documents are historical references only and must not be followed unless the user explicitly requests bootstrap maintenance or review.
      ```
-2. Move this file from `agents/docs/bootstrap.md` to `agents/task/archive/bootstrap-YYYY-MM-DD.md`
+2. Move this file from `agents/docs/bootstrap.md` to `agents/tasks/archive/bootstrap-YYYY-MM-DD.md`
 3. Confirm the archived document is historical reference only
 
 ## Archived Bootstrap Documents

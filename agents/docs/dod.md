@@ -1,15 +1,15 @@
 # Definition of Done
 
-Task plans use four states: `draft`, `approved`, `in_progress`, and `closed`.
+Task files use three lifecycle states: `todo` (planned), `current` (active), and `done` (completed and distilled). The task file lives in `agents/tasks/todo/` while `todo`, moves to `agents/tasks/current/` while active, and is distilled to a compact historical summary in `agents/tasks/archive/` when `done`.
 
-The criteria below define what must be true while a task is `in_progress` and what is required before it can be moved to `closed`.
+The criteria below define what must be true while a task is `current` and what is required before it can be distilled and removed from `agents/tasks/current/`.
 
-## In Progress
+## In Progress (task `current`)
 
 The change is implemented, validated, and ready for administrative closeout.
 
 - Task plan matches the implemented behavior.
-- Checklist is complete or explains non-applicable items.
+- Execution section is complete or explains non-applicable items.
 - Assumptions, edge cases, scope changes, and TDD exceptions are recorded.
 - Changes are scoped to the approved plan.
 - Existing public interfaces stay compatible unless the plan says otherwise.
@@ -28,9 +28,10 @@ The change is implemented, validated, and ready for administrative closeout.
 
 ## Closed
 
-Administratively closed. User approved, task files archived.
+Administratively closed. User approved, task distilled to a compact historical summary.
 
-- User approved backlog completion.
-- Task plan status was updated to `closed` before archiving.
-- Task plan/checklist were moved to `agents/task/archive/` in the same closeout step.
+- User approved task completion.
+- Task status was set to `done` before distilling.
+- `agents/tasks/current/TASK-XXX.md` was distilled into a compact historical summary in `agents/tasks/archive/` in the same closeout step.
+- Archived summaries are cold context: not source of truth, not read automatically.
 - Durable decisions were either recorded in the proper source-of-truth doc with user approval, or deliberately left task-local.

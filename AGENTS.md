@@ -8,7 +8,7 @@ Current mode: `skeleton`.
 
 This repository is in agent bootstrap mode. Product feature implementation is not allowed.
 
-For skeleton-mode scope, required setup information, validation, and transition to project mode, follow `agents/docs/bootstrap.md`. After transition to project mode, the archived bootstrap is at `agents/task/archive/bootstrap-*.md` (historical reference only).
+For skeleton-mode scope, required setup information, validation, and transition to project mode, follow `agents/docs/bootstrap.md`. After transition to project mode, the archived bootstrap is at `agents/tasks/archive/bootstrap-*.md` (historical reference only).
 
 Do not modify product source code or unrelated files unless the bootstrap docs explicitly allow it or the user explicitly requests it.
 
@@ -61,12 +61,11 @@ Read the smallest useful set. Use this table to decide what to open, not as a ma
 | File | Area | Purpose | Read when | Approval needed to edit? |
 |---|---|---|---|---|
 | `agents/docs/bootstrap.md` | Bootstrap | Skeleton setup and project transition | skeleton mode or bootstrap maintenance | No |
-| `agents/task/backlog.md` | Active task | Task queue and current selection | Planning or implementing product work | No |
-| `agents/task/TASK-XXX-plan.md` | Task plan | Scope and behavior contract | Implementing or validating task | No |
-| `agents/task/TASK-XXX-checklist.md` | Task checklist | Execution ledger and resume point | Implementing or resuming task | No |
-| `agents/task/plan.md` | Plan template | Template for task plans | Creating a new task plan | No |
-| `agents/task/checklist.md` | Checklist template | Template for checklists | Creating a new checklist | No |
-| `agents/docs/DoD.md` | Acceptance | Definition of done | Before validation and closeout | Yes |
+| `agents/tasks/current/TASK-XXX.md` | Active task file | Scope, behavior contract, and execution ledger (Plan + Execution). The only file in `current/` is the active task | Implementing, validating, or resuming task | No |
+| `agents/tasks/todo/TASK-XXX.md` | Pending task file | Planned task awaiting approval/start | Planning a pending task | No |
+| `agents/tasks/archive/TASK-XXX.md` | Archived task summary | Compact historical summary (cold context, not source of truth) | Historical rationale or similar prior work | No |
+| `agents/tasks/template.md` | Task template | Template for the task file (Plan + Execution) | Creating a new task | No |
+| `agents/docs/dod.md` | Acceptance | Definition of done | Before validation and closeout | Yes |
 | `agents/docs/testing.md` | Testing | Test commands, fixtures, validation rules | Adding/running tests or validating work | Only if validation changes |
 | `agents/docs/decisions.md` | Decisions | ADR records | Planning, durable decision, or past rationale matters | No |
 | `agents/docs/api.md` | API contracts | Routes, payloads, errors, compatibility | API routes, clients, or payloads affected | No |
@@ -115,15 +114,21 @@ Quality precedence: use `security-review` for exploitable security analysis, `pe
 "Read and apply" means: open the skill file with the Read tool and follow its instructions. Do NOT use the skill tool — project skills are not registered as system-level skills in this runtime.
 
 ## SDD Workflow
-Product implementation starts only when there is exactly one task under `## Current` in `agents/task/backlog.md`.
+Product implementation starts only when there is exactly one task in `agents/tasks/current/`.
+
+Task files live in `agents/tasks/`:
+- `current/TASK-XXX.md` — the single active task (Plan + Execution in one file). Only one file lives here.
+- `todo/TASK-XXX.md` — pending task awaiting approval/start.
+- `archive/TASK-XXX.md` — compact historical summary (cold context, not source of truth).
+- `template.md` — template for the task file.
 
 1. Select task
-   - Read `agents/task/backlog.md`.
-   - If `## Current` has zero or multiple tasks, ask the user to select or create one.
+   - List the task files in `agents/tasks/current/` and `agents/tasks/todo/`.
+   - The active task is the single file in `current/`. If there is zero or more than one, ask the user to select or create one.
 
 2. Plan
    - Read relevant accepted ADRs in `agents/docs/decisions.md` before proposing behavior or implementation choices.
-   - Create/update `agents/task/TASK-XXX-plan.md` from `agents/task/plan.md` as early as possible during planning, keeping it in `draft` while questions are still being resolved.
+   - Create/update the task file `agents/tasks/todo/TASK-XXX.md` (or `current/` once active) from `agents/tasks/template.md` as early as possible during planning, keeping its status `todo` while questions are still being resolved.
    - Inspect the smallest useful set of files and referenced context first.
    - For large or multi-repo context, use selective parallel exploration with subagents.
    - Ask one high-leverage question at a time. Prefer interface options when clear alternatives exist.
@@ -131,31 +136,32 @@ Product implementation starts only when there is exactly one task under `## Curr
    - Resolve behavior, data, security, API, and user-facing UX questions before implementation.
    - If the task affects the database, record DB impact, migration, rollback, compatibility, validation, recovery, and required doc updates in the task plan.
    - If a durable decision may be needed, include an ADR proposal in the plan instead of writing directly to `agents/docs/decisions.md`.
-    - Keep the plan in `draft` while it is being refined. When no blocking questions remain, ask the user whether it is ready for approval. Only after explicit confirmation may the agent change its status to `approved`.
+   - Keep the task status `todo` while it is being refined. When no blocking questions remain, ask the user whether the plan is ready for approval. Only after explicit confirmation may the agent move it to `current/` (active) for implementation.
 
-3. Checklist
-   - Create/update `agents/task/TASK-XXX-checklist.md` from `agents/task/checklist.md`.
-   - Derive checklist items from the approved plan only.
-   - If the task affects the database, include checklist items for DB schema updates, DB change log updates, backup/recovery checks, and migration validation.
+3. Execution ledger
+   - Fill the `## Execution` section of `agents/tasks/current/TASK-XXX.md` from `agents/tasks/template.md`.
+   - Derive Execution items from the approved plan only.
+   - If the task affects the database, include Execution items for DB schema updates, DB change log updates, backup/recovery checks, and migration validation.
 
 4. Implement with TDD
    - Read and apply `agents/skills/test-driven-development/SKILL.md` once at the start of implementation and follow it for the red/green/refactor process.
-   - Read the approved task plan, checklist, `agents/docs/testing.md`, and relevant source-of-truth files.
+   - Read the approved task file (Plan + Execution), `agents/docs/testing.md`, and relevant source-of-truth files.
    - Use `agents/docs/testing.md` only for project-specific commands, locations, fixtures, and validation requirements.
-   - Before each implementation block, re-read only the relevant plan sections, checklist items, and source files.
-    - `/implement` may only start from an `approved` plan; set the plan status to `in_progress` immediately before the first implementation change and keep it there until closeout is approved.
+   - Before each implementation block, re-read only the relevant plan sections, Execution items, and source files.
+   - `/implement` may only start from an approved plan; keep the task in `current/` until closeout is approved.
    - After each GREEN pass, run a lightweight quality gate: prefer the simplest passing design, remove real duplication, avoid premature abstractions, and question test-only production code.
-   - After implementation and validation, run one independent final review scoped to the approved plan, checklist, and task changes. Prefer a separate subagent or fresh review context when available.
+   - Run the **Converge** step before closeout: contrast the implemented code against the approved plan and acceptance criteria. Every acceptance criterion needs evidence (test, observable behavior, or documented exception). If the implementation diverges, stop and resolve with the user.
+   - After implementation and validation, run one independent final review scoped to the approved plan, Execution items, and task changes. Prefer a separate subagent or fresh review context when available.
    - Do not spawn subagents for every small RED/GREEN step. Use them for context-heavy checkpoints.
-   - Record checkpoint outcomes in the checklist or plan instead of relying on long conversation memory.
-   - Mark checklist items as they are completed.
-   - If test-first work is not feasible, stop unless the exception is already documented in the approved plan and checklist.
+   - Record checkpoint outcomes in the Execution section instead of relying on long conversation memory.
+   - Mark Execution items as they are completed.
+   - If test-first work is not feasible, stop unless the exception is already documented in the approved plan and Execution section.
 
 5. Validate
    - Run targeted tests, then full validation commands. See `agents/docs/testing.md` for the actual commands.
    - Run lint/typecheck/build when relevant.
    - Report unrelated failures before broadening scope.
-   - Check `agents/docs/DoD.md`.
+   - Check `agents/docs/dod.md`.
 
 6. Document
    - Update source-of-truth docs only when the durable project contract changes.
@@ -165,11 +171,12 @@ Product implementation starts only when there is exactly one task under `## Curr
    - Dependency changes update `agents/docs/dependency-policy.md` when the policy itself changes, and `agents/docs/decisions.md` when a new dependency ADR is recorded.
    - Lasting decisions may update `agents/docs/decisions.md` only after explicit user approval.
 
-7. Close out
+7. Close out (distill, not raw archive)
    - Ask before marking the backlog task done.
-   - Verify the task satisfies `agents/docs/DoD.md` while the plan is still `in_progress`.
-   - Set the plan status to `closed` in the final closeout step before archiving the task files.
-   - When the user approves marking a task done, move its task plan/checklist files to `agents/task/archive/` in the same closeout step.
+   - Verify the task satisfies `agents/docs/dod.md` while the task is still in `current/`.
+   - Distill `agents/tasks/current/TASK-XXX.md` into a compact historical summary in `agents/tasks/archive/TASK-XXX.md`, discarding execution state (trivial checkboxes, temporary results, resume notes, mechanical steps) and retaining durable knowledge (problem/outcome, scope, decisions, gotchas, references).
+   - Archived summaries are cold context: not source of truth, not read automatically, and current code/docs/tests always take precedence.
+   - Remove the task from `agents/tasks/current/` (move it out so `current/` holds no completed task).
    - Do not create branches or commits unless the user asks.
 
 ## Boundaries
