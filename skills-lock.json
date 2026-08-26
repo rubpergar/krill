@@ -13,12 +13,6 @@
       "skillPath": "skills/context7-mcp/SKILL.md",
       "computedHash": "bce41b8f466edc10be7d47ebdb4ea8b9bb281adee288b12f40a4c36890c48825"
     },
-    "cpp-best-practices": {
-      "source": "internal-consolidation",
-      "sourceType": "local",
-      "skillPath": "agents/skills/cpp-best-practices/SKILL.md",
-      "computedHash": "1f1a27a0e969172ce853ec0c043be29cb5c50abf81e0838571fe4ca5862a14ae"
-    },
     "find-skills": {
       "source": "vercel-labs/skills",
       "sourceType": "github",
