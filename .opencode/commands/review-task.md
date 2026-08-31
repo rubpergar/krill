@@ -2,7 +2,7 @@
 description: Rigorous review of the active task's code (branch/commit diff) contrasted against the plan and acceptance criteria
 ---
 
-Act as a senior production reviewer and perform a complete review of the code associated with krill's active task.
+Act as a senior production reviewer and perform a complete review of the code associated with Krill's single active task.
 
 Review the diff of the task's work (current branch or task commits) and decide whether it is ready for closeout, detect real defects, and explain what must be fixed or justified. Be exhaustive within the task's scope, but do not turn it into a general refactor or a list of personal preferences.
 
@@ -10,34 +10,61 @@ Additional user context: `$ARGUMENTS`
 
 ## Input
 
-- Identify the active task: the single file in `agents/tasks/current/`.
+- Read `agents/docs/task-lifecycle.md` first. It defines the lifecycle and the
+  meaning of `current/`, Resume State, and closeout readiness.
+- Identify the active task: the single task file matching `TASK-*.md` in
+  `agents/tasks/current/`; ignore `.gitkeep` and other placeholders.
+- If there is zero matching task files, stop and suggest `/plan`. If there is
+  more than one, stop and ask the user through the question interface to resolve
+  the multiplicity. Do not guess.
 - Extract the ID (TASK-XXX) and read `agents/tasks/current/TASK-XXX.md` (Plan + Execution).
+- Require `approved_at` in the active task. If it is missing, report an invalid
+  lifecycle state and stop without reviewing or changing the task.
+- Reject any frontmatter `status` field and any missing or unrecognized
+  `Phase`; do not reinterpret malformed state as a reviewable task.
+- If the phase is `blocked`, report the blocker and stop; do not clear it by
+  starting a review.
 - Determine the review range: the diff of the current branch against its merge base, or the task's commits. If `$ARGUMENTS` provides concrete branches/commits, use them.
 - Treat the rest of `$ARGUMENTS` as free context and options (e.g. `--deep`, `--no-checks`).
 
 ## Non-Negotiable Rules
 
 - Use as source of truth for the plan/criteria: `agents/tasks/current/TASK-XXX.md`, the relevant source-of-truth docs (`agents/docs/decisions.md`, `api.md`, `dod.md`, `testing.md`, DB) and the ADRs.
-- Use only read-only git operations: `git diff`, `git log`, `git status`. Do not make changes, commits, checkouts of other branches, or push.
+- Use only read-only git operations: `git diff`, `git diff --cached`, `git log`,
+  `git status`, and `git ls-files --others --exclude-standard`. Do not make
+  product changes, commits, checkouts of other branches, or push.
 - Capture the `head` and the base up front; the conclusion must correspond to the final reviewed state.
 - Do not fetch a monolithic diff: first get the file list and review per file or in small groups.
 - Do not read binaries or generated files as code; check their presence and role only if relevant.
-- Respect `AGENTS.md`, the ADRs, the glossary, the task plan, and the source-of-truth docs.
+- Respect `AGENTS.md`, the lifecycle contract, the ADRs, the glossary, the
+  task file, and the source-of-truth docs.
 - Do not invent requirements, states, modules, or acceptance criteria.
+- Do not move, approve, close, archive, or delete the task, and never rewrite
+  its Plan or TDD ledger. This command may update only `Resume State` and append
+  a review result to `Checkpoint Log` so the outcome is recoverable.
 - Do not turn style, naming, or formatting into findings unless they affect clarity, security, maintainability, or bug risk.
 - Do not formalize as a finding a pre-existing problem the diff neither causes nor exposes; leave it in `Residual risks or gaps`.
 - Do not formalize a design alternative unless there is a concrete problem with demonstrable impact.
 
 ## Phase 1: Context Capture
 
-1. Confirm the single active task file in `agents/tasks/current/`.
-2. Read `agents/tasks/current/TASK-XXX.md` (Plan: Summary, Scope, Current/Target Behavior, Acceptance Criteria, Edge Cases, Assumptions; Execution: TDD ledger, Converge, Validation).
-3. Get the git state: `git status --short`, `git log --oneline -15`, `git branch --show-current`.
+1. Confirm the single task file matching `TASK-*.md` in
+   `agents/tasks/current/` (ignore `.gitkeep` and other placeholders) and its
+   `approved_at` metadata.
+2. Read `agents/tasks/current/TASK-XXX.md` (Plan: Summary, Scope, Current/Target Behavior, Acceptance Criteria, Edge Cases, Assumptions; Execution: Resume State, TDD ledger, Converge, Validation).
+3. Get the git state: `git status --short`, `git diff --cached --name-status`,
+   `git diff --name-status`, `git ls-files --others --exclude-standard`,
+   `git log --oneline -15`, and `git branch --show-current`.
 4. Determine the diff range: base (merge base with the integration branch or the parent commit) → head.
+
+Before the review, set `phase: reviewing` and persist the review as the current
+Next action, unless the task is already `ready_for_closeout` and is being
+rechecked. Preserve the previous next action in `Checkpoint Log`.
 
 Build an internal manifest with:
 - Task ID and title, branch, base/head.
 - Files classified as production, tests, config, migrations, documentation, binaries, or generated.
+- Staged, unstaged, and untracked files included in the review.
 - The plan's explicit acceptance criteria.
 
 ## Phase 2: Scope and Contract
@@ -63,6 +90,10 @@ file or module | modified symbols | callers | contracts | happy paths | error pa
 ## Phase 3: Diff and Context
 
 - Get the specific diff of the production and test files.
+- Treat every staged, unstaged, or untracked file that belongs to the task as
+  part of the review. For untracked files, read the full file as a proposed
+  addition and include it in the behavior/documentation matrix; do not rely on
+  the branch diff alone.
 - Read the full modified functions at head.
 - Consult the surrounding code needed to understand ownership, lifecycle, contracts, and calls.
 - Search in a scoped way for affected callers and consumers.
@@ -103,13 +134,22 @@ Classify severity:
 
 ## Phase 6: Validation
 
-Do not automatically run builds, tests, linters, or project commands without authorization. After static analysis, if `--no-checks` is absent, ask the user with `question`:
+Do not automatically run builds, tests, linters, or project commands without authorization. After static analysis, if `--no-checks` is absent, ask the user through the OpenCode question interface (not as ordinary output):
 - Do not run checks.
 - Run specific checks detected in `agents/docs/testing.md`.
 - Run the full suite.
 - Run a specific command provided by the user.
 
 If checks are authorized, run the specific ones first and broaden only if the risk justifies it. Record commands, results, failures, and limitations.
+
+At the end of the review, persist only the review outcome in the active task:
+set `phase: ready_for_closeout` for a clean result only when validation,
+Converge, required documentation, and blockers also pass. Otherwise set
+`phase: implementing` or `blocked` with a concrete `Next action` when findings
+or missing gates remain. Append the review evidence to `Checkpoint Log`; never
+edit the approved Plan to hide a finding. If the command is run in a mode where
+task writes are unavailable, report the exact state update for the calling
+workflow to apply.
 
 ## Phase 7: Currency
 
@@ -156,4 +196,5 @@ Recommendation
 
 If you find no problems, write explicitly `No blocking or important findings in the reviewed diff` and keep the validation and residual gaps when relevant.
 
-Do not publish anything or execute write actions. Keep a technical, specific, and constructive tone.
+Do not publish anything, modify product code, commit, or push. Keep a technical,
+specific, and constructive tone.
