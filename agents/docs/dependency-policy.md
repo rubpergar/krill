@@ -89,7 +89,7 @@ All other dev dependencies (plugins, custom runners, code generators) follow the
 
 ## 7. Boundary Exclusion
 
-The SDD workflow Boundary rule (`AGENTS.md`) already says:
+The SDD workflow boundary rule (`AGENTS.md`) already says:
 
 > "Do not introduce dependencies without documenting why."
 
@@ -98,7 +98,7 @@ This policy is the "documenting why" mechanism. That rule is updated to point he
 ## 8. Exception Process
 
 To approve an exception to any rule in this policy:
-- Document the exception in the task plan with rationale.
+- Document the exception in the task file's Plan with rationale.
 - Get explicit user approval.
 - Record the exception as an ADR.
 

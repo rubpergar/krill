@@ -31,7 +31,7 @@ Each entry must include, at minimum:
 
 - Review the log with the user periodically (e.g. during task closeout) and confirm whether each entry is still accurate.
 - When a debt item is resolved, change it to `dismissed` or remove it from the log as appropriate, and briefly note the resolution.
-- When the user decides to address it as a formal task, reference the `DBT-XXX` in the task plan and close the entry.
+- When the user decides to address it as a formal task, reference the `DBT-XXX` in the task file and close the entry.
 - Do not accumulate un-reviewed debt: the log must reflect live debt, not an indefinite historical file.
 
 ## Statuses

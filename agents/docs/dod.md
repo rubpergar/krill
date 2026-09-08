@@ -1,37 +1,26 @@
 # Definition of Done
 
-Task files use three lifecycle states: `todo` (planned), `current` (active), and `done` (completed and distilled). The task file lives in `agents/tasks/todo/` while `todo`, moves to `agents/tasks/current/` while active, and is distilled to a compact historical summary in `agents/tasks/archive/` when `done`.
+This document defines the quality and completeness gates for setting an active
+task to `phase: ready_for_closeout`. The task lifecycle, state transitions,
+approval, archival, and removal rules belong exclusively to
+`agents/docs/task-lifecycle.md`.
 
-The criteria below define what must be true while a task is `current` and what is required before it can be distilled and removed from `agents/tasks/current/`.
+## Ready for closeout (task remains `current/`)
 
-## In Progress (task `current`)
+The implementation is complete and ready for the administrative closeout. The task's Resume State must be `phase: ready_for_closeout`.
 
-The change is implemented, validated, and ready for administrative closeout.
-
-- Task plan matches the implemented behavior.
-- Execution section is complete or explains non-applicable items.
-- Assumptions, edge cases, scope changes, and TDD exceptions are recorded.
-- Changes are scoped to the approved plan.
-- Existing public interfaces stay compatible unless the plan says otherwise.
-- No unrelated refactors.
-- No unnecessary dependencies.
+- The plan matches the implemented behavior, or every approved scope change is recorded with its approval and rationale.
+- The execution ledger preserves evidence for each planned behavior and each relevant RED → GREEN → REFACTOR cycle.
+- The task has no unresolved open question or blocker.
+- Changes are scoped to the approved plan and public interfaces remain compatible unless the plan says otherwise.
+- No unrelated refactor or unnecessary dependency was introduced.
 - Security-sensitive behavior changed only with explicit plan coverage.
-- Relevant tests were added or updated.
-- TDD evidence or approved exception is recorded for behavior changes.
-- Affected tests pass.
-- Lint/typecheck/build pass when available and relevant.
-- Any command that could not run is recorded with reason and residual risk.
-- Code-to-doc sync verified for affected source-of-truth docs (see plan "Affected Areas"). If discrepancies found, stop and ask user whether to update the doc or fix the code. Do not proceed until resolved.
-- Affected source-of-truth docs updated according to the documentation rules in `AGENTS.md`.
-- Temporary files, debug logs, scratch scripts, and test artifacts cleaned or promoted.
+- Relevant tests were added or updated and valid test criteria are satisfied.
+- TDD evidence or an approved exception is recorded for behavior changes.
+- Targeted tests pass; the applicable full suite, lint, typecheck, and build pass when configured and relevant.
+- Every skipped command has a reason and residual risk recorded.
+- Converge has checked every acceptance criterion against code and evidence.
+- Required source-of-truth documents are synchronized, including API, DB, domain, design, dependency, debt, or decisions documentation when affected.
+- Temporary files, debug logs, scratch scripts, and test artifacts are cleaned up or intentionally promoted.
 - `git status` contains only intentional changes.
-
-## Closed
-
-Administratively closed. User approved, task distilled to a compact historical summary.
-
-- User approved task completion.
-- Task status was set to `done` before distilling.
-- `agents/tasks/current/TASK-XXX.md` was distilled into a compact historical summary in `agents/tasks/archive/` in the same closeout step.
-- Archived summaries are cold context: not source of truth, not read automatically.
-- Durable decisions were either recorded in the proper source-of-truth doc with user approval, or deliberately left task-local.
+- An independent review has completed when required by the task or workflow.

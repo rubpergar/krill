@@ -13,7 +13,7 @@ Record an ADR only when the decision is **durable** and has **future impact**. A
 - It is the result of a **real trade-off** between valid options (not an obvious choice).
 - It will **guide future work** repeatedly.
 
-Do not record as an ADR: one-off task choices, temporary workarounds, task-local assumptions, obvious implementation details, or decisions better represented in code, tests, or specs. Those live in the task plan/Execution.
+Do not record as an ADR: one-off task choices, temporary workarounds, task-local assumptions, obvious implementation details, or decisions better represented in code, tests, or specs. Those live in the task file's Plan or Execution sections.
 
 Process: before adding or changing an ADR, ask the user for approval and summarize the title, context, decision, consequences, and future value. ADRs are only marked `accepted` after explicit user approval. If new work conflicts with an accepted ADR, explain the conflict and ask whether to keep, rewrite, or update it.
 
@@ -28,7 +28,7 @@ Every ADR must include, at minimum:
 - **Decision**: the concrete rule future work should follow, specific enough for another agent to apply it.
 - **Consequences**: benefits, costs, constraints, or follow-up work it creates.
 
-Record only decisions with future impact. Keep one-off choices, temporary workarounds, task-local assumptions, and code details in the task plan/checklist.
+Record only decisions with future impact. Keep one-off choices, temporary workarounds, task-local assumptions, and code details in the task file's Plan or Execution sections.
 
 ## Format
 

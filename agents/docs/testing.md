@@ -68,7 +68,7 @@ This file defines project-specific testing logistics. Use `agents/skills/test-dr
 ## TDD Coordination
 - Read and apply the TDD skill once before implementation code when the task changes behavior or refactors behavior-preserving code.
 - Use the commands and locations in this guide while following the skill's red/green/refactor cycle.
-- Record any approved TDD exception in the task plan and checklist before implementing under that exception.
+- Record any approved TDD exception in the active task file before implementing under that exception.
 
 ## Test Quality
 - Prefer deterministic fixtures.
