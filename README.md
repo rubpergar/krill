@@ -56,7 +56,7 @@ flowchart LR
         B2 --> B3["Detect plugins & MCPs"]:::plugin
         B3 --> B4{"Readiness passes?"}:::decision
         B4 -- Yes --> B5["Fill AGENTS.md\nproject & stack config"]:::file
-        B5 --> B6["Archive bootstrap.md\n→ project mode"]
+        B5 --> B6["Persist config and remove\nbootstrap artifacts → project mode"]
         B4 -- No --> B7["Report blockers"]
     end
 
@@ -64,64 +64,65 @@ flowchart LR
     subgraph S[Plan - SDD]
         direction TB
         S1["/plan"]:::cmd
-        S1 --> S2["Select task from\ntodo/ or current/"]:::file
-        S2 --> S3["Read decisions.md\nreview ADRs"]:::file
-        S3 --> S4["Read template.md\nstructure"]:::file
-        S4 --> S5["Inspect context files"]
-        S5 --> S6["Create TASK-XXX.md\nstatus: todo"]:::file
+        S1 --> S2["List current/ and todo/"]:::file
+        S2 --> S3{"Current task exists?"}:::decision
+        S3 -- Yes --> S4["Refine current plan\npreserve Execution"]:::file
+        S3 -- No --> S5["Create or refine\ntodo/TASK-XXX.md"]:::file
+        S4 --> S6["Read lifecycle, ADRs,\ntemplate and context"]:::file
+        S5 --> S6
         S6 --> S7{"Iterate: one\nquestion at a time"}:::decision
         S7 -- "Interface options" --> S8["User selects option\nagent updates draft"]
         S8 --> S9{"More questions?"}:::decision
         S9 -- Yes --> S7
-        S9 -- "No, user approves" --> S10(Plan: approved):::state
+        S9 -- "No, user approves" --> S10["Move todo → current/\nphase: ready_to_implement"]:::state
     end
 
     %% ==================== IMPLEMENT ====================
     subgraph T[Implement - TDD]
         direction TB
         T1["/implement"]:::cmd
-        T1 --> T2["Read approved plan\n(TASK-XXX.md)"]:::file
-        T2 --> T3["Fill Execution section\nfrom template.md"]:::file
-        T3 --> T4["Set task: current"]
-        T4 --> T5["Set plan: in_progress"]
-        T5 --> T6["Load TDD skill"]:::skill
-        T6 --> T7["Read testing.md\ncommands & fixtures"]:::file
-        T7 --> T8["Use Context7 MCP\nfor library docs"]:::mcp
-        T8 --> T9{"RED → GREEN → REFACTOR\nfor each behavior"}:::decision
-        T9 --> T10["RED: failing test"]
-        T10 --> T11{"Test fails\ncorrectly?"}:::decision
-        T11 -- Yes --> T12["GREEN: minimal code"]
-        T11 -- No --> T10
-        T12 --> T13{"All tests\npass?"}:::decision
-        T13 -- Yes --> T14["REFACTOR: clean up"]
-        T14 --> T15["SIMPLICITY GATE\nsimplest, no duplication\nno test-only code"]
-        T15 --> T16{"More\nbehaviors?"}:::decision
-        T16 -- Yes --> T9
-        T16 -- No --> T17["Run validation from\ntesting.md"]
-        T17 --> T18["CONVERGE: contrast code\nagainst plan & acceptance"]:::decision
-        T18 --> T19{"Diverges?"}:::decision
-        T19 -- Yes --> T20["Resolve with user"]
-        T20 --> T19
-        T19 -- No --> T21["Independent final review\nsubagent preferred"]
-        T21 --> T22{"Fixes\nneeded?"}:::decision
-        T22 -- Yes --> T23["Fix issues"]
-        T23 --> T22
-        T22 -- No --> T24["Task: current\nready for closeout"]:::state
+        T1 --> T2["Read current task\nand Resume State"]:::file
+        T2 --> T3["Preserve existing\nExecution ledger"]:::file
+        T3 --> T4["Set phase: implementing\nnext action persisted"]
+        T4 --> T5["Load TDD skill"]:::skill
+        T5 --> T6["Read testing.md\ncommands & fixtures"]:::file
+        T6 --> T7["If configured and relevant,\nuse Context7 MCP"]:::mcp
+        T7 --> T8{"RED → GREEN → REFACTOR\ncheckpoint each cycle"}:::decision
+        T8 --> T9["RED: failing test\nupdate ledger"]
+        T9 --> T10{"Test fails\ncorrectly?"}:::decision
+        T10 -- Yes --> T11["GREEN: minimal code\nupdate ledger"]
+        T10 -- No --> T9
+        T11 --> T12{"All tests\npass?"}:::decision
+        T12 -- Yes --> T13["REFACTOR: clean up\nupdate ledger"]
+        T13 --> T14["Simplicity gate\npersist Resume State"]
+        T14 --> T15{"More\nbehaviors?"}:::decision
+        T15 -- Yes --> T8
+        T15 -- No --> T16["Run validation from\ntesting.md"]
+        T16 --> T17["CONVERGE: contrast code\nagainst plan & acceptance"]:::decision
+        T17 --> T18{"Diverges?"}:::decision
+        T18 -- Yes --> T19["Record blocker\nand resolve with user"]
+        T19 --> T17
+        T18 -- No --> T20["Independent final review"]
+        T20 --> T21{"Fixes\nneeded?"}:::decision
+        T21 -- Yes --> T22["Return to implementing"]
+        T22 --> T8
+        T21 -- No --> T23["phase: ready_for_closeout"]:::state
     end
 
     %% ==================== CLOSEOUT ====================
     subgraph C[Closeout]
         direction TB
         C1["/closeout"]:::cmd
-        C1 --> C2["Verify DoD criteria"]:::file
+        C1 --> C2["Verify DoD, Converge,\nvalidation and docs"]:::file
         C2 --> C3{"User\napproves?"}:::decision
-        C3 -- Yes --> C4["Set task: done"]
-        C4 --> C5["Converge: code vs plan"]
-        C5 --> C6["Distill to\narchive/TASK-XXX.md"]:::file
-        C6 --> C7["Remove from\ncurrent/"]:::file
-        C7 --> C8["Verify durable docs\nAPI, DB, design, decisions"]:::file
-        C3 -- No --> C9["Resolve issues"]
-        C8 --> C10["Suggest /commit"]:::cmd
+        C3 -- Yes --> C4["Promote durable knowledge"]
+        C4 --> C5{"Historical value?"}:::decision
+        C5 -- Yes --> C6["Distill compact summary\nto archive/"]:::file
+        C5 -- No --> C7["Record omission\n(no archive file)"]:::file
+        C6 --> C8["Remove from current/\nlast transition"]:::file
+        C7 --> C8
+        C3 -- No --> C9["Keep current;\nrecord blocker"]
+        C8 --> C10["Suggest /commit\n(separate action)"]:::cmd
     end
 
     %% ==================== COMMIT ====================
@@ -130,7 +131,8 @@ flowchart LR
         D0["/commit"]:::cmd --> D1["Inspect git status"]
         D1 --> D2["Group files semantically"]
         D2 --> D3["Conventional Commits"]
-        D3 --> D4["git push"]
+        D3 --> D4{"Push approved?"}:::decision
+        D4 -- Yes --> D5["git push"]
     end
 
     %% ==================== CROSS-PHASE ====================
@@ -146,10 +148,11 @@ flowchart LR
 
 | Area | Contents |
 |---|---|
-| Agent rules | `AGENTS.md` with mode, boundaries, SDD/TDD workflow, and source-of-truth map |
-| OpenCode commands | Bootstrap, planning, implementation, closeout, testing, semantic commits, prompt tools, README, and trivial-change fast path |
-| Tasks | Backlog index, task files, and archived summaries under `agents/tasks/` |
-| Documentation | DoD, testing, API, DB, decisions, debt, design, and dependency policy |
+| Agent rules | `AGENTS.md` with mode, boundaries, lifecycle invariants, and source-of-truth map |
+| OpenCode commands | Bootstrap, planning, implementation, review, closeout, testing, semantic commits, prompt tools, README, and trivial-change fast path |
+| Tasks | Pending/active task files and optional archived summaries under `agents/tasks/` |
+| Lifecycle evaluation | Manual interruption and closeout scenarios in `agents/evals/task-lifecycle.md` |
+| Documentation | Task lifecycle, DoD, testing, API, DB, decisions, debt, design, and dependency policy |
 | Skills | TDD, code review, security, performance, SEO, UI, Context7 MCP, and skill discovery |
 
 ## Commands
@@ -158,10 +161,11 @@ flowchart LR
 |---|---|
 | [`/bootstrap`](.opencode/commands/bootstrap.md) | Adopt the skeleton into an existing project and prepare transition to project mode |
 | [`/plan`](.opencode/commands/plan.md) | Create or refine the active task plan from conversation context |
-| [`/implement`](.opencode/commands/implement.md) | Generate the checklist and execute the approved task with TDD |
-| [`/closeout`](.opencode/commands/closeout.md) | Close the active task, archive task files, and finalize durable docs |
+| [`/implement`](.opencode/commands/implement.md) | Resume and execute the approved current task with persistent TDD state |
+| [`/review-task`](.opencode/commands/review-task.md) | Review the active task against its plan, criteria, and evidence |
+| [`/closeout`](.opencode/commands/closeout.md) | Verify and close the active task with optional historical distillation |
 | [`/test`](.opencode/commands/test.md) | Auto-discover test surface, expand coverage, and validate test changes |
-| [`/commit`](.opencode/commands/commit.md) | Group changes into semantic commits and push |
+| [`/commit`](.opencode/commands/commit.md) | Group intentional changes into semantic commits and push |
 | [`/skip-sdd-tdd`](.opencode/commands/skip-sdd-tdd.md) | Quick implementation of trivial, non-behavioral changes (bypasses SDD/TDD) |
 | [`/prompt`](.opencode/commands/prompt.md) | Convert a rough request into an optimized prompt (output only, no execution) |
 | [`/prompt-run`](.opencode/commands/prompt-run.md) | Convert a rough request into an optimized prompt and execute it |
@@ -207,8 +211,9 @@ If you are starting a **new project** with no code yet, follow the incremental p
 ```text
 krill/
 ├── .opencode/
-│   └── commands/        # Custom OpenCode commands
-├── agents/              # Source-of-truth docs, tasks, DB, and agent skills
+│   ├── agents/           # Custom OpenCode agents
+│   └── commands/         # Custom OpenCode commands
+├── agents/              # Source-of-truth docs, tasks, evaluations, DB, and skills
 ├── AGENTS.md            # Main operating rules
 ├── LICENSE              # MIT license
 ├── README.md            # Project presentation
