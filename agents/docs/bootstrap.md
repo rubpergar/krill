@@ -45,7 +45,7 @@ Uses the `/bootstrap` command (`.opencode/commands/bootstrap.md`), which:
 - If the project does not contain them, keep `agents/db/schema.sql` and `agents/db/changes.sql` as the default paths.
 - After bootstrap, normal implementation work should use the DB paths declared in the Source of Truth Map without any extra DB policy document.
 
-**Transition:** When readiness passes (100% critical fields or >= 75% with user consent), the command updates `AGENTS.md` mode, archives this file regardless of completeness, and confirms the switch. Pending fields are tracked in the project-mode message in `AGENTS.md`.
+**Transition:** When readiness passes (100% critical fields or >= 75% with user consent), the command records durable findings, removes the bootstrap instructions and command, updates `AGENTS.md` mode, and confirms the switch. Pending fields are tracked in the project-mode message in `AGENTS.md`.
 
 ### Path B: New Project Initialization
 
@@ -66,18 +66,16 @@ No single `/bootstrap` command. The agent initializes the technical scaffold and
 After user approval, perform in one scoped maintenance step:
 
 1. In `AGENTS.md`:
-   - Change `Current mode: skeleton` to `Current mode: project`
+   - Change `Current mode: skeleton` to `Current mode: project`.
    - Replace the skeleton-mode heading message with:
      ```
      Current mode: `project`.
      
      This repository is an active project. Use the SDD/TDD workflow and the source-of-truth documents under `agents/**`.
      
-     Bootstrap is complete. Archived bootstrap documents are historical references only and must not be followed unless the user explicitly requests bootstrap maintenance or review.
+     Bootstrap is complete. The bootstrap instructions and command have been removed; do not recreate them during normal project work.
      ```
-2. Move this file from `agents/docs/bootstrap.md` to `agents/tasks/archive/bootstrap-YYYY-MM-DD.md`
-3. Confirm the archived document is historical reference only
-
-## Archived Bootstrap Documents
-
-Archived bootstrap documents are historical references only. Do not follow them during project work unless the user explicitly asks to review bootstrap history or perform bootstrap maintenance.
+2. Remove the skeleton-only bootstrap rules and the `agents/docs/bootstrap.md` row from the `AGENTS.md` Source of Truth Map.
+3. Verify that durable findings have been written to `AGENTS.md` and the applicable source-of-truth documents.
+4. Delete `agents/docs/bootstrap.md`.
+5. Delete `.opencode/commands/bootstrap.md`.

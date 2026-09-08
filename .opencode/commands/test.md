@@ -13,13 +13,14 @@ If `$ARGUMENTS` is provided, limit the analysis to the specified module, package
 ## Rules
 
 - Read `agents/docs/testing.md` first. It is the source of truth for commands, locations, fixtures, coverage configuration, and validation rules.
-- Read `AGENTS.md`, the active task plan/checklist when they exist, and any referenced source-of-truth docs relevant to the affected area.
+- Read `AGENTS.md`, the single active task file matching `TASK-*.md` in `agents/tasks/current/` when one exists (ignore `.gitkeep` and other placeholders), and any referenced source-of-truth docs relevant to the affected area. Stop if more than one active task exists.
+- If an active task exists, reject a frontmatter `status`, missing approval, or unknown phase as malformed lifecycle state; do not alter task state silently.
 - Auto-discover source modules, test files, and test registries from the real project structure before generating anything.
 - Derive expected behavior from names, contracts, usage context, plans, docs, and existing public interfaces. Do not derive expected behavior only from the current implementation.
 - Prefer modifying or extending existing test suites over creating redundant new ones.
 - You may create or expand tests automatically, but keep edits inside test locations, test fixtures, test utilities, and test registry files unless the user explicitly asks for broader changes.
 - Do not modify production source code from this command unless the user explicitly requests it.
-- If a gap cannot be covered because infrastructure is missing, the contract is unclear, or the change would require production code changes, record it in `agents/docs/debt.md` instead of guessing.
+- If a gap cannot be covered because infrastructure is missing, the contract is unclear, or the change would require production code changes, record it in `agents/docs/debt.md` instead of guessing. Do not create a standalone checklist or alter the task lifecycle.
 - Follow the project's testing conventions, naming, fixtures, and framework patterns.
 - If the project defines coverage tooling or thresholds in `agents/docs/testing.md`, use them. If not, perform a structural and behavioral coverage analysis anyway and report what could not be measured automatically.
 - Apply the "Valid Test Criteria" from `agents/docs/testing.md` to every test you generate, extend, or review. A test is only valid if it meets them all.

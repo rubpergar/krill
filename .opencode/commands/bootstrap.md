@@ -60,7 +60,7 @@ Present findings in three groups:
 
 ### 4. Phase 3 — Confirmation Questions
 
-Ask the user one by one. Use `$ARGUMENTS` as seed when relevant.
+Ask the user one by one through the OpenCode question interface; do not print questions as ordinary output when the interface is available. Use `$ARGUMENTS` as seed when relevant.
 
 **4.1 Product:**
 - Product name
@@ -171,17 +171,22 @@ For partial or mostly incomplete: ask if the user wants to answer pending fields
 Follow the readiness verdict:
 
 **If readiness passes (complete or partial):**
-Ask: "Do you want to transition to project mode?"
+Ask through the OpenCode question interface: "Do you want to transition to project mode?"
 
 - If yes (complete):
   - In `AGENTS.md`: change `Current mode: \`skeleton\`` to `Current mode: \`project\``
   - Replace skeleton-mode message with project-mode message (see `agents/docs/bootstrap.md`)
-  - Move `agents/docs/bootstrap.md` to `agents/tasks/archive/bootstrap-YYYY-MM-DD.md`
-  - Confirm archived file is historical reference
+  - Remove bootstrap-only rules and the `agents/docs/bootstrap.md` row from the `AGENTS.md` Source of Truth Map.
+  - Verify that durable findings are recorded in `AGENTS.md` and the applicable source-of-truth documents.
+  - Delete `agents/docs/bootstrap.md`.
+  - Delete `.opencode/commands/bootstrap.md` as the final bootstrap transition step. Report the completed transition before this self-deletion.
 
 - If yes (partial):
-  - Same transition and archive as complete, but add to project-mode message: "Pending fields: <list>. Resolve them in a task plan before working on those areas."
-  - Archive `bootstrap.md` to `agents/tasks/archive/bootstrap-YYYY-MM-DD.md` (historical reference; pending fields are tracked in the mode message above).
+  - Same transition and deletion as complete, but add to project-mode message: "Pending fields: <list>. Resolve them in a task plan before working on those areas."
+  - Remove the skeleton-only bootstrap rules and the `agents/docs/bootstrap.md` row from the `AGENTS.md` Source of Truth Map.
+  - Verify that confirmed findings are recorded before deleting `agents/docs/bootstrap.md`.
+  - Delete `agents/docs/bootstrap.md`.
+  - Delete `.opencode/commands/bootstrap.md` as the final transition step and report the completed transition before this self-deletion.
 
 - If no:
   - The partial configuration is saved. Repository stays in skeleton mode.

@@ -1,39 +1,47 @@
 ---
-description: Create or refine the active task plan from conversation context
+description: Create or refine a task plan in the canonical task lifecycle
 ---
 
-Create or refine `agents/tasks/current/TASK-XXX.md` (active task) or `agents/tasks/todo/TASK-XXX.md` (pending) for the active task using the planning discussion already developed in the conversation.
+Create or refine the SDD task artifact using the planning discussion already developed in the conversation.
 
-Rules:
-- Identify the active task: the single file in `agents/tasks/current/`, or the pending task selected from `agents/tasks/todo/`.
-- If `agents/tasks/current/` has zero or multiple tasks, stop and ask the user to select or create one.
-- Extract the task ID (TASK-XXX) from the task file name.
-- Read `agents/tasks/template.md` to understand the required structure (frontmatter + Plan + Execution).
-- Read relevant accepted ADRs from `agents/docs/decisions.md` before finalizing behavior or implementation choices.
-- Do not assume a special agent mode is required. This command must work correctly in the normal working mode.
-- Before asking questions, inspect the smallest useful set of files and project context needed to understand the task.
-- If the user references multiple repositories, large codebases, or supporting documents, inspect them first and parallelize exploration when useful.
-- Use the conversation context (planning discussion, /prompt-run output, user clarifications) to fill every section of the Plan portion of the template.
-- Do not invent requirements, APIs, DB structures, or technical facts that were not discussed or confirmed.
-- If critical information is missing from the conversation, list it under `## Open Questions` instead of guessing.
-- Keep the task status as `todo` while planning is in progress. When no blocking open questions remain, ask the user whether the plan is ready for approval. Only after an explicit affirmative answer may this command change the status to `current` (start) or mark it approved.
-- Create the task early and refine it iteratively. Do not wait until every question is answered before writing the first draft.
-- If a task file already exists, update it with any new discussion points instead of overwriting blindly.
-- Prefer asking one high-leverage planning question at a time.
-- Prefer interface-based option questions over free-form chat whenever there are clear alternatives.
-- For each question, present concise options, put the recommended option first, explain the tradeoff briefly, and leave room for a custom answer when needed.
-- After each planning answer, update the draft plan immediately so the file stays in sync with the conversation.
-- If the task affects the database, fill the `### Database Impact` section with the approach discussed.
-- Follow `AGENTS.md` for the canonical planning workflow and planning-question behavior.
+Read `agents/docs/task-lifecycle.md` first. It is the source of truth for task locations, approval, phases, and transitions. Read `agents/tasks/task-template.md` and relevant accepted ADRs before editing.
 
-Flow:
-1. Confirm exactly one active task in `agents/tasks/current/`, or select one from `agents/tasks/todo/`.
-2. Read `agents/tasks/template.md` for the structure.
-3. Read `agents/docs/decisions.md` and the relevant source-of-truth files and referenced context for the active task.
-4. Synthesize the available context into the current best draft plan.
-5. Create or update the task file (`agents/tasks/current/TASK-XXX.md` or `agents/tasks/todo/TASK-XXX.md`) with status `todo`.
-6. Ask the next highest-value unresolved question.
-7. After each user answer, update the draft plan and continue until the user confirms the plan is complete.
-8. When pausing, show the current plan progress and the remaining open questions that block approval.
-9. When no blocking questions remain, summarize the plan and ask whether the user wants to approve it for implementation.
-10. If the user explicitly approves, move the task to `agents/tasks/current/` (or set status accordingly) and record the approval. Otherwise leave it as `todo` and continue planning or report the remaining refinements.
+## Rules
+
+- List task files matching `TASK-*.md` in `agents/tasks/current/` and `agents/tasks/todo/` before acting; ignore `.gitkeep` and other placeholders.
+- If there is exactly one task in `current/`, it is the only active planning target. Refine its Plan only when the conversation explicitly changes or clarifies it; preserve its complete `## Execution` section, checked items, evidence, and Resume State.
+- A current task must contain `approved_at`, a recognized current-task phase, and no frontmatter `status`; otherwise stop and report the invalid lifecycle state instead of refining it.
+- A selected todo task must also have no frontmatter `status`; reject malformed legacy state instead of deleting or translating it implicitly. Its phase must be `planning` (or be absent in an older draft that can be explicitly initialized as `planning`).
+- If more than one task file matches `TASK-*.md` in `current/`, stop and ask the user to resolve the invalid multiplicity. Do not use conversational context to choose one.
+- If there is no current task and exactly one task in `todo/`, refine that task.
+- If there is no current or todo task, create a new task in `todo/` from `agents/tasks/task-template.md`.
+- If there is no current task and multiple todo tasks exist, use the OpenCode question interface to ask the user to select one. Do not guess or print the question as ordinary output when the interface is available.
+- Do not create `backlog.md`, `TASK-XXX-plan.md`, or `TASK-XXX-checklist.md`. Do not add a frontmatter `status` field.
+- Keep a task in `todo/` while questions are unresolved. Never begin product implementation from `todo/`.
+- Fill the Plan from the conversation and inspected project context. Do not invent requirements, APIs, DB structures, or technical facts.
+- Record missing critical information under `### Open Questions`.
+- Ask one high-leverage question at a time through the question interface, preferring concise options with the recommended option first.
+- If the plan changes an active task's acceptance criteria or scope, record the change, set `phase: blocked`, and obtain explicit re-approval before implementation continues.
+
+## Approval transition
+
+When no blocking questions remain, ask whether the user approves the plan through the OpenCode question interface. Do not move the file on an implicit or ambiguous answer.
+
+On explicit approval:
+
+1. Preserve the task ID and all plan content.
+2. Move `agents/tasks/todo/TASK-XXX.md` to
+   `agents/tasks/current/TASK-XXX.md`.
+3. Add `approved_at` to the frontmatter.
+4. Set `phase: ready_to_implement` in `### Resume State`.
+5. Record the approval transition in `Last checkpoint` and `Checkpoint Log`.
+
+If the task is already in `current/`, do not move it or reset its phase. If the user does not approve a changed plan, keep `phase: blocked` and record the unresolved question. If the user explicitly re-approves a changed active plan, record that approval in `Last checkpoint` and `Checkpoint Log`, then set `phase: ready_to_implement`.
+
+## Flow
+
+1. Inspect the task directories, template, ADRs, and relevant context.
+2. Create or update only the selected task file.
+3. Preserve existing Execution content on every update.
+4. Ask the next unresolved question through the question interface, or request approval when the plan is complete.
+5. Report the location, remaining questions, and whether the task is approved.
