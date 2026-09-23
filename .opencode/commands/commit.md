@@ -8,7 +8,7 @@ Do not make one big commit by default.
 Group files by purpose.
 Commit each group separately.
 
-If the user provides extra context via `$ARGUMENTS`, use it to refine commit messages — but do not force text that does not accurately describe the changes.
+If the user provides extra context via `$ARGUMENTS`, use it to refine commit messages, but do not force text that does not accurately describe the changes.
 
 ## Steps
 

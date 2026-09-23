@@ -15,7 +15,7 @@
 
 ## What It Is
 
-**Krill** is a workspace template for development agents. It enables an agent to step into a project with clear rules, traceable tasks, and disciplined validation — before touching a single line of product code.
+**Krill** is a workspace template for development agents. It enables an agent to step into a project with clear rules, traceable tasks, and disciplined validation before touching a single line of product code.
 
 The repository is currently in **skeleton mode**: no product code yet. It is ready to be adopted into an existing project or used to initialize a new one through the bootstrap workflow.
 
@@ -87,14 +87,13 @@ flowchart LR
         T4 --> T5["Load TDD skill"]:::skill
         T5 --> T6["Read testing.md\ncommands & fixtures"]:::file
         T6 --> T7["If configured and relevant,\nuse Context7 MCP"]:::mcp
-        T7 --> T8{"RED → GREEN → REFACTOR\ncheckpoint each cycle"}:::decision
+        T7 --> T8{"RED → GREEN\ncheckpoint each cycle"}:::decision
         T8 --> T9["RED: failing test\nupdate ledger"]
         T9 --> T10{"Test fails\ncorrectly?"}:::decision
         T10 -- Yes --> T11["GREEN: minimal code\nupdate ledger"]
         T10 -- No --> T9
         T11 --> T12{"All tests\npass?"}:::decision
-        T12 -- Yes --> T13["REFACTOR: clean up\nupdate ledger"]
-        T13 --> T14["Simplicity gate\npersist Resume State"]
+        T12 -- Yes --> T14["Simplicity gate\npersist Resume State"]
         T14 --> T15{"More\nbehaviors?"}:::decision
         T15 -- Yes --> T8
         T15 -- No --> T16["Run validation from\ntesting.md"]
@@ -153,7 +152,7 @@ flowchart LR
 | Tasks | Pending/active task files and optional archived summaries under `agents/tasks/` |
 | Lifecycle evaluation | Manual interruption and closeout scenarios in `agents/evals/task-lifecycle.md` |
 | Documentation | Task lifecycle, DoD, testing, API, DB, decisions, debt, design, and dependency policy |
-| Skills | TDD, code review, security, performance, SEO, UI, Context7 MCP, and skill discovery |
+| Skills | TDD and code review. Domain skills are added per project |
 
 ## Commands
 
@@ -173,8 +172,7 @@ flowchart LR
 
 ## Requirements
 
-- [OpenCode](https://opencode.ai) — the skeleton is designed around its commands, agents, and configuration.
-- Context7 MCP — required if you want to use the `context7-mcp` skill for up-to-date library, SDK, and framework documentation.
+- [OpenCode](https://opencode.ai): the skeleton is designed around its commands, agents, and configuration.
 
 ## Optional Integrations
 
@@ -212,12 +210,12 @@ If you are starting a **new project** with no code yet, follow the incremental p
 krill/
 ├── .opencode/
 │   ├── agents/           # Custom OpenCode agents
-│   └── commands/         # Custom OpenCode commands
-├── agents/              # Source-of-truth docs, tasks, evaluations, DB, and skills
+│   ├── commands/         # Custom OpenCode commands
+│   └── skills/           # Process skills (model-invoked)
+├── agents/              # Source-of-truth docs, tasks, evaluations, and DB
 ├── AGENTS.md            # Main operating rules
 ├── LICENSE              # MIT license
-├── README.md            # Project presentation
-└── skills-lock.json     # Skill provenance and integrity hashes
+└── README.md            # Project presentation
 ```
 
 ## Current Status
