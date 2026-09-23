@@ -4,7 +4,7 @@ description: Resume or execute the approved current task with persistent TDD sta
 
 Implement the single approved task in `agents/tasks/current/` following the SDD/TDD workflow.
 
-Read `agents/docs/task-lifecycle.md`, the active task file, the relevant source of truth, `agents/docs/testing.md`, and `agents/skills/test-driven-development/SKILL.md` before implementation.
+Read `agents/docs/task-lifecycle.md`, the active task file, the relevant source of truth, `agents/docs/testing.md`, and `.opencode/skills/tdd/SKILL.md` before implementation.
 
 ## Preconditions
 
@@ -17,7 +17,7 @@ Validate the active task exactly as `agents/docs/task-lifecycle.md` defines: exa
 - Add only missing scaffolding or items explicitly derived from the approved Plan. If the approved plan and execution ledger disagree, stop and resolve the discrepancy rather than silently rewriting history.
 - Before new implementation work, set `phase: implementing` and write a concrete `Next action`. Preserve a `reviewing` phase until review findings determine whether work must resume.
 - After every meaningful pause, failure, interruption, scope change, or validation, persist `phase`, `Next action`, `Blockers`, `Last validation`, `Last checkpoint`, `Scope changes`, and `Updated` in `### Resume State`.
-- After each relevant RED, GREEN, and REFACTOR checkpoint, update the matching TDD ledger item with its result and evidence in the same file before moving to another behavior.
+- After each relevant RED and GREEN checkpoint, update the matching TDD ledger item with its result and evidence in the same file before moving to another behavior. Refactoring belongs to the review stage, not the implementation loop.
 - A completed ledger item is never unchecked because a session restarted.
 - If the session or agent fails, leave the task in `current/`. A new session resumes from Resume State and the first incomplete ledger item, not from chat history or an archive summary.
 - Use the TDD skill's exception process and record any approved exception in the task before relying on it.
@@ -40,7 +40,7 @@ If implementation diverges from the approved plan, stop and resolve it with the 
 1. Validate the single current task and its approval metadata.
 2. Read Resume State and the first incomplete execution item.
 3. Preserve the existing ledger and continue at its Next action.
-4. Execute small RED → GREEN → REFACTOR cycles, persisting each checkpoint.
+4. Execute small RED → GREEN cycles, persisting each checkpoint; refactoring is deferred to review.
 5. Validate, Converge, and record evidence.
 6. Request independent review when required; do not close or archive the task.
 7. Leave the task in `current/` until `/closeout` completes.

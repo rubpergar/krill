@@ -2,7 +2,7 @@
 
 Customize before product implementation. If a command is unavailable, write `not available` and explain the fallback.
 
-This file defines project-specific testing logistics. Use `agents/skills/test-driven-development/SKILL.md` as the authority for the TDD workflow itself.
+This file defines project-specific testing logistics. Use `.opencode/skills/tdd/SKILL.md` as the authority for the TDD workflow itself.
 
 ## Commands
 
@@ -22,7 +22,7 @@ This file defines project-specific testing logistics. Use `agents/skills/test-dr
 | Build | |
 | Full validation | |
 | Coverage report | |
-| DESIGN.md lint | `npx @google/design.md lint agents/docs/design.md` (requires Node.js; optional — skip if unavailable) |
+| DESIGN.md lint | `npx @google/design.md lint agents/docs/design.md` (requires Node.js; optional; skip if unavailable) |
 
 ## Test Levels
 | Level | Purpose | Isolation | When to run |
@@ -67,7 +67,7 @@ This file defines project-specific testing logistics. Use `agents/skills/test-dr
 
 ## TDD Coordination
 - Read and apply the TDD skill once before implementation code when the task changes behavior or refactors behavior-preserving code.
-- Use the commands and locations in this guide while following the skill's red/green/refactor cycle.
+- Use the commands and locations in this guide while following the skill's red/green cycle.
 - Record any approved TDD exception in the active task file before implementing under that exception.
 
 ## Test Quality
@@ -76,6 +76,8 @@ This file defines project-specific testing logistics. Use `agents/skills/test-dr
 - Keep sensitive or production-like data out of fixtures.
 - Mock external services at boundaries; prefer real code for domain logic.
 - Do not assert only on mock calls when user-visible behavior can be asserted.
+- Tests adapt to the production contract; never change production code, add branches, or widen an interface only to satisfy a test.
+- Avoid tautological tests: expected values must come from an independent source, not be recomputed the way the code computes them.
 
 ## Valid Test Criteria
 A test is valid only if it meets all of the following criteria. The `/test` command applies them when generating, extending, or reviewing tests and reports any violation; task validation must also check them.

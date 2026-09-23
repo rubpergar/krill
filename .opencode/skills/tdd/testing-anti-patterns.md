@@ -244,8 +244,7 @@ BEFORE creating mock responses:
 TDD cycle:
 1. Write failing test
 2. Implement to pass
-3. Refactor
-4. THEN claim complete
+3. THEN claim complete (refactoring belongs to the review stage)
 ```
 
 ## When Mocks Become Too Complex

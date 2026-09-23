@@ -25,7 +25,7 @@ Copy `agents/tasks/task-template.md` to `agents/tasks/todo/TASK-001.md` and fill
 | Current takes precedence | Run `/plan` with one current task and one or more todo tasks | The current task remains the only active target; todo tasks are not started |
 | Start implementation | Run `/implement` | Existing execution content is preserved; phase and next action are persisted |
 | Resume after interruption | Stop after a RED or GREEN checkpoint and start a fresh session | The agent reads `current/TASK-001.md`, keeps completed evidence, and continues at the first incomplete ledger item |
-| Resume after REFACTOR | Stop after a REFACTOR checkpoint and start a fresh session | RED, GREEN, and REFACTOR markers and evidence remain intact; the next behavior is not repeated |
+| Resume after GREEN | Stop after a GREEN checkpoint and start a fresh session | RED and GREEN markers and evidence remain intact; the next behavior is not repeated |
 | Re-run implement | Run `/implement` again after a checkpoint | No duplicate `## Execution`, no reset checkboxes, and no lost evidence |
 | Resume during validation | Stop with `phase: validating` and start a fresh session | The agent continues the pending validation item and does not restart implementation |
 | Resume during review | Stop with `phase: reviewing` and start a fresh session | The agent continues review; it does not reset the ledger or silently code around findings |

@@ -79,7 +79,7 @@ be updated in the same task file as the work progresses.
 
 ### Context
 - [ ] Re-read the approved plan and referenced source-of-truth docs before implementation.
-- [ ] Load and apply `agents/skills/test-driven-development/SKILL.md`, or record why it does not apply.
+- [ ] Load and apply `.opencode/skills/tdd/SKILL.md`, or record why it does not apply.
 - [ ] Verify no open questions block implementation.
 
 ### Resume State
@@ -93,25 +93,23 @@ be updated in the same task file as the work progresses.
 
 ### TDD Ledger
 
-Track each behavior or subtask from the approved plan through RED → GREEN →
-REFACTOR. Preserve completed items and append evidence; do not reset them when
-resuming.
+Track each behavior or subtask from the approved plan through RED → GREEN.
+Preserve completed items and append evidence; do not reset them when resuming.
+Refactoring is not a ledger step; it belongs to the review stage.
 
 - [ ] Behavior/subtask 1:
-  - [ ] RED: pending — Evidence:
-  - [ ] GREEN: pending — Evidence:
-  - [ ] REFACTOR: pending — Evidence:
+  - [ ] RED: pending; Evidence:
+  - [ ] GREEN: pending; Evidence:
 - [ ] Behavior/subtask 2:
-  - [ ] RED: pending — Evidence:
-  - [ ] GREEN: pending — Evidence:
-  - [ ] REFACTOR: pending — Evidence:
+  - [ ] RED: pending; Evidence:
+  - [ ] GREEN: pending; Evidence:
 
 ### Checkpoint Log
 
 Append only interruptions, blockers, scope changes, and important validation
 results. This is not a second checklist.
 
-- YYYY-MM-DDTHH:MM:SSZ — checkpoint — result — next action
+- YYYY-MM-DDTHH:MM:SSZ | checkpoint | result | next action
 
 ### Converge
 
@@ -134,7 +132,7 @@ before closeout.
 
 ### Closeout Evidence
 - [ ] Independent review completed and findings resolved or documented.
-- Closeout approval: `pending | approved | declined` — Evidence:
-- Historical summary decision: `pending | retain | omit` — Reason:
+- Closeout approval: `pending | approved | declined`; Evidence:
+- Historical summary decision: `pending | retain | omit`; Reason:
 - [ ] If retained, compact summary written to `agents/tasks/archive/`.
 - [ ] Task removed from `agents/tasks/current/` only after all preceding steps succeed.

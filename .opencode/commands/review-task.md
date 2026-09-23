@@ -101,6 +101,7 @@ file or module | modified symbols | callers | contracts | happy paths | error pa
   - Does the test check observable behavior and not only implementation?
   - Is the change actually wired to production?
 - Review the tests against the "Valid Test Criteria" in `agents/docs/testing.md` (independence, uniqueness, clean state, determinism, production isolation, visible errors, etc.).
+- Check the diff for refactoring opportunities (duplication, naming, structure, dead code). Report them as findings; refactoring belongs to the review stage, not the implementation loop.
 
 ## Phase 4: Adaptive Parallelization
 

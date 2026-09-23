@@ -10,7 +10,7 @@ approval, archival, and removal rules belong exclusively to
 The implementation is complete and ready for the administrative closeout. The task's Resume State must be `phase: ready_for_closeout`.
 
 - The plan matches the implemented behavior, or every approved scope change is recorded with its approval and rationale.
-- The execution ledger preserves evidence for each planned behavior and each relevant RED → GREEN → REFACTOR cycle.
+- The execution ledger preserves evidence for each planned behavior and each relevant RED → GREEN cycle.
 - The task has no unresolved open question or blocker.
 - Changes are scoped to the approved plan and public interfaces remain compatible unless the plan says otherwise.
 - No unrelated refactor or unnecessary dependency was introduced.

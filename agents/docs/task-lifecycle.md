@@ -7,7 +7,7 @@ This document is the source of truth for the lifecycle of an SDD task. Commands 
 Krill does not distribute separate `sdd.md` or `tdd.md` files:
 
 - SDD is the task lifecycle and artifact contract defined here, exposed through `/plan`, `/implement`, `/review-task`, and `/closeout`.
-- TDD is a reusable implementation discipline in `agents/skills/test-driven-development/SKILL.md`.
+- TDD is a reusable implementation discipline in `.opencode/skills/tdd/SKILL.md`.
 - Project-specific test commands, fixtures, and validation logistics belong in `agents/docs/testing.md`.
 - Acceptance gates belong in `agents/docs/dod.md`.
 
@@ -63,13 +63,13 @@ The current task file is the hot, persistent context. It replaces the former sta
 - add only missing scaffolding or new items explicitly justified by the approved plan;
 - set or update the structured resume state before continuing;
 - persist `phase`, `next_action`, `blockers`, `last_validation`, `last_checkpoint`, and `scope_changes` in the task file;
-- update the TDD ledger after each relevant RED, GREEN, and REFACTOR checkpoint, including its result and evidence; and
+- update the TDD ledger after each relevant RED and GREEN checkpoint, including its result and evidence; and
 - leave the task in `current/` if the session stops, fails, or is interrupted.
 
 On a new session, or after an agent failure, the first action is to read the single current task and resume from `Resume State` and the first incomplete
 ledger item. Do not reconstruct progress from chat history, Git history, or an archive summary. If the next action is unknown, mark the task `blocked` and ask the user; do not infer a completed step.
 
-The ledger records durable execution evidence. Each RED, GREEN, and REFACTOR checkpoint has its own completion marker, so an interrupted behavior can resume at the exact cycle. The resume state records the small, replaceable pointer to the next action. A short append-only checkpoint entry is used for interruptions, blockers, scope changes, and important validation results; it is not a second checklist.
+The ledger records durable execution evidence. Each RED and GREEN checkpoint has its own completion marker, so an interrupted behavior can resume at the exact cycle. The resume state records the small, replaceable pointer to the next action. A short append-only checkpoint entry is used for interruptions, blockers, scope changes, and important validation results; it is not a second checklist.
 
 Phase-aware resumption is explicit: `ready_to_implement` starts implementation; `implementing` resumes the first incomplete ledger checkpoint; `validating` continues the pending validation; `reviewing` continues or reruns review; `ready_for_closeout` goes to `/closeout`; and `blocked` stops for resolution. Validation or review may deliberately return a task to `implementing`, but a new session must not make that transition merely by starting `/implement`.
 
@@ -113,7 +113,7 @@ When retained, an archive summary contains only:
 - references to authoritative docs, tests, commits, or pull requests; and
 - the outcome of the acceptance criteria.
 
-It must not contain execution checkboxes, temporary command output, resume notes, scaffolding, resolved questions, or the RED/GREEN/REFACTOR ledger.
+It must not contain execution checkboxes, temporary command output, resume notes, scaffolding, resolved questions, or the RED/GREEN ledger.
 
 ## Historical context
 
