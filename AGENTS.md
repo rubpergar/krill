@@ -30,28 +30,22 @@ Fill only what applies during bootstrap.
 
 ## Operating Rules
 - In skeleton mode, editing agent configuration files (`AGENTS.md`, `agents/**`, `.opencode/**`) does not require user approval. The Source of Truth Map approval column only applies in project mode.
-- Before modifying a source-of-truth document in project mode, check the **Approval needed?** column in the Source of Truth Map to determine if explicit approval is needed.
-- Product behavior changes require the SDD workflow below.
-- Template/agent-maintenance changes may be done directly when the user explicitly asks.
-- Skeleton maintenance is not product implementation and does not require a product task unless the user asks for that workflow.
+- Before modifying a source-of-truth document in project mode, check the **Approval needed?** column in the Source of Truth Map.
+- Product behavior changes require the SDD workflow below. Template and agent-maintenance changes may be done directly when the user explicitly asks.
 - New project initialization in `skeleton` mode requires explicit user approval and must follow `agents/docs/bootstrap.md`.
 - Exploratory, advisory, review-only, or planning-only requests do not change code unless the user asks for edits.
 - Keep changes scoped to the active task or the explicitly requested maintenance.
 - Prefer updating stable source-of-truth docs over duplicating instructions.
 - Project source-of-truth docs and approved task plans override skill guidance when they conflict.
 - Treat blank fields, placeholder markers, and `not available` commands as missing configuration, not as instructions to improvise.
-- After transition to project mode, `agents/docs/bootstrap.md` and `.opencode/commands/bootstrap.md` are removed. Their durable findings must already be recorded in `AGENTS.md` and the applicable source-of-truth documents.
 
 ## Token Budget
 - Communicate with the user in Spanish unless they request another language.
-- Keep progress updates brief and only send them for meaningful discoveries, blockers, edits, or validation results.
-- Avoid restating context already present in the conversation.
-- Prefer concise final responses: outcome, changed files, validation, and relevant caveats.
+- Keep updates brief and only for meaningful discoveries, blockers, edits, or validation results. Do not restate context already present in the conversation. Prefer concise final responses: outcome, changed files, validation, and caveats.
 - Do not use intentionally degraded or overly terse language if it reduces correctness or clarity.
-- Use subagents selectively: prefer them for heavy exploration, cross-repo comparison, independent final review, or tightly scoped analysis that would otherwise bloat the main context. Do not offload every small TDD step.
-- Read the smallest useful set of files for the current decision. Do not reload large documents or broad file sets when a narrower read will do.
+- Use subagents selectively: heavy exploration, cross-repo comparison, independent final review, or tightly scoped analysis that would otherwise bloat the main context. Do not offload every small TDD step.
+- Read the smallest useful set of files for the current decision; prefer targeted reads and focused diffs over reloading whole files.
 - When switching from exploration to implementation, carry forward only the distilled facts needed for the current step.
-- Prefer targeted file reads and focused diffs over re-reading whole files after every change.
 - If the task grows, summarize the current state in the active task file instead of keeping it only in conversation memory.
 - For large repos or multi-repo work, split discovery into parallel sub-tasks and keep the main thread focused on decisions and integration.
 
@@ -82,16 +76,7 @@ Fill during bootstrap when the project configures agent-specific runtime capabil
 - Plugins:
 - MCPs:
 
-Use runtime capabilities only when the current project configures them or `## Agent Runtime` records them.
-
-| Capability | Type | Use when | Avoid when |
-|---|---|---|---|
-| Context7 | MCP | Library, framework, SDK, API, CLI, or cloud-service docs are needed | Business-logic debugging, refactoring, or non-library concepts |
-| Playwright | MCP | Browser automation, UI validation, or E2E flows are needed | Backend-only or library-only work |
-| `opencode-pty` | Plugin | Terminal behavior benefits from PTY handling | Plain non-interactive commands work fine |
-| `opencode-vibeguard` | Plugin | Extra workflow/quality guardrails help the project | You need it to replace clear rules or review discipline |
-
-When Context7 is available to the current project, use it as the primary documentation source for library and API questions. If unavailable, say so and fall back to the best available project and built-in context.
+Use a runtime capability only when the current project declares it or this section records it. Do not assume globally available tools are project capabilities.
 
 ## Skills
 
@@ -125,35 +110,18 @@ The complete lifecycle contract is in `agents/docs/task-lifecycle.md`. Commands 
 ## Commands
 Validation commands (test, lint, typecheck, build, full validation) are defined in `agents/docs/testing.md`.
 
-Non-validation commands:
+Other operational commands:
 
 | Purpose | Command | Notes |
 |---|---|---|
 | Install | not configured | Package manager and lockfile policy |
 | Dev server | not configured | Port and env requirements |
+| Services / containers | not configured | Startup, shutdown, and health commands |
 
-## Code Conventions
-- Prefer existing patterns and local helpers.
-- Keep changes small, intentional, and task-scoped.
-- Prefer the simplest solution that satisfies the approved requirement and current tests.
-- Introduce an interface only when there are 2 or more real implementations, or the approved plan explicitly requires that abstraction.
-- Extract a helper or adapter only when there are 2 or more real consumers with repeated logic.
-- Question any production code that exists only to make tests easier; prefer test-side setup unless the production design genuinely benefits.
-- Add comments only for non-obvious logic.
-- Comments should explain intent, invariants, ownership, constraints, or why the structure exists - not restate obvious mechanics.
-- Avoid line-by-line narration, obvious assignment comments, or comments that only paraphrase the code.
-- Keep comments concise and locally useful. Prefer a short comment before a non-obvious block over many inline micro-comments.
-- The project should define the preferred comment language during bootstrap or in its source-of-truth docs. Until then, follow the dominant repository language if one exists.
-- Move detailed conventions into source-of-truth docs when they become durable project rules.
+## Code Design
+The design discipline (YAGNI, abstraction thresholds, keeping production free of test-only code, public-contract preservation, and comment rules) is in `.opencode/skills/code-design/SKILL.md`. Load it when writing or reviewing code.
 
-## Quality Standards
-- Design code to be maintainable and extensible without overengineering the current requirement.
-- Keep modules and functions focused on a clear responsibility.
-- Avoid duplication, but do not introduce abstractions without at least two real consumers or an explicit task requirement.
-- Preserve existing public contracts unless the approved plan explicitly changes them.
-- Add or update tests for every behavior change, including relevant edge cases and error paths.
-- Consider performance, security, observability, and compatibility when they are relevant to the change.
-- Prefer incremental changes that can be reviewed, tested, and rolled back independently.
+Project-specific conventions (naming, formatting, comment language, structure) belong in this file or the applicable source-of-truth doc; add them during bootstrap.
 
 ## Project Structure
 Add only primary routes with their purpose.
