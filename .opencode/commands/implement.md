@@ -4,7 +4,7 @@ description: Resume or execute the approved current task with persistent TDD sta
 
 Implement the single approved task in `agents/tasks/current/` following the SDD/TDD workflow.
 
-Read `agents/docs/task-lifecycle.md`, the active task file, the relevant source of truth, `agents/docs/testing.md`, and `.opencode/skills/tdd/SKILL.md` before implementation.
+Read `agents/docs/task-lifecycle.md`, the active task file, the relevant source of truth, `agents/docs/testing.md`, and `.opencode/skills/tdd/SKILL.md` before implementation. Load the `code-design` skill when writing or reviewing production code.
 
 ## Preconditions
 
