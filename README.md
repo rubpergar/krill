@@ -152,7 +152,7 @@ flowchart LR
 | Tasks | Pending/active task files and optional archived summaries under `agents/tasks/` |
 | Lifecycle evaluation | Manual interruption and closeout scenarios in `agents/evals/task-lifecycle.md` |
 | Documentation | Task lifecycle, DoD, testing, API, DB, decisions, debt, design, and dependency policy |
-| Skills | TDD and code review. Domain skills are added per project |
+| Skills | Process skills (TDD, code design, review, test authoring, commits, bootstrap, prompt optimization). Domain skills are added per project |
 
 ## Commands
 
@@ -166,8 +166,7 @@ flowchart LR
 | [`/test`](.opencode/commands/test.md) | Auto-discover test surface, expand coverage, and validate test changes |
 | [`/commit`](.opencode/commands/commit.md) | Group intentional changes into semantic commits and push |
 | [`/skip-sdd-tdd`](.opencode/commands/skip-sdd-tdd.md) | Quick implementation of trivial, non-behavioral changes (bypasses SDD/TDD) |
-| [`/prompt`](.opencode/commands/prompt.md) | Convert a rough request into an optimized prompt (output only, no execution) |
-| [`/prompt-run`](.opencode/commands/prompt-run.md) | Convert a rough request into an optimized prompt and execute it |
+| [`/prompt`](.opencode/commands/prompt.md) | Convert a rough request into an optimized prompt and execute it |
 | [`/readme`](.opencode/commands/readme.md) | Regenerate the README from the actual project state |
 
 ## Requirements

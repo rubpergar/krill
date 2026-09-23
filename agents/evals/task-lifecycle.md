@@ -44,7 +44,7 @@ Copy `agents/tasks/task-template.md` to `agents/tasks/todo/TASK-001.md` and fill
 | Review diff coverage | Add staged, unstaged, and untracked fixture files and run `/review-task` | Every file is classified and its full content is reviewed; untracked additions are not omitted from the matrix |
 | ADR approval | Include a proposed durable ADR in the task and run closeout | Closeout requests separate ADR approval and never marks it accepted implicitly |
 | Optional documentation tool | Include a library decision with and without configured Context7 | Context7 is used only when relevant and configured; it is never an unconditional lifecycle step |
-| Bootstrap transition | Complete bootstrap in a clean fixture and transition to project mode | Durable findings remain; `agents/docs/bootstrap.md`, its Source of Truth Map row, and `.opencode/commands/bootstrap.md` are removed, so bootstrap cannot run again |
+| Bootstrap transition | Complete bootstrap in a clean fixture and transition to project mode | Durable findings remain; `agents/docs/bootstrap.md`, its Source of Truth Map row, `.opencode/commands/bootstrap.md`, and `.opencode/skills/project-bootstrap/` are removed, so bootstrap cannot run again |
 | Invalid multiplicity | Put two files in `current/` and invoke each lifecycle command | `/plan`, `/implement`, `/review-task`, and `/closeout` stop and ask for resolution; none guesses |
 | Invalid approval | Put a task without `approved_at` in `current/` and invoke active-task commands | `/plan`, `/implement`, `/test`, `/review-task`, and `/closeout` stop instead of silently treating the move as approval |
 | Invalid phase | Put an unknown phase in the active task | The command stops and records a lifecycle error; it does not infer a phase |

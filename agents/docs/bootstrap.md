@@ -45,7 +45,7 @@ Uses the `/bootstrap` command (`.opencode/commands/bootstrap.md`), which:
 - If the project does not contain them, keep `agents/db/schema.sql` and `agents/db/changes.sql` as the default paths.
 - After bootstrap, normal implementation work should use the DB paths declared in the Source of Truth Map without any extra DB policy document.
 
-**Transition:** When readiness passes (100% critical fields or >= 75% with user consent), the command records durable findings, removes the bootstrap instructions and command, updates `AGENTS.md` mode, and confirms the switch. Pending fields are tracked in the project-mode message in `AGENTS.md`.
+**Transition:** When readiness passes (100% critical fields or >= 75% with user consent), the command records durable findings, removes the bootstrap instructions, command, and skill, updates `AGENTS.md` mode, and confirms the switch. Pending fields are tracked in the project-mode message in `AGENTS.md`.
 
 ### Path B: New Project Initialization
 
@@ -79,3 +79,4 @@ After user approval, perform in one scoped maintenance step:
 3. Verify that durable findings have been written to `AGENTS.md` and the applicable source-of-truth documents.
 4. Delete `agents/docs/bootstrap.md`.
 5. Delete `.opencode/commands/bootstrap.md`.
+6. Delete `.opencode/skills/project-bootstrap/`.
