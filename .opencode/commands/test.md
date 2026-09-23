@@ -13,8 +13,7 @@ If `$ARGUMENTS` is provided, limit the analysis to the specified module, package
 ## Rules
 
 - Read `agents/docs/testing.md` first. It is the source of truth for commands, locations, fixtures, coverage configuration, and validation rules.
-- Read `AGENTS.md`, the single active task file matching `TASK-*.md` in `agents/tasks/current/` when one exists (ignore `.gitkeep` and other placeholders), and any referenced source-of-truth docs relevant to the affected area. Stop if more than one active task exists.
-- If an active task exists, reject a frontmatter `status`, missing approval, or unknown phase as malformed lifecycle state; do not alter task state silently.
+- Read `AGENTS.md`, the active task file matching `TASK-*.md` in `agents/tasks/current/` when one exists, and any referenced source-of-truth docs relevant to the affected area. Validate it as `agents/docs/task-lifecycle.md` defines; stop on malformed or ambiguous state instead of altering it silently.
 - Auto-discover source modules, test files, and test registries from the real project structure before generating anything.
 - Derive expected behavior from names, contracts, usage context, plans, docs, and existing public interfaces. Do not derive expected behavior only from the current implementation.
 - Prefer modifying or extending existing test suites over creating redundant new ones.
@@ -128,6 +127,7 @@ Report any violation explicitly, even if the test passes, and fix it when it is 
 - [ ] Public behavior assertions
 - [ ] Adapted to production seams
 - [ ] Opt-in runner coverage documented
+- [ ] Reproducible validation
 - Violations found and how they were resolved:
 
 ## Validation

@@ -6,13 +6,7 @@ Complete the administrative closeout of the single active task. Read `agents/doc
 
 ## Preconditions
 
-- There must be exactly one task file matching `TASK-*.md` in `agents/tasks/current/`; ignore `.gitkeep` and other placeholders.
-- If there are zero or more than one current task files, stop. For more than one, ask the user through the question interface to resolve the invalid multiplicity; never choose one.
-- The active task must contain `approved_at`; otherwise stop and report the invalid lifecycle state without removing anything.
-- Reject any frontmatter `status` field and any missing or unrecognized `Phase`; do not treat `done` or an unknown phase as closeout permission.
-- The task must have `phase: ready_for_closeout`.
-- DoD, Converge, validation, required durable documentation, and independent review (when required) must already be evidenced in the task file.
-- Do not repair missing implementation or documentation by silently changing the approved plan during closeout. Leave the task active and record the blocker instead.
+Validate the active task exactly as `agents/docs/task-lifecycle.md` defines: exactly one task file in `current/`, `approved_at` present, no frontmatter `status`, and `phase: ready_for_closeout`. The DoD, Converge, validation, durable documentation, and independent review evidence required by `agents/docs/dod.md` must already be recorded. Do not repair missing implementation or documentation by silently changing the approved plan; leave the task active and record the blocker.
 
 ## Approval and ordering
 

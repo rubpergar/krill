@@ -12,18 +12,13 @@ Additional user context: `$ARGUMENTS`
 
 - Read `agents/docs/task-lifecycle.md` first. It defines the lifecycle and the
   meaning of `current/`, Resume State, and closeout readiness.
-- Identify the active task: the single task file matching `TASK-*.md` in
-  `agents/tasks/current/`; ignore `.gitkeep` and other placeholders.
-- If there is zero matching task files, stop and suggest `/plan`. If there is
-  more than one, stop and ask the user through the question interface to resolve
-  the multiplicity. Do not guess.
-- Extract the ID (TASK-XXX) and read `agents/tasks/current/TASK-XXX.md` (Plan + Execution).
-- Require `approved_at` in the active task. If it is missing, report an invalid
-  lifecycle state and stop without reviewing or changing the task.
-- Reject any frontmatter `status` field and any missing or unrecognized
-  `Phase`; do not reinterpret malformed state as a reviewable task.
+- Identify and validate the active task exactly as that contract defines:
+  exactly one task file in `current/`, `approved_at` present, no frontmatter
+  `status`, and a recognized current-task phase. If there is no valid active
+  task, stop and suggest `/plan`; never reinterpret malformed state as reviewable.
 - If the phase is `blocked`, report the blocker and stop; do not clear it by
   starting a review.
+- Extract the ID (TASK-XXX) and read `agents/tasks/current/TASK-XXX.md` (Plan + Execution).
 - Determine the review range: the diff of the current branch against its merge base, or the task's commits. If `$ARGUMENTS` provides concrete branches/commits, use them.
 - Treat the rest of `$ARGUMENTS` as free context and options (e.g. `--deep`, `--no-checks`).
 

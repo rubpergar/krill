@@ -4,7 +4,7 @@ Reusable UI/design source of truth. Mark as `Not applicable` for projects withou
 
 Document only durable, reusable UI decisions here. Do not document one-off screen details.
 
-Validation: `npx @google/design.md lint agents/docs/design.md` (optional, requires Node.js).
+Validation: see the DESIGN.md lint command in `agents/docs/testing.md`.
 
 ---
 

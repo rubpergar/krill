@@ -6,7 +6,7 @@ Rules for introducing new dependencies (libraries, packages, frameworks) into th
 
 Applies to all runtime dependencies. Dev dependencies for tooling (lint, format, test, typecheck) follow a lighter path described in the exceptions section.
 
-Dependencies that are part of the initial project scaffold (chosen during bootstrap) are exempt — they are already decided by the stack selection.
+Dependencies that are part of the initial project scaffold (chosen during bootstrap) are exempt, they are already decided by the stack selection.
 
 ## 1. Justification
 
@@ -52,7 +52,7 @@ Must be compatible with the project's license. Check:
 - Transitive dependency tree depth and width
 - Install time and disk impact
 
-## 4. Versioning Policy — Exact Versions Only
+## 4. Versioning Policy: Exact Versions Only
 
 ### Rule
 All dependencies in `package.json` MUST use exact versions (`"1.2.3"`). Ranges with caret (`"^1.2.3"`), tilde (`"~1.2.3"`), or other operators are NOT allowed unless explicitly approved via an ADR exception.
@@ -65,7 +65,7 @@ All dependencies in `package.json` MUST use exact versions (`"1.2.3"`). Ranges w
 ### How Updates Work
 - Major, minor, and patch updates are managed via automated tooling (Dependabot, Renovate) or explicit manual PRs.
 - Each update PR must be reviewed for breaking changes, changelog diff, and compatibility before merge.
-- Security patches follow the same process but with higher priority — they are not exempt from review.
+- Security patches follow the same process but with higher priority; they are not exempt from review.
 
 ## 5. Decision Record
 
@@ -80,20 +80,20 @@ Every new dependency (including the chosen version) MUST be recorded as an ADR i
 
 The following dev dependencies may skip the alternatives evaluation step, but still need justification and an ADR entry:
 
-- Linter and formatter (ESLint, Prettier, Ruff, rustfmt, etc.) — when they are the ecosystem standard
-- Test framework (Vitest, Jest, pytest, etc.) — when consistent with project stack
+- Linter and formatter (ESLint, Prettier, Ruff, rustfmt, etc.): when they are the ecosystem standard
+- Test framework (Vitest, Jest, pytest, etc.): when consistent with project stack
 - Type checker (TypeScript, mypy, etc.)
-- Build tooling (Vite, esbuild, Webpack, etc.) — when consistent with project stack
+- Build tooling (Vite, esbuild, Webpack, etc.): when consistent with project stack
 
 All other dev dependencies (plugins, custom runners, code generators) follow the full policy.
 
 ## 7. Boundary Exclusion
 
-The SDD workflow boundary rule (`AGENTS.md`) already says:
+The boundary rule in `AGENTS.md` already says:
 
-> "Do not introduce dependencies without documenting why."
+> "Do not introduce dependencies without following `agents/docs/dependency-policy.md`."
 
-This policy is the "documenting why" mechanism. That rule is updated to point here.
+This policy is the mechanism that rule points to.
 
 ## 8. Exception Process
 
@@ -105,4 +105,4 @@ To approve an exception to any rule in this policy:
 ## Exempt from This Policy
 
 - Dependencies introduced during project bootstrap / scaffold initialization.
-- Critical security patches (CVE with active exploitation) — but the update still needs an ADR entry within one working cycle.
+- Critical security patches (CVE with active exploitation), but the update still needs an ADR entry within one working cycle.

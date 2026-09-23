@@ -8,16 +8,7 @@ Read `agents/docs/task-lifecycle.md`, the active task file, the relevant source 
 
 ## Preconditions
 
-- There must be exactly one task file matching `TASK-*.md` in `agents/tasks/current/`; ignore `.gitkeep` and other placeholders.
-- If there are zero or more than one current task files, stop. For more than one, ask the user through the question interface to resolve the invalid multiplicity; never choose one.
-- The file must contain `approved_at`; a manually moved or malformed task is invalid and must not be implemented silently.
-- Reject any frontmatter `status` field and any missing or unrecognized `Phase`. A current task may use only `ready_to_implement`, `implementing`, `validating`, `reviewing`, `blocked`, or `ready_for_closeout`.
-- The task must have no unresolved plan question that blocks implementation.
-- If `phase: blocked`, stop and ask the user or resolve the recorded blocker; do not overwrite the blocker with a new phase.
-- If `phase: validating`, continue the pending validation items and do not restart implementation. If validation fails, record the evidence before deliberately returning to `implementing`.
-- If `phase: reviewing`, continue or rerun the review and do not start product work. Review findings may return the task to `implementing`; a clean review sets `ready_for_closeout` only when all other gates pass.
-- If `phase: ready_for_closeout`, do not restart implementation; report that `/closeout` is the next command.
-- If there is no valid current task, stop and suggest `/plan` to create/refine a todo task and obtain explicit approval.
+Validate the active task exactly as `agents/docs/task-lifecycle.md` defines: exactly one task file in `current/`, `approved_at` present, no frontmatter `status`, a recognized current-task phase, and no blocking open question. If the state is invalid or the phase does not allow implementation, stop and report it; never normalize malformed state. If there is no valid current task, suggest `/plan`.
 
 ## Resume-safe execution rules
 

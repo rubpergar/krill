@@ -68,14 +68,14 @@ Read the smallest useful set. Use this table to decide what to open, not as a ma
 | `agents/docs/task-lifecycle.md` | Task lifecycle | Canonical location, phase, resumption, review, and closeout rules | Any SDD lifecycle operation | No |
 | `agents/docs/dod.md` | Acceptance | Definition of done | Before validation and closeout | Yes |
 | `agents/docs/testing.md` | Testing | Test commands, fixtures, validation rules | Adding/running tests or validating work | Only if validation changes |
-| `agents/docs/decisions.md` | Decisions | ADR records | Planning, durable decision, or past rationale matters | No |
+| `agents/docs/decisions.md` | Decisions | ADR records | Planning, durable decision, or past rationale matters | Yes |
 | `agents/docs/api.md` | API contracts | Routes, payloads, errors, compatibility | API routes, clients, or payloads affected | No |
 | `agents/db/schema.sql` | DB schema | Current structure. Override path during bootstrap if project has its own. | Persistence, migrations, queries, or schema affected | No |
 | `agents/db/changes.sql` | DB change log | Ordered SQL changes with rollback notes. Override path during bootstrap if project has its own. | Persistence, migrations, queries, or schema affected | No |
 | `agents/db/domain.md` | DB domain | Vocabulary, entities, business rules | Data model or business rules affected | No |
 | `agents/docs/design.md` | UI design | Reusable UI tokens, components, a11y | UI, design system, or UX behavior affected | No |
 | `agents/docs/dependency-policy.md` | Dependencies | Rules for new dependencies | Adding or evaluating a dependency | Yes |
-| `agents/docs/debt.md` | Debt | Out-of-scope findings and bugs | Found something outside active task scope | Yes |
+| `agents/docs/debt.md` | Debt | Out-of-scope findings and bugs | Found something outside active task scope | No |
 
 ## Agent Runtime
 Fill during bootstrap when the project configures agent-specific runtime capabilities.
@@ -115,19 +115,13 @@ Quality precedence: use `security-review` for exploitable security analysis, `pe
 
 ## SDD Workflow
 
-The complete lifecycle contract is in `agents/docs/task-lifecycle.md`. The
-invariants that every command must preserve are:
+The complete lifecycle contract is in `agents/docs/task-lifecycle.md`. Commands must read it and enforce its preconditions instead of restating them. The non-negotiable invariants are:
 
-- The task location is the only lifecycle state: `todo/` means pending, `current/` means the one approved active task, and `archive/` means an optional compact historical summary.
-- There is zero or one task file matching `TASK-*.md` in `current/` (ignore `.gitkeep`). A task remains there while it is implementing, validating, blocked, under review, or ready for closeout.
-- Do not add a frontmatter `status` field, a global backlog, or a standalone checklist. The active task file contains both the plan and persistent execution/resume state.
-- `/plan` may create or refine a todo task when no current task exists. After explicit approval it moves that task to `current/`. If a current task exists, it is the only active planning target and its existing Execution section must be preserved.
-- `/implement` requires the approved task in `current/`, never regenerates its Execution section, and persists phase, next action, blockers, validation, checkpoint, and scope changes after meaningful work and every relevant TDD checkpoint.
-- `/review-task` reviews readiness without moving or closing the task. A clean review and complete validation permit `phase: ready_for_closeout`.
-- `/closeout` verifies DoD, Converge, documentation, and review while the task remains in `current/`, obtains explicit user approval, optionally distills a valuable summary, and removes `current/TASK-XXX.md` last. It never writes a `done` state.
-- Product implementation follows TDD unless the approved task records an exception. Read the TDD skill once before implementation and use `agents/docs/testing.md` for project-specific validation logistics.
-- Durable API, DB, domain, design, dependency, debt, and decision docs are updated only when their contracts change. Lasting ADRs still require user
-  approval. Do not create commits or branches unless the user asks.
+- The task directory is the only lifecycle state. There is zero or one task file matching `TASK-*.md` in `current/`; a command that operates on the active task requires exactly one.
+- Do not add a frontmatter `status` field, a global backlog, or a standalone checklist.
+- Product implementation follows TDD unless the approved task records an exception; the methodology is `.opencode/skills/tdd/SKILL.md` and the project logistics are in `agents/docs/testing.md`.
+- Durable docs are updated only when their contracts change, and lasting ADRs require user approval.
+- Do not create commits or branches unless the user asks.
 
 ## Boundaries
 - Do not invent missing requirements.

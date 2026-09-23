@@ -30,25 +30,25 @@ Inspect the repository for existing product code. Look for:
 
 If there is no product code, stop and inform the user.
 
-### 2. Phase 1 — Non-invasive Inspection
+### 2. Phase 1: Non-invasive Inspection
 
-**2.1 Structure** — List root directories. Inspect `src/`/`lib/`/`app/`/`packages/` up to 3 levels. Detect monorepo signs (workspace config, `packages/`, `apps/`).
+**2.1 Structure**: List root directories. Inspect `src/`/`lib/`/`app/`/`packages/` up to 3 levels. Detect monorepo signs (workspace config, `packages/`, `apps/`).
 
-**2.2 Stack** — Review manifests for runtime: `package.json` (JS/TS), `Cargo.toml` (Rust), `pyproject.toml` (Python), `go.mod` (Go), `Gemfile` (Ruby), `composer.json` (PHP), `pom.xml`/`build.gradle` (Java/Kotlin), `.csproj` (.NET). Check dependencies for frameworks.
+**2.2 Stack**: Review manifests for runtime: `package.json` (JS/TS), `Cargo.toml` (Rust), `pyproject.toml` (Python), `go.mod` (Go), `Gemfile` (Ruby), `composer.json` (PHP), `pom.xml`/`build.gradle` (Java/Kotlin), `.csproj` (.NET). Check dependencies for frameworks.
 
-**2.3 Package Manager** — Identify by lockfile: `package-lock.json` (npm), `yarn.lock` (yarn), `pnpm-lock.yaml` (pnpm), `Cargo.lock` (cargo), `poetry.lock` (poetry), `Gemfile.lock` (bundler), `go.sum` (go), `composer.lock` (composer). If multiple, ask the user.
+**2.3 Package Manager**: Identify by lockfile: `package-lock.json` (npm), `yarn.lock` (yarn), `pnpm-lock.yaml` (pnpm), `Cargo.lock` (cargo), `poetry.lock` (poetry), `Gemfile.lock` (bundler), `go.sum` (go), `composer.lock` (composer). If multiple, ask the user.
 
-**2.4 Tests** — Look for config/deps: `jest.config.*`, `vitest.config.*`, `.mocharc.*`, `playwright.config.*`, `cypress.config.*`, `pytest.ini`, `[tool.pytest]`, `rspec`, `cargo test`, `*.test.*`/`*.spec.*`. Identify existing test command.
+**2.4 Tests**: Look for config/deps: `jest.config.*`, `vitest.config.*`, `.mocharc.*`, `playwright.config.*`, `cypress.config.*`, `pytest.ini`, `[tool.pytest]`, `rspec`, `cargo test`, `*.test.*`/`*.spec.*`. Identify existing test command.
 
-**2.5 CI** — Review pipelines (`.github/workflows/*.yml`, `.gitlab-ci.yml`, `Jenkinsfile`, `.circleci/config.yml`, `azure-pipelines.yml`). Extract test/lint/build/deploy commands.
+**2.5 CI**: Review pipelines (`.github/workflows/*.yml`, `.gitlab-ci.yml`, `Jenkinsfile`, `.circleci/config.yml`, `azure-pipelines.yml`). Extract test/lint/build/deploy commands.
 
-**2.6 Docs** — Read `README.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `docs/`, `ARCHITECTURE.md`, ADRs, `API.md` or `api/`/`openapi/`/`swagger/`, existing agent configs (`.opencode/`, `.claude/`, `AGENTS.md`).
+**2.6 Docs**: Read `README.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `docs/`, `ARCHITECTURE.md`, ADRs, `API.md` or `api/`/`openapi/`/`swagger/`, existing agent configs (`.opencode/`, `.claude/`, `AGENTS.md`).
 
-**2.7 Config** — Review `.gitignore`, `.dockerignore`, `Dockerfile`, `docker-compose.yml`, `.env.example` (template only, never `.env`), style config (`.editorconfig`, `.prettierrc`, `tsconfig.json`, etc.), linter config (ESLint, Prettier, Ruff, rustfmt, clippy, golangci-lint, RuboCop, etc.).
+**2.7 Config**: Review `.gitignore`, `.dockerignore`, `Dockerfile`, `docker-compose.yml`, `.env.example` (template only, never `.env`), style config (`.editorconfig`, `.prettierrc`, `tsconfig.json`, etc.), linter config (ESLint, Prettier, Ruff, rustfmt, clippy, golangci-lint, RuboCop, etc.).
 
-**2.8 Agent runtime** — If `opencode.json` or equivalent agent config exists, inspect configured plugins and MCPs. Treat them as `detected` only when they are declared in project config, not because they may exist globally on the machine.
+**2.8 Agent runtime**: If `opencode.json` or equivalent agent config exists, inspect configured plugins and MCPs. Treat them as `detected` only when they are declared in project config, not because they may exist globally on the machine.
 
-### 3. Phase 2 — Summary
+### 3. Phase 2: Summary
 
 Present findings in three groups:
 
@@ -58,7 +58,7 @@ Present findings in three groups:
 | **Inferred** (needs confirmation) | Probable commands, framework, architecture |
 | **Missing** (needs user) | Product identity, deployment, DB, external services, agent runtime not declared in project |
 
-### 4. Phase 3 — Confirmation Questions
+### 4. Phase 3: Confirmation Questions
 
 Ask the user one by one through the OpenCode question interface; do not print questions as ordinary output when the interface is available. Use `$ARGUMENTS` as seed when relevant.
 
@@ -100,7 +100,7 @@ Ask if the project needs:
 - `agents/docs/design.md` (UI?)
 - `agents/docs/decisions.md` (ADR?)
 
-### 5. Phase 4 — Fill Source-of-Truth Docs
+### 5. Phase 4: Fill Source-of-Truth Docs
 
 Write only facts confirmed by the user. Never write unconfirmed inferences as authoritative.
 
@@ -114,7 +114,7 @@ Write only facts confirmed by the user. Never write unconfirmed inferences as au
 **5.2 `agents/docs/testing.md`:**
 - Test commands, locations, services, env vars
 
-**5.3 Additional Documents (per 4.6):**
+**5.3 Additional Documents (per 4.7):**
 - `agents/docs/api.md`: base URL, routes, auth, formats, errors
 - `agents/db/schema.sql`: DB type, schema, migrations, connection
 - `agents/db/domain.md`: vocabulary, entities, business rules
@@ -123,7 +123,7 @@ Write only facts confirmed by the user. Never write unconfirmed inferences as au
 
 Mark unused files as `Not applicable`.
 
-### 6. Phase 5 — Mark Uncertainty
+### 6. Phase 5: Mark Uncertainty
 
 Before writing, distinguish:
 
