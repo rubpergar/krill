@@ -1,6 +1,6 @@
 ---
 name: code-design
-description: Design discipline for production code: YAGNI, abstraction thresholds, module responsibility, and keeping production free of test-only code. Use when implementing a feature, refactoring, reviewing code, or deciding whether to introduce an abstraction.
+description: Design discipline for production code: YAGNI, abstraction thresholds, complexity limits, module responsibility, and keeping production free of test-only code. Use when implementing a feature, refactoring, reviewing code, or deciding whether to introduce an abstraction.
 ---
 
 # Code Design
@@ -24,6 +24,14 @@ Apply these rules when writing, refactoring, or reviewing production code. They 
 ## Contracts
 - Preserve existing public contracts unless the approved plan explicitly changes them.
 - Keep modules and functions focused on a clear responsibility.
+
+## Complexity
+- Keep functions small enough to reason about locally. A cyclomatic complexity around 10 is a warning line, not a gate; use judgment, not a number.
+- Count decision points: `if`/`else if`, `switch` cases, loops, `catch`, and short-circuit boolean operators.
+- Prefer guard clauses and early returns over deep nesting. Nesting deeper than about 3 levels is a split signal.
+- When a function passes the warning line, extract a cohesive block or replace a conditional with data or polymorphism. Do not split arbitrarily.
+- Keep one level of abstraction per function; do not mix orchestration with low-level detail.
+- A function that is hard to test at its seam, or whose name needs "and", is a split signal.
 
 ## Comments
 - Comment only non-obvious logic, and explain intent, invariants, ownership, constraints, or why the structure exists, not what the code does.
