@@ -22,7 +22,7 @@ This file defines project-specific testing logistics. Use `.opencode/skills/tdd/
 | Build | |
 | Full validation | |
 | Coverage report | |
-| DESIGN.md lint | `npx @google/design.md lint agents/docs/design.md` (requires Node.js; optional; skip if unavailable) |
+| DESIGN.md lint | optional; see `agents/docs/design.md` |
 
 ## Test Levels
 | Level | Purpose | Isolation | When to run |
@@ -83,16 +83,13 @@ Gaps blocked by missing infrastructure or an unclear contract are recorded in `a
 ## TDD Coordination
 - Read and apply the TDD skill once before implementation code when the task changes behavior or refactors behavior-preserving code.
 - Use the commands and locations in this guide while following the skill's red/green cycle.
-- Record any approved TDD exception in the active task file before implementing under that exception.
+- Record any approved TDD exception in the active task file before implementing under that exception. When there is no active task, state the exception and its approval in the conversation and the commit message.
 
 ## Test Quality
 - Prefer deterministic fixtures.
 - Avoid shared mutable state and order-dependent tests.
 - Keep sensitive or production-like data out of fixtures.
 - Mock external services at boundaries; prefer real code for domain logic.
-- Do not assert only on mock calls when user-visible behavior can be asserted.
-- Tests adapt to the production contract; never change production code, add branches, or widen an interface only to satisfy a test.
-- Avoid tautological tests: expected values must come from an independent source, not be recomputed the way the code computes them.
 
 ## Valid Test Criteria
 A test is valid only if it meets every universal criterion and, when it applies, the conditional ones. The `test-audit` skill applies them when auditing or writing tests and reports any violation; task validation must also check them.
@@ -101,8 +98,8 @@ A test is valid only if it meets every universal criterion and, when it applies,
 - **Independence:** each test must be able to run on its own and in any order, with its own identifiers, logical connections, and state. It must clean up only the data it creates and always close connections, threads, sockets, servers, and temporary files.
 - **Uniqueness / one behavior per test:** each case validates a single observable contract and has a descriptive name. It may contain multiple assertions related to that contract, but must not mix independent behaviors.
 - **Clean initial state:** no test may depend on residual state from other tests. Setup must produce a known state and cleanup must leave the environment reproducible.
-- **Reproducibility / determinism:** the result must not depend on execution order, time, fixed ports, or real external services. For async behavior, use observable conditions with a bounded timeout (`QTRY_VERIFY`, `QSignalSpy`, etc.); do not rely on fixed waits as the only evidence.
-- **No implicit dependencies:** do not assume services, DBs, credentials, or network are implicitly available. External dependencies are injected or mocked at boundaries; unit tests must not require MySQL, external sockets, or real services.
+- **Reproducibility / determinism:** the result must not depend on execution order, time, fixed ports, or real external services. For async behavior, wait for an observable condition with a bounded timeout; do not rely on fixed waits as the only evidence.
+- **No implicit dependencies:** do not assume services, DBs, credentials, or network are implicitly available. External dependencies are injected or mocked at boundaries; unit tests must not require a real database, external sockets, or live services.
 - **Public behavior:** prefer assertions on observable results, states, and effects. Mock calls may be verified when a call absence is part of the contract, but must not be the only evidence when a functional result is checkable.
 - **Adapted to production seams:** use existing public seams; do not introduce production APIs or branches only to support an unsafe or artificial test.
 - **No tautological assertions:** the expected value must come from an independent source (a known-good literal, a worked example, or the spec). An assertion that recomputes the expected value the way the code does passes by construction and is invalid. See `.opencode/skills/tdd/SKILL.md`.
