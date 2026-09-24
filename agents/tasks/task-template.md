@@ -1,11 +1,8 @@
 # Task Plan + Execution Template
 
-Copy this file to `agents/tasks/todo/TASK-XXX.md` while planning. After explicit
-user approval, move the same file to `agents/tasks/current/TASK-XXX.md`. Do not
-implement from this template.
+Copy this file to `agents/tasks/todo/TASK-XXX.md` while planning. After explicit user approval, move the same file to `agents/tasks/current/TASK-XXX.md`. Do not implement from this template.
 
-The task directory is the lifecycle state. Do not add a `status` field to the
-frontmatter. See `agents/docs/task-lifecycle.md` for the complete contract.
+The task directory is the lifecycle state. Do not add a `status` field to the frontmatter. See `agents/docs/task-lifecycle.md` for the complete contract.
 
 ## Frontmatter
 
@@ -19,8 +16,7 @@ archived_at: YYYY-MM-DD # summary metadata only in archive/
 ---
 ```
 
-Omit metadata that does not apply yet. In particular, a todo task has no
-`approved_at`, and an active task has no `archived_at`.
+Omit metadata that does not apply yet. In particular, a todo task has no `approved_at`, and an active task has no `archived_at`.
 
 ## Plan
 
@@ -73,9 +69,7 @@ Use `Not applicable` when the task does not affect the database.
 
 ## Execution
 
-The execution section is persistent hot context. `/implement` must preserve it
-when resuming and must not regenerate it. Every item and evidence entry should
-be updated in the same task file as the work progresses.
+The Execution section is persistent hot context. `/implement` must preserve it when resuming and must not regenerate it. Every item and evidence entry should be updated in the same task file as the work progresses.
 
 ### Context
 - [ ] Re-read the approved plan and referenced source-of-truth docs before implementation.
@@ -83,7 +77,7 @@ be updated in the same task file as the work progresses.
 - [ ] Verify no open questions block implementation.
 
 ### Resume State
-- Phase: `planning` (todo only) | `ready_to_implement` | `implementing` | `validating` | `reviewing` | `blocked` | `ready_for_closeout`
+- Phase: `planning` (todo only) | `ready_to_implement` | `implementing` | `reviewing` | `blocked` | `ready_for_closeout`
 - Next action: ...
 - Blockers: None
 - Last validation: Not run
@@ -93,9 +87,7 @@ be updated in the same task file as the work progresses.
 
 ### TDD Ledger
 
-Track each behavior or subtask from the approved plan through RED → GREEN.
-Preserve completed items and append evidence; do not reset them when resuming.
-Refactoring is not a ledger step; it belongs to the review stage.
+Track each behavior or subtask from the approved plan through RED → GREEN. Preserve completed items and append evidence; do not reset them when resuming. Refactoring is not a ledger step; it belongs to the review stage.
 
 - [ ] Behavior/subtask 1:
   - [ ] RED: pending; Evidence:
@@ -106,15 +98,13 @@ Refactoring is not a ledger step; it belongs to the review stage.
 
 ### Checkpoint Log
 
-Append only interruptions, blockers, scope changes, and important validation
-results. This is not a second checklist.
+Append only interruptions, blockers, scope changes, and important validation results. This is not a second checklist.
 
 - YYYY-MM-DDTHH:MM:SSZ | checkpoint | result | next action
 
 ### Converge
 
-Contrast the implementation against the approved plan and acceptance criteria
-before closeout.
+Contrast the implementation against the approved plan and acceptance criteria before closeout.
 
 - [ ] Every acceptance criterion has evidence (test, behavior, or documented exception).
 - [ ] No unrelated refactors or out-of-scope changes.
