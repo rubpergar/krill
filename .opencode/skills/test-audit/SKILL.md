@@ -11,7 +11,7 @@ Audit the test surface first; write tests only for confirmed gaps. The default o
 
 ## Default mode: audit only
 
-1. **Discover the test surface.** Read `agents/docs/testing.md`; inspect source roots, test roots, naming patterns, registries, and module boundaries. Map any provided scope to the matching modules and files.
+1. **Discover the test surface.** Read `agents/docs/testing.md`; inspect source roots, test roots, naming patterns, registries, and module boundaries. Map any provided scope to the matching modules and files. For a large surface, split the audit into a few independent areas and run each in its own sub-agent, then merge the reports; do not spawn one sub-agent per file.
 2. **Analyze behavior.** For each in-scope behavior, identify public behavior, inputs and outputs, side effects, invariants, preconditions, error paths, and external boundaries.
 3. **Classify coverage.** Label existing coverage as positive, negative, edge, or invariant. Flag gaps, weak assertions, duplicates, implementation-coupled tests, and tautological tests.
 4. **Verify validity.** Check every existing test against the Valid Test Criteria in `agents/docs/testing.md` and report each violation, even when the test passes.
