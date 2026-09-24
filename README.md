@@ -152,7 +152,7 @@ flowchart LR
 | Tasks | Pending/active task files and optional archived summaries under `agents/tasks/` |
 | Lifecycle evaluation | Manual interruption and closeout scenarios in `agents/evals/task-lifecycle.md` |
 | Documentation | Task lifecycle, DoD, testing, API, DB, decisions, debt, design, and dependency policy |
-| Skills | Process skills (TDD, code design, review, test authoring, commits, bootstrap, prompt optimization). Domain skills are added per project |
+| Skills | Process skills (TDD, code design, review, test audit, commits, bootstrap, prompt optimization). Domain skills are added per project |
 
 ## Commands
 
@@ -163,7 +163,7 @@ flowchart LR
 | [`/implement`](.opencode/commands/implement.md) | Resume and execute the approved current task with persistent TDD state |
 | [`/review-task`](.opencode/commands/review-task.md) | Review the active task against its plan, criteria, and evidence |
 | [`/closeout`](.opencode/commands/closeout.md) | Verify and close the active task with optional historical distillation |
-| [`/test`](.opencode/commands/test.md) | Auto-discover test surface, expand coverage, and validate test changes |
+| [`/audit-tests`](.opencode/commands/audit-tests.md) | Audit test quality and functional coverage, then fill only confirmed gaps |
 | [`/commit`](.opencode/commands/commit.md) | Group intentional changes into semantic commits and push |
 | [`/skip-sdd-tdd`](.opencode/commands/skip-sdd-tdd.md) | Quick implementation of trivial, non-behavioral changes (bypasses SDD/TDD) |
 | [`/prompt`](.opencode/commands/prompt.md) | Convert a rough request into an optimized prompt and execute it |
