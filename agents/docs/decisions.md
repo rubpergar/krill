@@ -6,12 +6,17 @@ Before planning product work, read relevant accepted ADRs and do not contradict 
 
 ## When to Update decisions.md
 
-Record an ADR only when the decision is **durable** and has **future impact**. An ADR is appropriate when it meets at least one of these criteria:
+Record an ADR sparingly, and only when **all three** conditions hold:
 
 - It is **hard to revert** or costly to change later (architecture, contracts, persistence, security).
 - It is **surprising without context**: another engineer or agent would not infer the reason from the code.
 - It is the result of a **real trade-off** between valid options (not an obvious choice).
-- It will **guide future work** repeatedly.
+
+If a condition is missing, keep the decision in the task file instead. Record it here only when it will guide future work repeatedly.
+
+**Amendment**: if a new decision changes an accepted ADR, amend that ADR with a dated note instead of creating a duplicate. Create a new ADR only for a distinct decision.
+
+**Promotion from debt**: when discarded or accepted debt becomes a durable decision, record it here and reference this ADR from the debt entry (`-> ADR-XXX`).
 
 Do not record as an ADR: one-off task choices, temporary workarounds, task-local assumptions, obvious implementation details, or decisions better represented in code, tests, or specs. Those live in the task file's Plan or Execution sections.
 

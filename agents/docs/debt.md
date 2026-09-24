@@ -10,6 +10,8 @@ Register a finding here when it is **outside the active task's scope** and deser
 - An improvement, refactor, or consolidation that is clearly valuable but the current task must not tackle.
 - An incident or deferred decision that must not be forgotten.
 
+On a legacy or already-developed project, out-of-scope problems are expected. Record each one here with evidence instead of fixing it inside an unrelated task, so nothing is lost and the task scope does not silently expand.
+
 Do not register as debt: personal preferences, noise, style/naming without impact, or findings already covered by an existing task or an ADR. Debt is for what the current task will not solve but must not be lost.
 
 Action rule: when the agent finds something relevant but out of scope, it must register it here instead of modifying it without permission. The user reviews the log periodically and decides whether to create a formal task.
@@ -29,14 +31,16 @@ Each entry must include, at minimum:
 
 ## How to Keep It Updated
 
-- Review the log with the user periodically (e.g. during task closeout) and confirm whether each entry is still accurate.
-- When a debt item is resolved, change it to `dismissed` or remove it from the log as appropriate, and briefly note the resolution.
-- When the user decides to address it as a formal task, reference the `DBT-XXX` in the task file and close the entry.
+- Register debt inline while working; registering does not require prior user approval (see the Source of Truth Map).
+- IDs are immutable: assign `DBT-XXX` once and never reuse, renumber, or recycle a number, even after the entry is resolved.
+- When an item is resolved, either promote the durable decision to an ADR (`-> ADR-XXX`) and record that reference, or mark it `dismissed` with the reason. Never delete a number silently.
+- Review the log with the user periodically (for example at closeout) and confirm whether each entry is still accurate.
+- When the user decides to address an item as a formal task, reference the `DBT-XXX` in the task file and close the entry.
 - Do not accumulate un-reviewed debt: the log must reflect live debt, not an indefinite historical file.
 
 ## Statuses
-- `open`: pending user review.
-- `dismissed`: the user decided not to address it.
+- `open`: registered and pending review or work.
+- `dismissed`: deliberately not addressed, or promoted to an ADR (record `-> ADR-XXX`).
 
 ## Format
 
