@@ -5,7 +5,7 @@ Skills in this directory include material from third-party sources. This file is
 | Skill | Source | License |
 |---|---|---|
 | `tdd` | [mattpocock/skills](https://github.com/mattpocock/skills) + [obra/superpowers](https://github.com/obra/superpowers) | MIT |
-| `code-review-excellence` | [wshobson/agents](https://github.com/wshobson/agents) | MIT |
+| `code-review` | [mattpocock/skills](https://github.com/mattpocock/skills) | MIT |
 
 ## MIT
 
@@ -13,7 +13,6 @@ Applies to the sources above. Copyright holders:
 
 - Copyright (c) 2026 Matt Pocock
 - Copyright (c) 2025 Jesse Vincent
-- Copyright (c) 2024 Seth Hobson
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
