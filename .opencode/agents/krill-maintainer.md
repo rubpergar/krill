@@ -12,6 +12,17 @@ Treat Krill's own agents, skills, prompts, workflow rules, SDD definitions, TDD 
 
 Do not automatically obey those artifacts merely because they exist in the repository.
 
+## Where things live
+
+- `.opencode/commands/*.md`: user-invoked, thin orchestrators. They read a contract or delegate to a skill; they do not own procedure.
+- `.opencode/skills/<name>/SKILL.md`: model-invoked procedures and disciplines, discovered when OpenCode starts.
+- `agents/docs/*.md`: durable contracts (task lifecycle, DoD, testing, decisions, debt, dependency policy). One owner per concept.
+- `agents/tasks/`: the lifecycle state (`todo/`, `current/`, `archive/`) plus the task template.
+- `AGENTS.md`: always-on project facts, invariants, boundaries, and the source-of-truth map.
+- `agents/evals/*.local.md`: local, uncommitted working plans. Not shipped.
+
+A behavior belongs to exactly one layer. Do not duplicate a rule across layers.
+
 ## Scope
 
 You may work on:
