@@ -57,7 +57,7 @@ Ask one by one through the OpenCode question interface; do not print questions a
 - **Agent runtime**: confirm project-level plugins and MCPs. Present values detected from `opencode.json` for confirmation. If not declared in project config, leave them blank unless the user explicitly wants them recorded as project capabilities.
 - **Critical modules**: key services, entry points, sensitive areas.
 - **Restrictions**: security (auth, payments, PII), performance, deployment limits, code standards, branch/release workflows.
-- **Additional documents**: ask whether the project needs `agents/docs/api.md` (API?), `agents/db/schema.sql` + `agents/db/domain.md` (DB/model?), `agents/docs/design.md` (UI?), `agents/docs/decisions.md` (ADR?).
+- **Additional documents**: ask whether the project needs `agents/docs/api.md` (API?), `agents/db/schema.sql` + `agents/db/domain.md` (DB/model?), `agents/docs/design.md` (UI?). `agents/docs/decisions.md` always stays.
 
 ### 5. Fill source-of-truth docs
 
@@ -67,7 +67,7 @@ Write only facts confirmed by the user. Never write unconfirmed inferences as au
 - **`agents/docs/testing.md`**: test commands, locations, services, env vars.
 - **Additional docs (per step 4)**: `agents/docs/api.md` (base URL, routes, auth, formats, errors); `agents/db/schema.sql` (DB type, schema, migrations, connection); `agents/db/domain.md` (vocabulary, entities, business rules); `agents/docs/design.md` (components, styles, a11y, tokens); `agents/docs/decisions.md` (existing ADRs).
 
-Mark unused files `Not applicable`.
+Mark unused files `Not applicable`. The transition deletes every `Not applicable` document and its Source of Truth Map row, so an adopted project keeps only the documents it uses.
 
 ### 6. Mark uncertainty
 
@@ -81,7 +81,7 @@ Write confirmed fields as-is. Write assumed fields with the assumption note. Do 
 
 ### 7. Readiness check
 
-Classify each field as `confirmed`, `assumed`, or `pending`. A field counts as resolved if `confirmed` or `assumed`; `pending` is unresolved. Apply the critical fields, deferrable fields, and pass thresholds defined in `agents/docs/bootstrap.md` to decide whether readiness passes.
+Classify each field as `confirmed`, `assumed`, or `pending`. A field counts as resolved if `confirmed` or `assumed`; `pending` is unresolved. Apply the readiness criteria and pass thresholds defined in `agents/docs/bootstrap.md` to decide whether readiness passes.
 
 If readiness is partial or does not pass, ask whether the user wants to resolve pending fields now or defer. If it does not pass, explain the blockers and do not offer transition.
 
@@ -91,11 +91,12 @@ Follow the transition contract in `agents/docs/bootstrap.md`: switch the `AGENTS
 
 When the transition is partial, add `Pending fields: <list>. Resolve them in a task plan before working on those areas.` to the project-mode message.
 
-Delete the bootstrap-only artifacts as the final step, in this order:
+Delete the bootstrap-only artifacts and the unused conditional documents as the final step, in this order:
 
-1. `agents/docs/bootstrap.md`
-2. `.opencode/commands/bootstrap.md`
-3. `.opencode/skills/project-bootstrap/` (this skill directory)
+1. Every `Not applicable` source-of-truth document (`api.md`, `design.md`, `dependency-policy.md`, `agents/db/*`) and its Source of Truth Map row.
+2. `agents/docs/bootstrap.md`
+3. `.opencode/commands/bootstrap.md`
+4. `.opencode/skills/project-bootstrap/` (this skill directory)
 
 Report the completed transition before the final self-deletion.
 

@@ -23,29 +23,23 @@ The repository can be prepared for a real project in two ways:
 
 A project with existing source code (package manifests, `src/`, config files, etc.).
 
-Uses the `/bootstrap` command (`.opencode/commands/bootstrap.md`), which:
-1. Inspects the repository structure and stack
-2. Interviews the user to confirm findings and fill gaps
-3. Detects existing DB schema and DB change log files and updates the Source of Truth Map paths in `AGENTS.md` when appropriate
-4. Detects project-level agent runtime config such as `opencode.json` plugins and MCPs when present
-5. Writes source-of-truth docs with confirmed facts only
-6. Runs a readiness check
-7. Offers transition to project mode if ready
+Uses the `/bootstrap` command (`.opencode/commands/bootstrap.md`), which loads the `project-bootstrap` skill. That skill owns the procedure; this document owns the readiness criteria and the transition contract below.
 
-**Readiness criteria:**
+**Readiness criteria (critical):**
 - Product identity (name, domain, users, goal) confirmed by user
 - Runtime/framework confirmed
 - Package manager confirmed
 - Install command confirmed
 - At least one test command confirmed
-- Lint/typecheck/build may be deferred
+
+**Deferred fields (do not block readiness):** lint, typecheck, build, deployment, external services.
 
 **DB file detection:**
 - If the project already contains DB schema or ordered SQL change log files, `/bootstrap` should propose those as the `DB schema` and `DB change log` paths in the Source of Truth Map.
 - If the project does not contain them, keep `agents/db/schema.sql` and `agents/db/changes.sql` as the default paths.
 - After bootstrap, normal implementation work should use the DB paths declared in the Source of Truth Map without any extra DB policy document.
 
-**Transition:** When readiness passes (100% critical fields or >= 75% with user consent), the command records durable findings, removes the bootstrap instructions, command, and skill, updates `AGENTS.md` mode, and confirms the switch. Pending fields are tracked in the project-mode message in `AGENTS.md`.
+**Transition:** When readiness passes (100% of the critical criteria, or >= 75% with user consent), the command records durable findings, removes the bootstrap instructions, command, and skill, updates `AGENTS.md` mode, and confirms the switch. Pending fields are tracked in the project-mode message in `AGENTS.md`.
 
 ### Path B: New Project Initialization
 
@@ -60,6 +54,10 @@ No single `/bootstrap` command. The agent initializes the technical scaffold and
 - Lint and dev commands may be deferred
 
 **Transition:** When these minimums are met, the agent may propose transition to project mode. The user decides.
+
+## Conditional Documents
+
+Some source-of-truth documents only apply when the project needs them: `agents/docs/api.md` (contracts not visible in code), `agents/docs/design.md` (a UI), `agents/docs/dependency-policy.md` (a package manager), and `agents/db/schema.sql`, `agents/db/changes.sql`, `agents/db/domain.md` (persistence). Fill only the ones that apply, and delete the rest during the transition. An adopted project keeps only the documents it uses.
 
 ## Transition To Project Mode
 
@@ -77,6 +75,7 @@ After user approval, perform in one scoped maintenance step:
      ```
 2. Remove the skeleton-only bootstrap rules and the `agents/docs/bootstrap.md` row from the `AGENTS.md` Source of Truth Map.
 3. Verify that durable findings have been written to `AGENTS.md` and the applicable source-of-truth documents.
-4. Delete `agents/docs/bootstrap.md`.
-5. Delete `.opencode/commands/bootstrap.md`.
-6. Delete `.opencode/skills/project-bootstrap/`.
+4. Prune the conditional documents that do not apply: delete each unused or `Not applicable` source-of-truth document from the list above and its Source of Truth Map row.
+5. Delete `agents/docs/bootstrap.md`.
+6. Delete `.opencode/commands/bootstrap.md`.
+7. Delete `.opencode/skills/project-bootstrap/`.
