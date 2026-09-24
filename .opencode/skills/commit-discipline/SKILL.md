@@ -1,15 +1,13 @@
 ---
 name: commit-discipline
-description: Groups pending changes into semantic commits, detects the issue key from the branch, and applies Conventional Commit format, splitting, and safety rules. Use when the user asks to commit, to group changes into meaningful commits, or to decide how to split or describe a commit.
+description: Groups pending changes into semantic commits and pushes them, using Conventional Commit format plus splitting and safety rules. Use when the user asks to commit, to group changes into meaningful commits, or to push.
 ---
 
 # Commit Discipline
 
-Create semantic commits from all available changes.
+Create semantic commits from all available changes, then push. The user owns the decision and the responsibility for what gets pushed.
 
-Do not make one big commit by default. Group files by purpose. Commit each group separately.
-
-If the user provides extra context, use it to refine commit messages, but do not force text that does not accurately describe the changes.
+Do not make one big commit by default. Group files by purpose and commit each group separately. If the user provides extra context, use it to refine commit messages, but do not force text that does not describe the changes.
 
 ## Procedure
 
@@ -24,57 +22,25 @@ git ls-files --others --exclude-standard
 
 Understand every available change before committing.
 
-### 2. Detect issue key
+### 2. Group changes semantically
 
-```bash
-git branch --show-current
-```
-
-If the branch contains an issue key (`PROJ-123`, `POW-456`, `#123`), use it in every related commit. Otherwise, commit without it. Do not invent one.
-
-### 3. Group changes semantically
-
-Group files and hunks by intent. One commit = one purpose.
-
-Valid groups: one bug fix, one feature, one refactor, one test update, one documentation change, one dependency update, one config/CI change.
+Group files and hunks by intent. One commit = one purpose (a bug fix, a feature, a refactor, a test update, a docs change, a dependency update, a config/CI change).
 
 If two files changed for the same reason, commit them together. If one file contains unrelated changes, split hunks with `git add -p` or stage files explicitly with `git add <file>`. Do not use `git add -A` blindly when changes are unrelated.
 
-### 4. Create commits one by one
+### 3. Create commits one by one
 
-For each semantic group:
-1. Stage only the files or hunks for that group.
-2. Verify the staged diff with `git diff --cached`.
-3. Create a Conventional Commit.
-4. Commit.
-5. Repeat until no meaningful changes remain.
+For each group: stage only its files or hunks, verify with `git diff --cached`, and commit with `type(scope): summary`.
 
-Commit format:
+- Use the most accurate type: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
+- Use a short scope when useful; skip it when it adds no value.
+- Imperative mood, no period, 72 characters or fewer. Describe the purpose, not the file.
 
-```
-git commit -m "type(scope): summary"
-git commit -m "issue-key: type(scope): summary"
-```
+Repeat until no meaningful changes remain.
 
-Use the most accurate type: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
+### 4. Push
 
-Use a short scope when useful (feature area, package, route, module, service, config). Skip scope only if it adds no value.
-
-Message rules:
-- Max 72 characters, imperative mood, capitalize, no period.
-- Describe the purpose, not the file changed.
-- Do not use `changes`, `stuff`, `misc`, or `wip`.
-
-### 5. Keep committing until done
-
-After each commit, check remaining changes with `git status --short`. Stop only when:
-- all intentional changes are committed
-- unrelated or unsafe changes are left unstaged on purpose
-- the user must decide what to do with ambiguous changes
-
-### 6. Push to remote
-
-Push only when the user authorizes it. Once all commits are done and nothing intended for this work is left staged, push to the active branch:
+Once all commits are done and nothing intended for this work is left uncommitted, push to the active branch:
 
 ```bash
 git push
@@ -84,7 +50,8 @@ If the push fails because the branch has no upstream or the remote rejects it, s
 
 ## Splitting rules
 
-Split commits when changes are unrelated:
+Split when changes are unrelated:
+
 - UI change + dependency update = two commits
 - bug fix + test for that bug = usually one commit
 - refactor + behavior change = two commits
@@ -102,9 +69,4 @@ Before each commit, verify the staged diff with `git diff --cached`. If it conta
 
 ## Final check
 
-When finished, run `git status --short`. Then report in as few words as possible:
-- commits created
-- files intentionally left uncommitted
-- anything skipped for safety
-
-Done means clean semantic history, not just zero pending files.
+When finished, run `git status --short`, then report in as few words as possible: commits created, files intentionally left uncommitted, anything skipped for safety, and the push result. Done means a clean semantic history, not just zero pending files.
