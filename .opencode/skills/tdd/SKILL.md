@@ -38,7 +38,7 @@ A **seam** is the public boundary you test at: the interface where you observe b
 - **Tautological:** the assertion recomputes the expected value the way the code does (`expect(add(a, b)).toBe(a + b)`), so it passes by construction and can never disagree with the code. Expected values must come from an independent source of truth: a known-good literal, a worked example, or the spec.
 - **Horizontal slicing:** writing all tests first, then all implementation. Work in vertical slices instead: one test, one implementation, repeat.
 
-See [tests.md](tests.md) for good/bad examples, [testing-anti-patterns.md](testing-anti-patterns.md) for deeper anti-patterns, and [mocking.md](mocking.md) for mocking rules.
+See [tests.md](tests.md) for good and bad examples, and [mocking.md](mocking.md) for when and how to mock, including the mocking anti-patterns.
 
 ## Rules of the loop
 
