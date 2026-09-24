@@ -11,6 +11,7 @@ Read `agents/docs/task-lifecycle.md` first. It is the source of truth for task l
 - Select or refine the task exactly as `agents/docs/task-lifecycle.md` defines, using the question interface for any selection or approval decision.
 - Preserve an existing `## Execution` section, checked items, evidence, and Resume State when refining a current task.
 - Fill the Plan from the conversation and inspected project context. Do not invent requirements, APIs, DB structures, or technical facts.
+- For external facts (library behavior, standards, dependency evaluation), delegate a bounded research sub-agent that returns a cited summary, and record the conclusion and its source in the Plan. Do not research what the repository already answers.
 - Record missing critical information under `### Open Questions`.
 - Ask one high-leverage question at a time through the question interface, preferring concise options with the recommended option first.
 - If the plan changes an active task's acceptance criteria or scope, record the change, set `phase: blocked`, and obtain explicit re-approval before implementation continues.
