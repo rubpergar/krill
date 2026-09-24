@@ -4,7 +4,7 @@ description: Review the active task's diff for spec compliance, standards, and c
 
 # /review
 
-Review the active task's diff (branch or task commits) against its plan, the repository standards, and design quality. Find real defects and concrete improvements, decide whether the task is ready for closeout, and report findings. Additional user context: `$ARGUMENTS`
+Review the active task's own diff (its commits and working-tree changes) against its plan, the repository standards, and design quality. Find real defects and concrete improvements, decide whether the task is ready for closeout, and report findings. Additional user context: `$ARGUMENTS`
 
 ## Input and validation
 
@@ -12,7 +12,7 @@ Review the active task's diff (branch or task commits) against its plan, the rep
 - If there is no valid active task, stop and suggest `/plan`; never reinterpret malformed state as reviewable.
 - If the phase is `blocked`, report the blocker and stop; do not clear it by starting a review.
 - Read the active task file (Plan and Execution).
-- Determine the review range: the diff of the current branch against its merge base, or the task's commits. If `$ARGUMENTS` provides concrete branches or commits, use them. Treat the rest of `$ARGUMENTS` as free context and options such as `--deep` and `--no-checks`.
+- Determine the review range: by default, the current task's own changes (its commits and working-tree changes) against the point where the task started, scoped to the files the task touched. If `$ARGUMENTS` names concrete branches, commits, or another fixed point, use those instead. Treat the rest of `$ARGUMENTS` as free context and options such as `--deep` and `--no-checks`.
 
 ## Method
 
@@ -21,7 +21,7 @@ Review the active task's diff (branch or task commits) against its plan, the rep
 
 ## Task-specific rules
 
-- Plan and criteria source: the active task file plus the relevant source-of-truth docs (`agents/docs/decisions.md`, `agents/docs/api.md`, `agents/docs/dod.md`, the DB files named in the Source of Truth Map) and accepted ADRs. Use `agents/docs/testing.md` only to judge test validity.
+- Plan and criteria source: the active task file plus the relevant source-of-truth documents declared in the `AGENTS.md` Source of Truth Map (for example `agents/docs/decisions.md` and `agents/docs/dod.md`, and the API or DB files only when the map still lists them) and accepted ADRs. Use `agents/docs/testing.md` only to judge test validity.
 - Use only read-only git operations (`git diff`, `git diff --cached`, `git log`, `git status`, `git ls-files --others --exclude-standard`). Never change product code, commit, checkout other branches, or push.
 - Never move, approve, close, archive, or delete the task, and never rewrite its Plan or TDD ledger. Only `Resume State` and `Checkpoint Log` may be updated.
 - Do not invent requirements or acceptance criteria; if there are none, say so and limit the review to existing behavior and repository conventions.

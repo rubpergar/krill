@@ -5,7 +5,7 @@ description: Review a task's diff on three independent axes (Spec, Standards, Im
 
 # Code Review
 
-Read-only, independent review of the diff between the current branch and a fixed point. This skill owns the review method. `agents/docs/task-lifecycle.md` owns the review gate and the phase transition that follows.
+Read-only, independent review of a task's diff against a fixed point (its own commits and working-tree changes by default). This skill owns the review method. `agents/docs/task-lifecycle.md` owns the review gate and the phase transition that follows.
 
 Independence comes from two levers: the whole review should run without the implementation context (prefer a fresh session), and each axis runs in its own sub-agent so they do not contaminate each other. Sub-agents receive only the diff command, the spec and standards, and the brief; they never see the planning or implementation conversation.
 
@@ -19,7 +19,7 @@ Run each axis in its own sub-agent so their contexts do not contaminate each oth
 
 ## Process
 
-1. **Pin the fixed point.** Use the merge base of the current branch, or the task's commits. `$ARGUMENTS` may override it. Verify the ref resolves (`git rev-parse`) and the diff is non-empty before spawning sub-agents.
+1. **Pin the fixed point.** Default to the point where the task started (its own commits and working-tree changes, scoped to the files the task touched). `$ARGUMENTS` may override it. Verify the ref resolves (`git rev-parse`) and the diff is non-empty before spawning sub-agents.
 2. **Identify the spec source.** The active `agents/tasks/current/TASK-XXX.md` (Plan plus acceptance criteria). If there is no task, the Spec axis reports `no spec available`.
 3. **Identify the standards sources.** `AGENTS.md`, the relevant `agents/docs/*`, `.opencode/skills/code-design/SKILL.md`, and repository conventions.
 4. **Spawn one sub-agent per axis in the same turn.** Give each: the diff command and commit list, its source material, and a brief. Include the smell baseline only for the Standards axis. Ask for findings with `file:line`, severity (`blocking`, `important`, `nit`), and under 400 words.
