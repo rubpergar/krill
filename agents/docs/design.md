@@ -1,14 +1,3 @@
-# Design System
-
-Reusable UI/design source of truth. Mark as `Not applicable` for projects without UI.
-
-Document only durable, reusable UI decisions here. Do not document one-off screen details.
-
-Validation: `npx @google/design.md lint agents/docs/design.md` (optional, requires Node.js).
-
----
-
-```yaml
 ---
 version: alpha
 name:
@@ -50,7 +39,14 @@ components:
     borderColor:
     rounded:
 ---
-```
+
+# Design System
+
+Reusable UI/design source of truth. Delete this file if the project has no UI.
+
+Document only durable, reusable UI decisions here. Do not document one-off screen details.
+
+The YAML block above is the DESIGN.md front matter; keep it first in the file. Validation is optional: `npx -p @google/design.md designmd lint agents/docs/design.md` (requires Node.js; valid only when this file uses DESIGN.md front matter).
 
 ## Overview
 

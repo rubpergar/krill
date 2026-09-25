@@ -1,40 +1,29 @@
 ---
-description: Create or refine the active task plan from conversation context
+description: Create or refine a task plan in the canonical task lifecycle
 ---
 
-Create or refine `agents/task/TASK-XXX-plan.md` for the active task using the planning discussion already developed in the conversation.
+Create or refine the SDD task artifact using the planning discussion already developed in the conversation.
 
-Rules:
-- Read `agents/task/backlog.md` and identify the single task under `## Current`.
-- If `## Current` has zero or multiple tasks, stop and ask the user to select or create one.
-- Extract the task ID (TASK-XXX) from the backlog entry.
-- Read `agents/task/plan.md` to understand the required plan structure.
-- Read relevant accepted ADRs from `agents/docs/decisions.md` before finalizing behavior or implementation choices.
-- Do not assume a special agent mode is required. This command must work correctly in the normal working mode.
-- Before asking questions, inspect the smallest useful set of files and project context needed to understand the task.
-- If the user references multiple repositories, large codebases, or supporting documents, inspect them first and parallelize exploration when useful.
-- Use the conversation context (planning discussion, /prompt-run output, user clarifications) to fill every section of the plan template.
-- Do not invent requirements, APIs, DB structures, or technical facts that were not discussed or confirmed.
-- If critical information is missing from the conversation, list it under `## Open Questions` instead of guessing.
-- Keep the plan status as `draft` while planning is in progress. When no blocking open questions remain, ask the user whether the plan is ready for approval. Only after an explicit affirmative answer may this command change the status to `approved`.
-- Create the plan early and refine it iteratively. Do not wait until every question is answered before writing the first draft.
-- If a plan file already exists for this task, update it with any new discussion points instead of overwriting blindly.
-- Prefer asking one high-leverage planning question at a time.
-- Prefer interface-based option questions over free-form chat whenever there are clear alternatives.
-- For each question, present concise options, put the recommended option first, explain the tradeoff briefly, and leave room for a custom answer when needed.
-- After each planning answer, update the draft plan immediately so the file stays in sync with the conversation.
-- If the task affects the database, fill the `## Database Impact` section with the approach discussed.
-- Populate `## Source of Truth to Read` with files relevant to the task.
-- Follow `AGENTS.md` for the canonical planning workflow and planning-question behavior.
+Read `agents/docs/task-lifecycle.md` first. It is the source of truth for task locations, approval, phases, and transitions. Read `agents/tasks/task-template.md` and relevant accepted ADRs before editing.
 
-Flow:
-1. Read `agents/task/backlog.md` and confirm exactly one task under `## Current`.
-2. Read `agents/task/plan.md` for the template structure.
-3. Read `agents/docs/decisions.md` and the relevant source-of-truth files and referenced context for the active task.
-4. Synthesize the available context into the current best draft plan.
-5. Create or update `agents/task/TASK-XXX-plan.md` with status `draft`.
-6. Ask the next highest-value unresolved question.
-7. After each user answer, update the draft plan and continue until the user confirms the plan is complete.
-8. When pausing, show the current plan progress and the remaining open questions that block approval.
-9. When no blocking questions remain, summarize the plan and ask whether the user wants to approve it for implementation.
-10. If the user explicitly approves, change the plan status from `draft` to `approved`. Otherwise leave it as `draft` and continue planning or report the remaining refinements.
+## Rules
+
+- Select or refine the task exactly as `agents/docs/task-lifecycle.md` defines, using the question interface for any selection or approval decision.
+- Preserve an existing `## Execution` section, checked items, evidence, and Resume State when refining a current task.
+- Fill the Plan from the conversation and inspected project context. Do not invent requirements, APIs, DB structures, or technical facts.
+- For external facts (library behavior, standards, dependency evaluation), delegate a bounded research sub-agent that returns a cited summary, and record the conclusion and its source in the Plan. Do not research what the repository already answers.
+- Record missing critical information under `### Open Questions`.
+- Ask one high-leverage question at a time through the question interface, preferring concise options with the recommended option first.
+- If the plan changes an active task's acceptance criteria or scope, record the change, set `phase: blocked`, and obtain explicit re-approval before implementation continues.
+
+## Approval transition
+
+When no blocking questions remain, ask for explicit approval through the question interface; never move the file on an implicit or ambiguous answer. On approval, perform the transition exactly as `agents/docs/task-lifecycle.md` defines: preserve the task ID and plan, move the file to `current/`, add `approved_at`, set `phase: ready_to_implement`, and record the checkpoint.
+
+## Flow
+
+1. Inspect the task directories, template, ADRs, and relevant context.
+2. Create or update only the selected task file.
+3. Preserve existing Execution content on every update.
+4. Ask the next unresolved question through the question interface, or request approval when the plan is complete.
+5. Report the location, remaining questions, and whether the task is approved.

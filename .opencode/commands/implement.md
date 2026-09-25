@@ -1,42 +1,46 @@
 ---
-description: Generate checklist and start TDD implementation for the active task
+description: Resume or execute the approved current task with persistent TDD state
 ---
 
-Generate `agents/task/TASK-XXX-checklist.md` for the active task and begin implementation following the SDD/TDD workflow.
+Implement the single approved task in `agents/tasks/current/` following the SDD/TDD workflow.
 
-Rules:
-- Read `agents/task/backlog.md` and identify the single task under `## Current`.
-- If `## Current` has zero or multiple tasks, stop and ask the user to select or create one.
-- Extract the task ID (TASK-XXX) from the backlog entry.
-- Verify that `agents/task/TASK-XXX-plan.md` exists. If not, stop and suggest running `/plan` first.
-- Read the plan status before making any changes. If it is `draft`, stop and ask the user to review the plan and change `## Status` to `approved` manually when it is ready. Never approve a draft implicitly through `/implement`.
-- If the plan status is not `approved`, stop and report that implementation can only start from an `approved` plan.
-- Read `agents/task/checklist.md` for the checklist template structure.
-- Derive checklist items from the approved plan only. Do not add items that are not covered by the plan.
-- ALL checklist items must start `[ ]` (unchecked). Never pre-mark items when generating.
-- If the task affects the database, include checklist items for DB schema updates, DB change log updates, backup/recovery checks, and migration validation.
-- Read and apply `agents/skills/test-driven-development/SKILL.md` once at the start of implementation.
-- Follow the RED → GREEN → REFACTOR cycle from the TDD skill during implementation.
-- After each GREEN pass, run the lightweight quality gate from `AGENTS.md`: prefer the simplest passing design, avoid premature abstractions, and question production code that exists only to support tests.
-- Read `agents/docs/testing.md` for project-specific test, lint, typecheck, and build commands.
-- Mark checklist items as they are completed during implementation.
-- Do not change files outside the approved scope.
-- Register out-of-scope findings in `agents/docs/debt.md` instead of modifying them.
-- If test-first work is not feasible for a specific item, stop and document why unless the exception is already in the approved plan.
-- After implementation and validation, run one independent final review scoped to the approved plan, checklist, and task changes. Prefer a separate subagent or fresh review context when available.
-- Follow `AGENTS.md` for the canonical implementation workflow, TDD quality gate, and independent final review policy.
+Read `agents/docs/task-lifecycle.md`, the active task file, the relevant source-of-truth documents from the Source of Truth Map, `agents/docs/testing.md`, and `.opencode/skills/tdd/SKILL.md` before implementation. Load the `code-design` skill when writing or reviewing production code.
 
-Flow:
-1. Read `agents/task/backlog.md` and confirm exactly one task under `## Current`.
-2. Verify `agents/task/TASK-XXX-plan.md` exists. If not, stop.
-3. Verify the plan status is `approved`; otherwise stop before editing anything.
-4. Set the plan status to `in_progress` before implementation starts.
-5. Read the approved plan and `agents/task/checklist.md`.
-6. Generate or update `agents/task/TASK-XXX-checklist.md` with items derived from the plan.
-7. Read and apply `agents/skills/test-driven-development/SKILL.md` and `agents/docs/testing.md`.
-8. Implement following the checklist order and the canonical workflow from `AGENTS.md`.
-9. Mark completed items in the checklist as you go.
-10. When implementation is complete, run validation commands from `agents/docs/testing.md`.
-11. Run the independent final review required by `AGENTS.md`. If issues are found, fix them before ending `/implement`.
-12. Leave the plan in `in_progress` until `/closeout` finishes.
-13. Report the final state: checklist progress, validation results, review outcome, and any open items or debt registered.
+## Preconditions
+
+Validate the active task exactly as `agents/docs/task-lifecycle.md` defines: exactly one task file in `current/`, `approved_at` present, no frontmatter `status`, a recognized current-task phase, and no blocking open question. If the state is invalid or the phase does not allow implementation, stop and report it; never normalize malformed state. If there is no valid current task, suggest `/plan`.
+
+## Resume-safe execution rules
+
+- Read the full existing `## Execution` section before changing it.
+- If `## Execution` already exists, never regenerate, replace, reorder, or reset it. Preserve all checked items, evidence, checkpoint history, and previous Resume State.
+- Add only missing scaffolding or items explicitly derived from the approved Plan. If the approved plan and Execution section disagree, stop and resolve the discrepancy rather than silently rewriting history.
+- Before new implementation work, set `phase: implementing` and write a concrete `Next action`. Preserve a `reviewing` phase until review findings determine whether work must resume.
+- After every meaningful pause, failure, interruption, scope change, or validation, persist `phase`, `Next action`, `Blockers`, `Last validation`, `Last checkpoint`, `Scope changes`, and `Updated` in `### Resume State`.
+- After each relevant RED and GREEN checkpoint, update the matching TDD Ledger item with its result and evidence in the same file before moving to another behavior.
+- A completed ledger item is never unchecked because a session restarted.
+- If the session or agent fails, leave the task in `current/`. A new session resumes from Resume State and the first incomplete ledger item, not from chat history or an archive summary.
+- Use the TDD skill's exception process and record any approved exception in the task before relying on it.
+
+## Converge and readiness
+
+Before considering implementation complete:
+
+- Run the validation commands in `agents/docs/testing.md`, from most targeted to broadest applicable command.
+- Run Converge against every acceptance criterion. Each criterion needs a test, observable behavior, or a documented exception.
+- Confirm no unrelated changes, unexplained scope changes, or unresolved blockers remain.
+- Confirm required durable documentation is synchronized.
+- Record the validation and Converge evidence in the task file.
+- Keep `phase: implementing` during validation and set `phase: reviewing` when ready for independent review. A clean review permits `phase: ready_for_closeout`.
+
+If implementation diverges from the approved plan, stop and resolve it with the user. Leave the task in `current/` with the discrepancy recorded.
+
+## Flow
+
+1. Validate the single current task and its approval metadata.
+2. Read Resume State and the first incomplete execution item.
+3. Preserve the existing ledger and continue at its Next action.
+4. Execute small RED → GREEN cycles, persisting each checkpoint.
+5. Validate, Converge, and record evidence.
+6. Request independent review when required; do not close or archive the task.
+7. Leave the task in `current/` until `/closeout` completes.

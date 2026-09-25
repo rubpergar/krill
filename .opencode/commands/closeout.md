@@ -1,34 +1,33 @@
 ---
-description: Close out the active task: update backlog, archive files, and finalize docs
+description: Verify and close the active task with optional historical distillation
 ---
 
-Complete the closeout process for the active task.
+Complete the administrative closeout of the single active task. Read `agents/docs/task-lifecycle.md` and `agents/docs/dod.md` first.
 
-Rules:
-- Read `agents/task/backlog.md` and identify the single task under `## Current`.
-- If `## Current` has zero or multiple tasks, stop and ask the user to clarify which task to close.
-- Extract the task ID (TASK-XXX) from the backlog entry.
-- Ask the user for explicit approval before marking the task done. Do not proceed without confirmation.
-- If `agents/docs/decisions.md` has new decisions that were approved during the task, ensure they are recorded.
-- If `agents/docs/debt.md` has out-of-scope findings registered during the task, confirm they are still accurate.
-- If the task affected the database, verify that `agents/db/changes.sql` and the DB schema file from the Source of Truth Map are up to date.
-- If the task affected the API, verify that `agents/docs/api.md` reflects the changes.
-- If the task affected the UI design system, verify that `agents/docs/design.md` is updated.
-- Do not create git commits or branches unless the user explicitly asks.
-- If there are uncommitted code changes, inform the user and suggest running `/commit` separately.
-- Follow `AGENTS.md` and `agents/docs/DoD.md` for the canonical closeout and documentation rules.
+## Preconditions
 
-Flow:
-1. Read `agents/task/backlog.md` and confirm exactly one task under `## Current`.
-2. Ask the user: "Do you approve closing TASK-XXX and moving it to Done?"
-3. If the user approves:
-   - Verify the task meets the `## In Progress` criteria from `agents/docs/DoD.md`.
-   - Before moving, set the plan status to `closed`.
-   - Before moving, read `TASK-XXX-checklist.md` and mark any unchecked items in section 6 (Closeout) as `[x]` if they were completed in this step.
-   - Move the task from `## Current` to `## Done` in the backlog.
-   - Move `TASK-XXX-plan.md` to `agents/task/archive/`.
-   - Move `TASK-XXX-checklist.md` to `agents/task/archive/`.
-   - Verify durable docs are updated as required by `AGENTS.md`, including API, DB, design, decisions, and debt when applicable.
-   - Report any uncommitted changes and suggest `/commit` if needed.
-4. If the user does not approve, stop and ask what needs to be resolved before closeout.
-5. Confirm all closeout actions completed and list the archived files.
+Validate the active task exactly as `agents/docs/task-lifecycle.md` defines: exactly one task file in `current/`, `approved_at` present, no frontmatter `status`, and `phase: ready_for_closeout`. The DoD, Converge, validation, durable documentation, and independent review evidence required by `agents/docs/dod.md` must already be recorded. Do not repair missing implementation or documentation by silently changing the approved plan; leave the task active and record the blocker.
+
+## Preflight and approval
+
+- Before asking, perform a complete preflight against the task file, the actual diff, and `agents/docs/dod.md`. Confirm every acceptance criterion, validation, Converge result, required document, review result, blocker, and scope change. If any preflight check fails, do not ask for closeout approval: persist the failure in `Resume State` and `Checkpoint Log`, set `phase: implementing` or `blocked`, and report the next action.
+- Ask the user for explicit approval through the OpenCode question interface, unless unchanged task state already records `Closeout approval: approved`. Do not print the question as ordinary output when the interface is available, and do not treat silence or an ambiguous answer as approval. If approval is already recorded and the plan or implementation has not changed, reuse it rather than asking again.
+- A rejection or ambiguous answer leaves the task in `current/`, keeps the `ready_for_closeout` phase, records `Closeout approval: declined` or `pending`, and records the next action needed to obtain or resolve approval.
+
+## Order
+
+Execute the closeout order defined in `agents/docs/task-lifecycle.md` (Closeout and idempotency). That contract already covers approval reuse, interruption, the `done` prohibition, and archive contents.
+
+Command-level requirements:
+
+- Respect the Source of Truth Map approval column before modifying any durable document. ADR changes need their separate explicit approval.
+- Report the result and any uncommitted changes. Do not create commits or branches unless the user separately asks.
+
+## Flow
+
+1. Confirm the single current task, its approval metadata, and the `ready_for_closeout` phase.
+2. Run the complete preflight. If it fails, persist the blocker and stop.
+3. Ask for explicit closeout approval through the question interface unless an unchanged task already records `Closeout approval: approved`.
+4. Recheck all gates and durable documentation after approval.
+5. Execute the closeout order in `agents/docs/task-lifecycle.md`.
+6. Report the result and any uncommitted changes; do not create commits or branches unless the user separately asks.
