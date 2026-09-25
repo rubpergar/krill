@@ -7,9 +7,7 @@
   <img alt="License" src="https://img.shields.io/badge/license-MIT-3B82F6?style=flat-square" />
 </p>
 
-<p align="center">
 An agent skeleton for disciplined development with [OpenCode](https://opencode.ai): planned tasks, test-driven implementation, and documentation as the source of truth.
-</p>
 
 ## What it is
 
