@@ -63,7 +63,7 @@ Ask one by one through the OpenCode question interface; do not print questions a
 
 Write only facts confirmed by the user. Never write unconfirmed inferences as authoritative.
 
-- **`AGENTS.md`**: `## Project` (Product, Domain, Users, Goal); `## Stack` (runtime/framework, package manager, database, test tools, deployment, external services); `## Agent Runtime` (plugins, MCPs) when confirmed; `## Commands` with confirmed commands; `## Project Structure` with primary routes and purpose.
+- **`AGENTS.md`**: `## Project` (Product, Domain, Users, Goal); `## Stack` (runtime/framework, package manager, database, test tools, deployment, external services); `## Agent Runtime` (plugins, MCPs) when confirmed; `## Commands` with confirmed commands. Add a `## Project Structure` section only when the project has meaningful primary routes or entry points.
 - **`agents/docs/testing.md`**: test commands, locations, services, env vars.
 - **Additional docs (per step 4)**: `agents/docs/api.md` (base URL, routes, auth, formats, errors); `agents/db/schema.sql` (DB type, schema, migrations, connection); `agents/db/domain.md` (vocabulary, entities, business rules); `agents/docs/design.md` (components, styles, a11y, tokens); `agents/docs/decisions.md` (existing ADRs).
 

@@ -129,6 +129,3 @@ Other operational commands:
 The design discipline (YAGNI, abstraction thresholds, keeping production free of test-only code, public-contract preservation, and comment rules) is in `.opencode/skills/code-design/SKILL.md`. Load it when writing or reviewing code.
 
 Project-specific conventions (naming, formatting, comment language, structure) belong in this file or the applicable source-of-truth doc; add them during bootstrap.
-
-## Project Structure
-Add only primary routes with their purpose.
