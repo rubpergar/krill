@@ -120,7 +120,7 @@ Contrast the implementation against the approved plan and acceptance criteria be
 
 ### Review Findings
 
-Every `/review` finding is recorded here with its disposition. `blocking` and `important` findings must be `fixed`, `dismissed` with a reason, or `deferred` to `agents/docs/debt.md` with user consent; `nit` findings may be deferred or dismissed. `ready_for_closeout` requires no open `blocking` or `important` finding.
+Every `/review` finding is recorded here with its severity and disposition. A finding starts `open` and ends `fixed`, `dismissed` with a reason, or `deferred` to `agents/docs/debt.md` with user consent; a `nit` may be deferred or dismissed. `ready_for_closeout` requires no `blocking` or `important` finding left `open`.
 
 - Finding | severity | disposition | evidence or reason
 
