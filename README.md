@@ -29,7 +29,7 @@ It ships in `skeleton` mode: no product code and no stack assumptions. You adopt
 
 ```mermaid
 flowchart LR
-    P["/plan"] --> I["/implement"] --> R["/review"] --> C["/closeout"]
+    P["/plan"] --> I["/implement"] --> R["/review"]
 ```
 
 ## Commands
@@ -40,7 +40,6 @@ flowchart LR
 | `/plan` | Create or refine the active task plan |
 | `/implement` | Execute or resume the approved task with persistent TDD state |
 | `/review` | Review the task diff: spec, standards, and concrete improvements |
-| `/closeout` | Verify the task and promote durable knowledge before closing it |
 | `/audit-tests` | Audit test quality and functional coverage |
 | `/commit` | Group changes into semantic commits and push |
 | `/prompt` | Convert a rough request into an optimized prompt and execute it |

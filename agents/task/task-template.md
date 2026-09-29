@@ -120,5 +120,5 @@ Contrast the implementation against the approved plan and acceptance criteria be
 
 ### Closeout Evidence
 - [ ] Independent review completed and findings resolved or documented.
-- Closeout approval: `pending | approved | declined`; Evidence:
-- [ ] Task file `agents/task/TASK.md` deleted only after all preceding steps succeed.
+- [ ] Durable docs synchronized during the task (API, DB files, design, decisions).
+- [ ] Task file `agents/task/TASK.md` deleted only after the work is integrated.

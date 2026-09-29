@@ -27,7 +27,7 @@ The only valid phases are `planning`, `ready_to_implement`, `implementing`, `rev
 
 `approved_at` is audit metadata for an approved task, not a status. It is written when the user approves the plan.
 
-An unresolved `blocked` task is not changed to `implementing` merely because a new session starts. A task already at `ready_for_closeout` is not restarted by `/implement`; `/closeout` is its next operation.
+An unresolved `blocked` task is not changed to `implementing` merely because a new session starts. A task already at `ready_for_closeout` is not restarted by `/implement`; it is finished by integrating the work and deleting the task file.
 
 ## Creating and selecting a task
 
@@ -59,7 +59,7 @@ On a new session, or after an agent failure, the first action is to read the act
 
 The ledger records durable execution evidence. Each RED and GREEN checkpoint has its own completion marker, so an interrupted behavior can resume at the exact cycle. The resume state records the small, replaceable pointer to the next action. A short append-only checkpoint entry is used for interruptions, blockers, scope changes, and important validation results; it is not a second checklist.
 
-Phase-aware resumption is explicit: `ready_to_implement` starts implementation; `implementing` resumes the first incomplete ledger checkpoint, including any pending validation tracked in `Next action`; `reviewing` continues or reruns review; `ready_for_closeout` goes to `/closeout`; and `blocked` stops for resolution. Validation or review may deliberately return a task to `implementing`, but a new session must not make that transition merely by starting `/implement`.
+Phase-aware resumption is explicit: `ready_to_implement` starts implementation; `implementing` resumes the first incomplete ledger checkpoint, including any pending validation tracked in `Next action`; `reviewing` continues or reruns review; `ready_for_closeout` means the work is validated and ready to integrate and remove; and `blocked` stops for resolution. Validation or review may deliberately return a task to `implementing`, but a new session must not make that transition merely by starting `/implement`.
 
 ## Review readiness
 
@@ -67,18 +67,16 @@ Phase-aware resumption is explicit: `ready_to_implement` starts implementation; 
 
 After a clean review, `/review` records the evidence and sets `phase: ready_for_closeout` only when the active task also satisfies the readiness gates in `agents/docs/dod.md`. Findings return the task to `implementing` or `blocked`, with the next action recorded. A task is not ready for closeout merely because the code compiles or the TDD Ledger has checkmarks.
 
-## Closeout and idempotency
+## Finishing and removal
 
-`/closeout` is an administrative transition, not an implementation phase. It may run only when the task file exists, has `phase: ready_for_closeout`, and contains evidence that the applicable gates in `agents/docs/dod.md` pass. Durable knowledge is promoted to its owning document; no task summary is archived.
+Closeout is the finishing step, not a dedicated command. `/review` sets `phase: ready_for_closeout` only when the task satisfies the gates in `agents/docs/dod.md`; finishing then integrates the work and removes the task file.
 
-The command then uses this order:
+Durable knowledge is updated when it changes, not at finishing: ADRs and glossary during `/plan`, and API, DB, domain, design, and project docs during `/implement`. If finishing reveals a durable document that is still out of sync, update it before removing the task file.
 
-1. Verify the lifecycle state and DoD evidence while the task file is present.
-2. Ask the user for explicit closeout approval through the question interface, unless unchanged task state already records `Closeout approval: approved`.
-3. Persist the approval result in `Closeout Evidence`. A declined or ambiguous result leaves the task file in place; an approved result is reused on retry unless the plan or implementation changed or the user revokes it.
-4. Promote durable knowledge to code, tests, API/domain/design docs, `agents/docs/decisions.md`, or other authoritative documents as appropriate. ADR changes still require their separate explicit approval. Anything not durable belongs to the code, tests, and Git history; do not create a task summary.
-5. Delete `agents/task/TASK.md` only after the preceding steps succeed. The plan remains reachable through the task's commits and, when needed, the pull request.
+Finishing order:
 
-The `Closeout approval` field in the task's Closeout Evidence is a persistent decision. A retry must respect `approved`, `declined`, or `pending` values already recorded.
+1. Confirm the task file exists with `phase: ready_for_closeout` and that the applicable gates in `agents/docs/dod.md` pass.
+2. Integrate the work (commit, push, and pull or merge request) through the user's chosen flow.
+3. Delete `agents/task/TASK.md`. The plan remains reachable through the task's commits and the pull request.
 
-Never write `done` into the task or delete the task file before validation. If validation or documentation promotion fails, keep the task file and record the blocker. If a post-approval recheck finds that the plan or implementation changed, invalidate the approval, return to `implementing` or `blocked`, and require a new approval before closeout.
+Never write `done` into the task or delete the task file before the work is validated and integrated. If validation or integration has not happened, keep the task file and record the blocker.

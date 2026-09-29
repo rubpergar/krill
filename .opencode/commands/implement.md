@@ -43,4 +43,4 @@ If implementation diverges from the approved plan, stop and resolve it with the 
 4. Execute small RED → GREEN cycles, persisting each checkpoint.
 5. Validate, Converge, and record evidence.
 6. Request independent review when required; do not close or delete the task.
-7. Leave the task file in place until `/closeout` completes.
+7. Leave the task file in place until the work is integrated; delete it only when the task is finished.

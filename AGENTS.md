@@ -57,8 +57,8 @@ Read the smallest useful set. Use this table to decide what to open, not as a ma
 | `agents/docs/bootstrap.md` | Bootstrap | Skeleton setup and project transition | skeleton mode or bootstrap maintenance | No |
 | `agents/task/TASK.md` | Active task file | Scope, behavior contract, and execution ledger (Plan + Execution). The single task file; absent when no task is active | Implementing, validating, or resuming task | No |
 | `agents/task/task-template.md` | Task template | Template for the task file (Plan + Execution) | Creating a new task | No |
-| `agents/docs/task-lifecycle.md` | Task lifecycle | Task file, phase, resumption, review, and closeout rules | Any SDD lifecycle operation | No |
-| `agents/docs/dod.md` | Acceptance | Definition of done | Before validation and closeout | Yes |
+| `agents/docs/task-lifecycle.md` | Task lifecycle | Task file, phase, resumption, review, and finishing rules | Any SDD lifecycle operation | No |
+| `agents/docs/dod.md` | Acceptance | Definition of done | Before validation and finishing | Yes |
 | `agents/docs/testing.md` | Testing | Test commands, fixtures, validation rules | Adding/running tests or validating work | Only if validation changes |
 | `agents/docs/decisions.md` | Decisions | ADR records | Planning, durable decision, or past rationale matters | Yes |
 | `agents/docs/api.md` | API contracts | Routes, payloads, errors, compatibility | API routes, clients, or payloads affected | No |

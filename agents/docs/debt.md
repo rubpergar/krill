@@ -34,7 +34,7 @@ Each entry must include, at minimum:
 - Register debt inline while working; registering does not require prior user approval (see the Source of Truth Map).
 - IDs are immutable: assign `DBT-XXX` once and never reuse, renumber, or recycle a number, even after the entry is resolved.
 - When an item is resolved, either promote the durable decision to an ADR (`-> ADR-XXX`) and record that reference, or mark it `dismissed` with the reason. Never delete a number silently.
-- Review the log with the user periodically (for example at closeout) and confirm whether each entry is still accurate.
+- Review the log with the user periodically (for example when finishing a task) and confirm whether each entry is still accurate.
 - When the user decides to address an item as a formal task, reference the `DBT-XXX` in the task file and close the entry.
 - Do not accumulate un-reviewed debt: the log must reflect live debt, not an indefinite historical file.
 
