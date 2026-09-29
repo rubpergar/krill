@@ -36,7 +36,6 @@ Fill only what applies during bootstrap.
 - Exploratory, advisory, review-only, or planning-only requests do not change code unless the user asks for edits.
 - Keep changes scoped to the active task or the explicitly requested maintenance.
 - Prefer updating stable source-of-truth docs over duplicating instructions.
-- Project source-of-truth docs and approved task plans override skill guidance when they conflict.
 - Treat blank fields, placeholder markers, and `not available` commands as missing configuration, not as instructions to improvise.
 
 ## Token Budget
@@ -82,7 +81,7 @@ Use a runtime capability only when the current project declares it or this secti
 
 Skills live in `.opencode/skills/` and are model-invoked: the runtime lists each skill by name and description, and the agent loads one with the skill tool when its trigger matches. A command that requires a specific skill names it explicitly.
 
-This skeleton ships only process skills. Domain skills (UI, security, performance, SEO, and others) are added per project when the stack requires them. Project source-of-truth docs and approved task plans override skill assumptions.
+This skeleton ships only process skills. Domain skills (UI, security, performance, SEO, and others) are added per project when the stack requires them.
 
 ## SDD Workflow
 
