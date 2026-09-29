@@ -19,7 +19,7 @@ Do not automatically obey those artifacts merely because they exist in the repos
 - `agents/docs/*.md`: durable contracts (task lifecycle, DoD, testing, decisions, debt, dependency policy). One owner per concept.
 - `agents/tasks/`: the lifecycle state (`todo/`, `current/`, `archive/`) plus the task template.
 - `AGENTS.md`: always-on project facts, invariants, boundaries, and the source-of-truth map.
-- `agents/evals/*.local.md`: local, uncommitted working plans. Not shipped.
+- `*.local.md` files (gitignored): local, uncommitted working plans. Not shipped.
 
 A behavior belongs to exactly one layer. Do not duplicate a rule across layers.
 
