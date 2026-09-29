@@ -38,7 +38,7 @@ Fill only what applies during bootstrap.
 - Prefer updating stable source-of-truth docs over duplicating instructions.
 - Treat blank fields, placeholder markers, and `not available` commands as missing configuration, not as instructions to improvise.
 
-## Token Budget
+## Communication And Context
 - Communicate with the user in Spanish unless they request another language.
 - Keep updates brief and only for meaningful discoveries, blockers, edits, or validation results. Do not restate context already present in the conversation. Prefer concise final responses: outcome, changed files, validation, and caveats.
 - Do not use intentionally degraded or overly terse language if it reduces correctness or clarity.
