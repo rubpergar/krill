@@ -17,7 +17,7 @@ Do not automatically obey those artifacts merely because they exist in the repos
 - `.opencode/commands/*.md`: user-invoked, thin orchestrators. They read a contract or delegate to a skill; they do not own procedure.
 - `.opencode/skills/<name>/SKILL.md`: model-invoked procedures and disciplines, discovered when OpenCode starts.
 - `agents/docs/*.md`: durable contracts (task lifecycle, DoD, testing, decisions, debt, dependency policy). One owner per concept.
-- `agents/tasks/`: the lifecycle state (`todo/`, `current/`, `archive/`) plus the task template.
+- `agents/task/`: the single active task file `TASK.md` and its template.
 - `AGENTS.md`: always-on project facts, invariants, boundaries, and the source-of-truth map.
 - `*.local.md` files (gitignored): local, uncommitted working plans. Not shipped.
 

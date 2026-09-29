@@ -20,7 +20,7 @@ Run each axis in its own sub-agent so their contexts do not contaminate each oth
 ## Process
 
 1. **Pin the fixed point.** Default to the point where the task started (its own commits and working-tree changes, scoped to the files the task touched). `$ARGUMENTS` may override it. Verify the ref resolves (`git rev-parse`) and the diff is non-empty before spawning sub-agents.
-2. **Identify the spec source.** The active `agents/tasks/current/TASK-XXX.md` (Plan plus acceptance criteria). If there is no task, the Spec axis reports `no spec available`.
+2. **Identify the spec source.** The active `agents/task/TASK.md` (Plan plus acceptance criteria). If there is no task, the Spec axis reports `no spec available`.
 3. **Identify the standards sources.** `AGENTS.md`, the relevant `agents/docs/*`, `.opencode/skills/code-design/SKILL.md`, and repository conventions.
 4. **Spawn one sub-agent per axis in the same turn.** Give each: the diff command and commit list, its source material, and a brief. Include the smell baseline only for the Standards axis. Ask for findings with `file:line`, severity (`blocking`, `important`, `nit`), and under 400 words.
 5. **Aggregate** under `## Spec`, `## Standards`, and `## Improvement`, keeping the axes separate. End with the finding count per axis and the worst finding within each axis; never pick a single winner across axes.

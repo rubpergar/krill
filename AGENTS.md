@@ -55,11 +55,9 @@ Read the smallest useful set. Use this table to decide what to open, not as a ma
 | File | Area | Purpose | Read when | Approval needed to edit? |
 |---|---|---|---|---|
 | `agents/docs/bootstrap.md` | Bootstrap | Skeleton setup and project transition | skeleton mode or bootstrap maintenance | No |
-| `agents/tasks/current/TASK-XXX.md` | Active task file | Scope, behavior contract, and execution ledger (Plan + Execution). The only `TASK-*.md` file in `current/` is the active task | Implementing, validating, or resuming task | No |
-| `agents/tasks/todo/TASK-XXX.md` | Pending task file | Planned task awaiting approval/start | Planning a pending task | No |
-| `agents/tasks/archive/TASK-XXX.md` | Archived task summary | Compact historical summary (cold context, not source of truth) | Historical rationale or similar prior work | No |
-| `agents/tasks/task-template.md` | Task template | Template for the task file (Plan + Execution) | Creating a new task | No |
-| `agents/docs/task-lifecycle.md` | Task lifecycle | Canonical location, phase, resumption, review, and closeout rules | Any SDD lifecycle operation | No |
+| `agents/task/TASK.md` | Active task file | Scope, behavior contract, and execution ledger (Plan + Execution). The single task file; absent when no task is active | Implementing, validating, or resuming task | No |
+| `agents/task/task-template.md` | Task template | Template for the task file (Plan + Execution) | Creating a new task | No |
+| `agents/docs/task-lifecycle.md` | Task lifecycle | Task file, phase, resumption, review, and closeout rules | Any SDD lifecycle operation | No |
 | `agents/docs/dod.md` | Acceptance | Definition of done | Before validation and closeout | Yes |
 | `agents/docs/testing.md` | Testing | Test commands, fixtures, validation rules | Adding/running tests or validating work | Only if validation changes |
 | `agents/docs/decisions.md` | Decisions | ADR records | Planning, durable decision, or past rationale matters | Yes |
@@ -90,7 +88,7 @@ This skeleton ships only process skills. Domain skills (UI, security, performanc
 
 The complete lifecycle contract is in `agents/docs/task-lifecycle.md`. Commands must read it and enforce its preconditions instead of restating them. The non-negotiable invariants are:
 
-- The task directory is the only lifecycle state. There is zero or one task file matching `TASK-*.md` in `current/`; a command that operates on the active task requires exactly one.
+- The task file is the only lifecycle state. There is zero or one `agents/task/TASK.md`; a command that operates on the active task requires it to exist.
 - Do not add a frontmatter `status` field, a global backlog, or a standalone checklist.
 - Product implementation follows TDD unless the approved task records an exception; the methodology is `.opencode/skills/tdd/SKILL.md` and the project logistics are in `agents/docs/testing.md`.
 - Durable docs are updated only when their contracts change, and lasting ADRs require user approval.

@@ -1,8 +1,8 @@
 # Definition of Done
 
-This document defines the quality and completeness gates for setting an active task to `phase: ready_for_closeout`. The task lifecycle, state transitions, approval, archival, and removal rules belong exclusively to `agents/docs/task-lifecycle.md`.
+This document defines the quality and completeness gates for setting an active task to `phase: ready_for_closeout`. The task lifecycle, state transitions, approval, and removal rules belong exclusively to `agents/docs/task-lifecycle.md`.
 
-## Ready for closeout (task remains `current/`)
+## Ready for closeout (task file present)
 
 The implementation is complete and ready for the administrative closeout. The task's Resume State must be `phase: ready_for_closeout`.
 

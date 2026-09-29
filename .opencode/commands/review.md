@@ -8,7 +8,7 @@ Review the active task's own diff (its commits and working-tree changes) against
 
 ## Input and validation
 
-- Read `agents/docs/task-lifecycle.md` first and validate the active task exactly as that contract defines: exactly one task file matching `TASK-*.md` in `agents/tasks/current/` (ignore placeholders), `approved_at` present, no frontmatter `status`, and a recognized current-task phase.
+- Read `agents/docs/task-lifecycle.md` first and validate the active task exactly as that contract defines: the task file `agents/task/TASK.md` exists, `approved_at` is present, there is no frontmatter `status`, and the phase is recognized.
 - If there is no valid active task, stop and suggest `/plan`; never reinterpret malformed state as reviewable.
 - If the phase is `blocked`, report the blocker and stop; do not clear it by starting a review.
 - Read the active task file (Plan and Execution).
@@ -23,7 +23,7 @@ Review the active task's own diff (its commits and working-tree changes) against
 
 - Plan and criteria source: the active task file plus the relevant source-of-truth documents declared in the `AGENTS.md` Source of Truth Map (for example `agents/docs/decisions.md` and `agents/docs/dod.md`, and the API or DB files only when the map still lists them) and accepted ADRs. Use `agents/docs/testing.md` only to judge test validity.
 - Use only read-only git operations (`git diff`, `git diff --cached`, `git log`, `git status`, `git ls-files --others --exclude-standard`). Never change product code, commit, checkout other branches, or push.
-- Never move, approve, close, archive, or delete the task, and never rewrite its Plan or TDD ledger. Only `Resume State` and `Checkpoint Log` may be updated.
+- Never approve, close, or delete the task, and never rewrite its Plan or TDD ledger. Only `Resume State` and `Checkpoint Log` may be updated.
 - Do not invent requirements or acceptance criteria; if there are none, say so and limit the review to existing behavior and repository conventions.
 - Refactoring and simplification belong to this stage: report them as findings, never apply them here.
 - Classify severity as `blocking`, `important`, or `nit`.

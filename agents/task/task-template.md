@@ -1,22 +1,20 @@
 # Task Plan + Execution Template
 
-Copy this file to `agents/tasks/todo/TASK-XXX.md` while planning. After explicit user approval, move the same file to `agents/tasks/current/TASK-XXX.md`. Do not implement from this template.
+Copy this file to `agents/task/TASK.md` when planning starts. Do not implement from this template.
 
-The task directory is the lifecycle state. Do not add a `status` field to the frontmatter. See `agents/docs/task-lifecycle.md` for the complete contract.
+The task file is the lifecycle state; there is never more than one active task and it lives at the fixed path `agents/task/TASK.md`. Do not add a `status` field to the frontmatter. See `agents/docs/task-lifecycle.md` for the complete contract.
 
 ## Frontmatter
 
 ```md
 ---
-id: TASK-XXX
 title: Short task title
 created: YYYY-MM-DD
-approved_at: YYYY-MM-DDTHH:MM:SSZ # required only after approval in current/
-archived_at: YYYY-MM-DD # summary metadata only in archive/
+approved_at: YYYY-MM-DDTHH:MM:SSZ # add only after explicit user approval
 ---
 ```
 
-Omit metadata that does not apply yet. In particular, a todo task has no `approved_at`, and an active task has no `archived_at`.
+Omit `approved_at` while the phase is `planning`. No task id and no `archived_at` are used.
 
 ## Plan
 
@@ -77,7 +75,7 @@ The Execution section is persistent hot context. `/implement` must preserve it w
 - [ ] Verify no open questions block implementation.
 
 ### Resume State
-- Phase: `planning` (todo only) | `ready_to_implement` | `implementing` | `reviewing` | `blocked` | `ready_for_closeout`
+- Phase: `planning` | `ready_to_implement` | `implementing` | `reviewing` | `blocked` | `ready_for_closeout`
 - Next action: ...
 - Blockers: None
 - Last validation: Not run
@@ -118,11 +116,9 @@ Contrast the implementation against the approved plan and acceptance criteria be
 - [ ] Lint:
 - [ ] Typecheck:
 - [ ] Build:
-- [ ] `agents/docs/dod.md` criteria checked while the task is still in `current/`:
+- [ ] `agents/docs/dod.md` criteria checked while the task file is still present:
 
 ### Closeout Evidence
 - [ ] Independent review completed and findings resolved or documented.
 - Closeout approval: `pending | approved | declined`; Evidence:
-- Historical summary decision: `pending | retain | omit`; Reason:
-- [ ] If retained, compact summary written to `agents/tasks/archive/`.
-- [ ] Task removed from `agents/tasks/current/` only after all preceding steps succeed.
+- [ ] Task file `agents/task/TASK.md` deleted only after all preceding steps succeed.

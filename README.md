@@ -40,7 +40,7 @@ flowchart LR
 | `/plan` | Create or refine the active task plan |
 | `/implement` | Execute or resume the approved task with persistent TDD state |
 | `/review` | Review the task diff: spec, standards, and concrete improvements |
-| `/closeout` | Verify the task and archive its history |
+| `/closeout` | Verify the task and promote durable knowledge before closing it |
 | `/audit-tests` | Audit test quality and functional coverage |
 | `/commit` | Group changes into semantic commits and push |
 | `/prompt` | Convert a rough request into an optimized prompt and execute it |
@@ -52,7 +52,7 @@ flowchart LR
 - `.opencode/skills/`: model-invoked process skills (TDD, design, code review, test audit, commit discipline, bootstrap, prompt optimization). Domain skills are added per project.
 - `.opencode/agents/`: custom agents; `krill-maintainer.md` maintains Krill itself.
 - `agents/docs/`: durable contracts (task lifecycle, DoD, testing, decisions, debt, dependency policy, API, design, bootstrap).
-- `agents/tasks/`: `todo/`, `current/`, and `archive/`, plus the task template.
+- `agents/task/`: the single active task file `TASK.md` and its template.
 - `agents/db/`: schema, change log, and domain fallbacks.
 
 ## Requirements
