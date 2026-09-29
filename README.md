@@ -56,7 +56,7 @@ flowchart LR
 
 ## Requirements
 
-- [OpenCode](https://opencode.ai).
+[OpenCode](https://opencode.ai)
 
 ## License
 
