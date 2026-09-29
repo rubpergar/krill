@@ -29,6 +29,19 @@ The only valid phases are `planning`, `ready_to_implement`, `implementing`, `rev
 
 An unresolved `blocked` task is not changed to `implementing` merely because a new session starts. A task already at `ready_for_closeout` is not restarted by `/implement`; it is finished by integrating the work and deleting the task file.
 
+## Phase gates
+
+A phase is left only when its gate holds. This table is the single owner of phase exit conditions; the sections below only describe who performs each operation. Each gate is verifiable against the task file, the diff, and `agents/docs/dod.md`, and points at evidence that already exists rather than restating it. If the evidence is missing, the gate does not pass.
+
+| Phase | Gate to leave it |
+|---|---|
+| `planning` | No blocking `### Open Questions`, and the user explicitly approves the plan. Write `approved_at` and set `phase: ready_to_implement`. |
+| `ready_to_implement` | The Execution scaffold exists and the first `Next action` is set. Starting the first implementation step sets `phase: implementing`. |
+| `implementing` | Every planned behavior has RED and GREEN evidence in the TDD Ledger; every acceptance criterion maps to evidence in Converge; the applicable commands in `agents/docs/testing.md` ran or their skip reason is recorded; no unresolved blocker. Ready for independent review sets `phase: reviewing`. |
+| `reviewing` | An independent review is complete and no `blocking` or `important` finding is open. Each such finding is `fixed`, `dismissed` with a reason, or `deferred` to `agents/docs/debt.md` with user consent, recorded in `Review Findings`; `nit` findings may be deferred. The gates in `agents/docs/dod.md` pass. Then set `phase: ready_for_closeout`; otherwise return to `implementing`. Use `blocked` only when resolving a finding needs a user decision or a plan change. |
+| `blocked` | The blocker recorded in `Resume State` is resolved. A changed plan is re-approved first and returns the task to `ready_to_implement`; a resolved technical blocker returns it to `implementing`. |
+| `ready_for_closeout` | Terminal. The work is integrated (commit, push, pull or merge request) and `agents/task/TASK.md` is deleted. |
+
 ## Creating and selecting a task
 
 1. `/plan` checks whether `agents/task/TASK.md` exists before acting.

@@ -118,7 +118,13 @@ Contrast the implementation against the approved plan and acceptance criteria be
 - [ ] Build:
 - [ ] `agents/docs/dod.md` criteria checked while the task file is still present:
 
+### Review Findings
+
+Every `/review` finding is recorded here with its disposition. `blocking` and `important` findings must be `fixed`, `dismissed` with a reason, or `deferred` to `agents/docs/debt.md` with user consent; `nit` findings may be deferred or dismissed. `ready_for_closeout` requires no open `blocking` or `important` finding.
+
+- Finding | severity | disposition | evidence or reason
+
 ### Closeout Evidence
-- [ ] Independent review completed and findings resolved or documented.
+- [ ] Independent review completed; every finding dispositioned in `Review Findings`.
 - [ ] Durable docs synchronized during the task (API, DB files, design, decisions).
 - [ ] Task file `agents/task/TASK.md` deleted only after the work is integrated.

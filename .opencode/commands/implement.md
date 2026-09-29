@@ -21,6 +21,7 @@ Validate the active task exactly as `agents/docs/task-lifecycle.md` defines: the
 - A completed ledger item is never unchecked because a session restarted.
 - If the session or agent fails, leave the task file in place. A new session resumes from Resume State and the first incomplete ledger item, not from chat history.
 - Use the TDD skill's exception process and record any approved exception in the task before relying on it.
+- When a review finding is addressed, update its disposition in `Review Findings`: `fixed`, `dismissed` with a reason, or `deferred` to `agents/docs/debt.md` with the user's consent.
 
 ## Converge and readiness
 

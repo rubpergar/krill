@@ -23,11 +23,12 @@ Review the active task's own diff (its commits and working-tree changes) against
 
 - Plan and criteria source: the active task file plus the relevant source-of-truth documents declared in the `AGENTS.md` Source of Truth Map (for example `agents/docs/decisions.md` and `agents/docs/dod.md`, and the API or DB files only when the map still lists them) and accepted ADRs. Use `agents/docs/testing.md` only to judge test validity.
 - Use only read-only git operations (`git diff`, `git diff --cached`, `git log`, `git status`, `git ls-files --others --exclude-standard`). Never change product code, commit, checkout other branches, or push.
-- Never approve, close, or delete the task, and never rewrite its Plan or TDD ledger. Only `Resume State` and `Checkpoint Log` may be updated.
+- Never approve, close, or delete the task, and never rewrite its Plan or TDD ledger. Only `Resume State`, `Checkpoint Log`, and `Review Findings` may be updated.
 - Do not invent requirements or acceptance criteria; if there are none, say so and limit the review to existing behavior and repository conventions.
 - Refactoring and simplification belong to this stage: report them as findings, never apply them here.
-- Classify severity as `blocking`, `important`, or `nit`.
-- Persist the outcome: set `phase: ready_for_closeout` on a clean result only when validation, Converge, required documentation, and blockers also pass; otherwise set `phase: implementing` or `blocked` with a concrete next action. Append the review evidence to `Checkpoint Log` and update `Last validation`.
+- Classify severity as `blocking`, `important`, or `nit`, and record every finding in `Review Findings` with an `open` disposition.
+- Scope findings to the task's diff and acceptance criteria. A `nit` may be deferred; a finding outside the task's diff or acceptance criteria is out-of-scope, belongs in `agents/docs/debt.md`, and is never a blocker.
+- Persist the outcome: set `phase: ready_for_closeout` only when no `blocking` or `important` finding is open and validation, Converge, required documentation, and blockers also pass. Otherwise set `phase: implementing`; use `blocked` only when resolving a finding needs a user decision or a plan change. Append the review evidence to `Checkpoint Log` and update `Last validation`.
 - Keep a technical, specific, and constructive tone; report findings first.
 
 ## Output
