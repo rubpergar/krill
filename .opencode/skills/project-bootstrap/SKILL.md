@@ -87,17 +87,10 @@ If readiness is partial or does not pass, ask whether the user wants to resolve 
 
 ### 8. Transition to project mode
 
-Follow the transition contract in `agents/docs/bootstrap.md`: switch the `AGENTS.md` mode, replace the skeleton-mode message with the project-mode message, remove the skeleton-only bootstrap rules and the `agents/docs/bootstrap.md` row from the Source of Truth Map, and verify that durable findings are recorded before deleting anything.
+Follow the transition contract in `agents/docs/bootstrap.md` exactly; it owns the mode switch, the message replacement, the rule and row removals, the pruning of conditional documents and their references, and the deletion order. Verify that durable findings are recorded before deleting anything.
 
 When the transition is partial, add `Pending fields: <list>. Resolve them in a task plan before working on those areas.` to the project-mode message.
 
-Delete the bootstrap-only artifacts and the unused conditional documents as the final step, in this order:
-
-1. Every `Not applicable` source-of-truth document (`api.md`, `design.md`, `dependency-policy.md`, `agents/db/*`) and its Source of Truth Map row.
-2. `agents/docs/bootstrap.md`
-3. `.opencode/commands/bootstrap.md`
-4. `.opencode/skills/project-bootstrap/` (this skill directory)
-
-Report the completed transition before the final self-deletion.
+Delete the bootstrap-only artifacts and the unused conditional documents in the order defined in `agents/docs/bootstrap.md`. Report the completed transition before the final self-deletion.
 
 If the user declines, keep the partial configuration, stay in skeleton mode, and note that the user can resume later.

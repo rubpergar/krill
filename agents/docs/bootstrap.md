@@ -73,9 +73,9 @@ After user approval, perform in one scoped maintenance step:
      
      Bootstrap is complete. The bootstrap instructions and command have been removed; do not recreate them during normal project work.
      ```
-2. Remove the skeleton-only bootstrap rules and the `agents/docs/bootstrap.md` row from the `AGENTS.md` Source of Truth Map.
+2. Remove the skeleton-only rules from `AGENTS.md`: the two `skeleton`-mode bullets in `## Operating Rules` (unapproved editing of agent configuration in skeleton mode, and explicit approval for new project initialization), plus the `agents/docs/bootstrap.md` row from the Source of Truth Map.
 3. Verify that durable findings have been written to `AGENTS.md` and the applicable source-of-truth documents.
-4. Prune the conditional documents that do not apply: delete each unused or `Not applicable` source-of-truth document from the list above and its Source of Truth Map row.
+4. Prune the conditional documents that do not apply: delete each unused or `Not applicable` source-of-truth document from the list above and its Source of Truth Map row. For each pruned document, remove or generalize any `AGENTS.md` rule or boundary that hard-references its path.
 5. Delete `agents/docs/bootstrap.md`.
 6. Delete `.opencode/commands/bootstrap.md`.
 7. Delete `.opencode/skills/project-bootstrap/`.
