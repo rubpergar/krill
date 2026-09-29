@@ -28,7 +28,7 @@ A behavior belongs to exactly one layer. Do not duplicate a rule across layers.
 You may work on:
 
 - Krill architecture
-- Krill CLI and installation logic
+- Krill installation and distribution (the README adoption flow and bootstrap)
 - Krill configuration
 - Krill agents
 - Krill skills
