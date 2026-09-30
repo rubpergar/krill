@@ -1,38 +1,33 @@
 # AGENTS.md
 
-This repository starts as an agent skeleton and can be prepared for active project work.
+This repository contains the myFinancePal personal finance application and its agent workflow.
 
 ## Mode
 
-Current mode: `skeleton`.
+Current mode: `project`.
 
-This repository is in agent bootstrap mode. Product feature implementation is not allowed.
+This repository is an active project. Use the SDD/TDD workflow and the source-of-truth documents under `agents/**`.
 
-For skeleton-mode scope, required setup information, validation, and transition to project mode, follow `agents/docs/bootstrap.md`.
-
-Do not modify product source code or unrelated files unless the bootstrap docs explicitly allow it or the user explicitly requests it.
+Bootstrap is complete. The bootstrap instructions and command have been removed; do not recreate them during normal project work.
 
 ## Project
-Fill this section during bootstrap. Leave fields blank only while they are unknown or not configured yet.
-- Product:
-- Domain:
-- Users:
-- Goal:
+These fields describe the configured project context.
+- Product: myFinancePal
+- Domain: Personal finance tracking
+- Users: One local user without authentication
+- Goal: Record incomes and expenses and view a monthly summary.
 
 ## Stack
-Fill only what applies during bootstrap.
-- Runtime/framework:
-- Package manager:
-- Database:
-- Test tools:
-- Deployment:
-- External services:
+Fill only what applies to this project.
+- Runtime/framework: Python 3.12 + FastAPI; Node 22 LTS + React/Vite
+- Package manager: uv + pnpm
+- Database: SQLite with SQLAlchemy and Alembic
+- Test tools: pytest, Vitest, React Testing Library, Playwright
+- Deployment: Local development only for now
+- External services: None
 
 ## Operating Rules
-- In skeleton mode, editing agent configuration files (`AGENTS.md`, `agents/**`, `.opencode/**`) does not require user approval. The Source of Truth Map approval column only applies in project mode.
-- Before modifying a source-of-truth document in project mode, check the **Approval needed?** column in the Source of Truth Map.
 - Product behavior changes require the SDD workflow below. Template and agent-maintenance changes may be done directly when the user explicitly asks.
-- New project initialization in `skeleton` mode requires explicit user approval and must follow `agents/docs/bootstrap.md`.
 - Exploratory, advisory, review-only, or planning-only requests do not change code unless the user asks for edits.
 - Keep changes scoped to the active task or the explicitly requested maintenance.
 - Prefer updating stable source-of-truth docs over duplicating instructions.
@@ -53,7 +48,6 @@ Read the smallest useful set. Use this table to decide what to open, not as a ma
 
 | File | Area | Purpose | Read when | Approval needed to edit? |
 |---|---|---|---|---|
-| `agents/docs/bootstrap.md` | Bootstrap | Skeleton setup and project transition | skeleton mode or bootstrap maintenance | No |
 | `agents/task/TASK.md` | Active task file | Scope, behavior contract, and execution ledger (Plan + Execution). The single task file; absent when no task is active | Implementing, validating, or resuming task | No |
 | `agents/task/task-template.md` | Task template | Template for the task file (Plan + Execution) | Creating a new task | No |
 | `agents/docs/task-lifecycle.md` | Task lifecycle | Task file, phase, resumption, review, and finishing rules | Any SDD lifecycle operation | No |
@@ -61,19 +55,19 @@ Read the smallest useful set. Use this table to decide what to open, not as a ma
 | `agents/docs/testing.md` | Testing | Test commands, fixtures, validation rules | Adding/running tests or validating work | Only if validation changes |
 | `agents/docs/decisions.md` | Decisions | ADR records | Planning, durable decision, or past rationale matters | Yes |
 | `agents/docs/api.md` | API contracts | Routes, payloads, errors, compatibility | API routes, clients, or payloads affected | No |
-| `agents/db/schema.sql` | DB schema | Current structure. Override path during bootstrap if project has its own. | Persistence, migrations, queries, or schema affected | No |
-| `agents/db/changes.sql` | DB change log | Ordered SQL changes with rollback notes. Override path during bootstrap if project has its own. | Persistence, migrations, queries, or schema affected | No |
+| `agents/db/schema.sql` | DB schema | Current structure and domain constraints. | Persistence, migrations, queries, or schema affected | No |
+| `agents/db/changes.sql` | DB change log | Ordered SQL changes with rollback notes. | Persistence, migrations, queries, or schema affected | No |
 | `agents/db/domain.md` | DB domain | Vocabulary, entities, business rules | Data model or business rules affected | No |
 | `agents/docs/design.md` | UI design | Reusable UI tokens, components, a11y | UI, design system, or UX behavior affected | No |
 | `agents/docs/dependency-policy.md` | Dependencies | Rules for new dependencies | Adding or evaluating a dependency | Yes |
 | `agents/docs/debt.md` | Debt | Out-of-scope findings and bugs | Found something outside active task scope | No |
 
-Conditional documents (`agents/docs/api.md`, `agents/docs/design.md`, `agents/docs/dependency-policy.md`, `agents/db/*`) are deleted with their rows during bootstrap when the project does not use them.
+Conditional documents (`agents/docs/api.md`, `agents/docs/design.md`, `agents/docs/dependency-policy.md`, `agents/db/*`) are kept only when the project uses them.
 
 ## Agent Runtime
-Fill during bootstrap when the project configures agent-specific runtime capabilities.
-- Plugins:
-- MCPs:
+Record agent-specific runtime capabilities when the project configures them.
+- Plugins: None configured
+- MCPs: None configured
 
 Use a runtime capability only when the current project declares it or this section records it. Do not assume globally available tools are project capabilities.
 
@@ -81,7 +75,7 @@ Use a runtime capability only when the current project declares it or this secti
 
 Skills live in `.opencode/skills/` and are model-invoked: the runtime lists each skill by name and description, and the agent loads one with the skill tool when its trigger matches. A command that requires a specific skill names it explicitly.
 
-This skeleton ships only process skills. Domain skills (UI, security, performance, SEO, and others) are added per project when the stack requires them.
+This project uses the process skills under `.opencode/skills/`. Domain skills are added only when a task requires them.
 
 ## SDD Workflow
 
@@ -121,11 +115,22 @@ Other operational commands:
 
 | Purpose | Command | Notes |
 |---|---|---|
-| Install | not configured | Package manager and lockfile policy |
-| Dev server | not configured | Port and env requirements |
-| Services / containers | not configured | Startup, shutdown, and health commands |
+| Install | `uv sync --project backend` and `pnpm install` | Run from the repository root |
+| Dev server | `uv run --project backend --directory backend uvicorn app.main:app --reload` and `pnpm --dir frontend dev` | Run backend and frontend locally |
+| Services / containers | not applicable | No external services or containers |
+| Backend tests | `uv run --project backend --directory backend pytest` | Fast backend suite |
+| Frontend tests | `pnpm --dir frontend test` | Fast frontend suite |
+| Backend lint/typecheck | `uv run --project backend --directory backend ruff check .` and `uv run --project backend --directory backend mypy app` | Quality checks |
+| Frontend lint/format | `pnpm --dir frontend lint` and `pnpm --dir frontend format:check` | Quality checks |
+| Build | `pnpm --dir frontend build` | Frontend production build |
+
+## Project Structure
+
+- `backend/`: FastAPI application, database integration, migrations, and backend tests.
+- `frontend/`: React/Vite application, UI tests, and browser-facing assets.
+- `agents/`: project source-of-truth documents and database/domain records.
 
 ## Code Design
 The design discipline (YAGNI, abstraction thresholds, keeping production free of test-only code, public-contract preservation, and comment rules) is in `.opencode/skills/code-design/SKILL.md`. Load it when writing or reviewing code.
 
-Project-specific conventions (naming, formatting, comment language, structure) belong in this file or the applicable source-of-truth doc; add them during bootstrap.
+Project-specific conventions (naming, formatting, comment language, structure) belong in this file or the applicable source-of-truth doc.

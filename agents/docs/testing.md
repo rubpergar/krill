@@ -9,19 +9,19 @@ This file defines project-specific testing logistics. Use `.opencode/skills/tdd/
 ### Fast (TDD cycle / pre-commit)
 | Purpose | Command |
 |---|---|
-| Targeted unit | |
-| Full unit | |
-| Lint | |
-| Typecheck | |
+| Targeted unit | `uv run --project backend --directory backend pytest tests/test_<target>.py` or `pnpm --dir frontend test -- <pattern>` |
+| Full unit | `uv run --project backend --directory backend pytest` and `pnpm --dir frontend test` |
+| Lint | `uv run --project backend --directory backend ruff check .` and `pnpm --dir frontend lint` |
+| Typecheck | `uv run --project backend --directory backend mypy app` and `pnpm --dir frontend build` |
 
 ### Slow (pre-merge / CI)
 | Purpose | Command |
 |---|---|
-| Integration | |
-| E2E | |
-| Build | |
-| Full validation | |
-| Coverage report | |
+| Integration | `uv run --project backend --directory backend pytest tests/integration` when the integration suite exists |
+| E2E | `pnpm --dir frontend exec playwright test` once the browser suite is configured |
+| Build | `pnpm --dir frontend build` |
+| Full validation | Backend tests, backend lint/typecheck, frontend tests, frontend lint, frontend build, and format check |
+| Coverage report | `uv run --project backend --directory backend pytest --cov` and frontend Vitest coverage once configured |
 | DESIGN.md lint | optional; see `agents/docs/design.md` |
 
 ## Test Levels
@@ -56,9 +56,9 @@ For each public behavior changed, added, or under audit, a test is required when
 Gaps blocked by missing infrastructure or an unclear contract are recorded in `agents/docs/debt.md`.
 
 ## Environment
-- Required services:
-- Required environment variables:
-- Reset/cleanup:
+- Required services: None for the scaffold; backend and frontend run locally.
+- Required environment variables: None for the scaffold.
+- Reset/cleanup: Remove the local SQLite file when database persistence is introduced; tests use temporary databases.
 
 ## Fixtures
 | Type | Location | When used |
@@ -76,9 +76,9 @@ Gaps blocked by missing infrastructure or an unclear contract are recorded in `a
 | E2E | Staging or sandbox environment |
 
 ## Test Locations
-- Unit:
-- Integration:
-- E2E:
+- Unit: `backend/tests/` and `frontend/src/**/*.test.tsx`
+- Integration: `backend/tests/integration/`
+- E2E: `frontend/e2e/`
 
 ## TDD Coordination
 - Read and apply the TDD skill once before implementation code when the task changes behavior or refactors behavior-preserving code.

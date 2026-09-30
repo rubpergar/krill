@@ -1,43 +1,43 @@
 ---
 version: alpha
-name:
+name: myFinancePal
 colors:
-  background:
-  surface:
-  foreground:
-  muted:
-  border:
-  primary:
-  secondary:
-  success:
-  warning:
-  danger:
-  focus:
+  background: "#F5F7FB"
+  surface: "#FFFFFF"
+  foreground: "#172033"
+  muted: "#64748B"
+  border: "#D9E0EA"
+  primary: "#2563EB"
+  secondary: "#0F766E"
+  success: "#15803D"
+  warning: "#B45309"
+  danger: "#B91C1C"
+  focus: "#1D4ED8"
 typography:
   body:
-    fontFamily:
-    fontSize:
+    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1rem"
   heading:
-    fontFamily:
-    fontSize:
+    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.875rem"
 rounded:
-  sm:
-  md:
-  lg:
+  sm: "0.375rem"
+  md: "0.625rem"
+  lg: "0.875rem"
 spacing:
-  xs:
-  sm:
-  md:
-  lg:
+  xs: "0.25rem"
+  sm: "0.5rem"
+  md: "1rem"
+  lg: "1.5rem"
 components:
   button:
-    backgroundColor:
-    textColor:
-    rounded:
+    backgroundColor: "#2563EB"
+    textColor: "#FFFFFF"
+    rounded: "0.625rem"
   input:
-    backgroundColor:
-    borderColor:
-    rounded:
+    backgroundColor: "#FFFFFF"
+    borderColor: "#D9E0EA"
+    rounded: "0.625rem"
 ---
 
 # Design System
@@ -50,12 +50,12 @@ The YAML block above is the DESIGN.md front matter; keep it first in the file. V
 
 ## Overview
 
-- **UI type:**
-- **Audience:**
-- **Tone:**
-- **Density:**
+- **UI type:** Desktop dashboard for personal finance tracking
+- **Audience:** One local user
+- **Tone:** Calm, clear, and practical
+- **Density:** Moderate; prioritize scanning totals and recent movements
 - **Accessibility target:** WCAG 2.2 AA (default)
-- **Dark mode:** supported / planned / not applicable
+- **Dark mode:** not applicable for the MVP
 
 ### Visual Principles
 

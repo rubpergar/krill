@@ -47,3 +47,10 @@ Consequences: What benefits, costs, constraints, or follow-up work does this cre
 ```
 
 ## Log
+
+## ADR-001: Local full-stack architecture for myFinancePal
+Date: 2026-09-30
+Status: accepted
+Context: The project is a small local personal-finance application. The main alternatives were a single full-stack framework, a Python backend with a separate frontend, or a browser-only application. The chosen design must support a real API, SQLite persistence, and independent frontend and backend tests without introducing deployment infrastructure.
+Decision: Use a monorepo with a Python 3.12 FastAPI backend, synchronous SQLAlchemy with Alembic, SQLite, and a React/Vite frontend using Node 22 LTS and pnpm. Store monetary values as integer cents and expose REST JSON endpoints.
+Consequences: The project has two local processes and two package ecosystems, but keeps frontend and backend responsibilities explicit and supports API, integration, component, and E2E testing. Authentication, remote deployment, categories, and exports remain outside the MVP.
