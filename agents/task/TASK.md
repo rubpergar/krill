@@ -90,13 +90,13 @@ El backend persiste movimientos válidos en SQLite y ofrece una API REST JSON pa
 - [x] Verify no open questions block implementation.
 
 ### Resume State
-- Phase: `reviewing`
-- Next action: Solicitar revisión independiente del diff actualizado.
+- Phase: `ready_for_closeout`
+- Next action: Eliminar `agents/task/TASK.md` tras confirmar la integración de los commits.
 - Blockers: None
 - Last validation: Backend `pytest` 37 passed with one existing `TestClient`/`httpx` deprecation warning; backend Ruff and mypy pass; frontend tests 1 passed, ESLint, Prettier check, and build pass; `alembic upgrade head` followed by `alembic check` reports no new operations; `git diff --check` reports only existing line-ending conversion warnings. Integration and E2E suites are not configured.
-- Last checkpoint: 2026-09-30T13:31:04+02:00 | full validation and converge | all applicable checks pass, all current review findings fixed or previously deferred, no blockers or scope changes | request independent review
+- Last checkpoint: 2026-09-30T13:45:16+02:00 | closeout exception approved | user explicitly approved omitting a second independent review; commits are already pushed, findings are fixed or previously deferred, and no blockers remain | delete task file
 - Scope changes: None
-- Updated: 2026-09-30T13:31:04+02:00
+- Updated: 2026-09-30T13:45:16+02:00
 
 ### TDD Ledger
 
@@ -185,6 +185,6 @@ El backend persiste movimientos válidos en SQLite y ofrece una API REST JSON pa
 
 ### Closeout Evidence
 
-- [ ] Independent review completed; every finding dispositioned in `Review Findings`.
-- [ ] Durable docs synchronized during the task (API, DB files, design, decisions).
+- [x] Independent review exception approved by the user on 2026-09-30; every finding is dispositioned in `Review Findings`.
+- [x] Durable docs synchronized during the task (API, DB files, design, decisions).
 - [ ] Task file `agents/task/TASK.md` deleted only after the work is integrated.
