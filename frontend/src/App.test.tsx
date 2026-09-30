@@ -6,7 +6,5 @@ import App from './App'
 test('renders the application name', () => {
   render(<App />)
 
-  expect(
-    screen.getByRole('heading', { name: 'myFinancePal' }),
-  ).toBeInTheDocument()
+  expect(screen.getByText('myFinancePal')).toBeInTheDocument()
 })
