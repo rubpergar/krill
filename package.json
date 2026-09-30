@@ -1,0 +1,12 @@
+{
+  "name": "myfinancepal",
+  "private": true,
+  "packageManager": "pnpm@11.1.3",
+  "scripts": {
+    "dev": "pnpm --dir frontend dev",
+    "build": "pnpm --dir frontend build",
+    "test": "pnpm --dir frontend test",
+    "lint": "pnpm --dir frontend lint",
+    "format:check": "pnpm --dir frontend format:check"
+  }
+}
