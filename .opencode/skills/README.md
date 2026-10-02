@@ -6,6 +6,7 @@ Skills in this directory include material from third-party sources. This file is
 |---|---|---|
 | `tdd` | [mattpocock/skills](https://github.com/mattpocock/skills) + [obra/superpowers](https://github.com/obra/superpowers) | MIT |
 | `code-review` | [mattpocock/skills](https://github.com/mattpocock/skills) | MIT |
+| `code-design` | [mattpocock/skills — codebase-design](https://github.com/mattpocock/skills/tree/main/skills/engineering/codebase-design) | MIT |
 
 ## MIT
 

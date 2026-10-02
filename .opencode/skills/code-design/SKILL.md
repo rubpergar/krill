@@ -25,6 +25,9 @@ Apply these rules when writing, refactoring, or reviewing production code. They 
 - Preserve existing public contracts unless the approved plan explicitly changes them.
 - Keep modules and functions focused on a clear responsibility.
 
+## Module design
+When surveying architecture or designing or restructuring a module's interface, read [DEEP-MODULES.md](DEEP-MODULES.md) for the shared vocabulary, deletion test, and interface-level reasoning. Small internal functions and deep modules are compatible; avoid exposing internal coordination to callers merely to keep individual files small.
+
 ## Complexity
 - Keep functions small enough to reason about locally. A cyclomatic complexity around 10 is a warning line, not a gate; use judgment, not a number.
 - Count decision points: `if`/`else if`, `switch` cases, loops, `catch`, and short-circuit boolean operators.
