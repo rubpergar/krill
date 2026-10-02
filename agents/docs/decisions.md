@@ -4,15 +4,36 @@ ADR log for durable decisions that should guide future work.
 
 Before planning product work, read relevant accepted ADRs and do not contradict them silently.
 
-Record only decisions with future impact. Keep one-off choices, temporary workarounds, task-local assumptions, and obvious coding details in the task plan/checklist.
+## When to Update decisions.md
 
-Before adding or changing an ADR, ask the user for approval and summarize the title, context, decision, consequences, and future value.
+Record an ADR sparingly, and only when **all three** conditions hold:
 
-If new work conflicts with an accepted ADR, explain the conflict and ask whether to keep, rewrite, or update it.
+- It is **hard to revert** or costly to change later (architecture, contracts, persistence, security).
+- It is **surprising without context**: another engineer or agent would not infer the reason from the code.
+- It is the result of a **real trade-off** between valid options (not an obvious choice).
 
-## Statuses
-- `accepted`: approved by the user and active for future work.
-- `rejected`: considered and explicitly declined; keep only when remembering the rejection prevents repeated debate.
+If a condition is missing, keep the decision in the task file instead. Record it here only when it will guide future work repeatedly.
+
+**Amendment**: if a new decision changes an accepted ADR, amend that ADR with a dated note instead of creating a duplicate. Create a new ADR only for a distinct decision.
+
+**Promotion from debt**: when discarded or accepted debt becomes a durable decision, record it here and reference this ADR from the debt entry (`-> ADR-XXX`).
+
+Do not record as an ADR: one-off task choices, temporary workarounds, task-local assumptions, obvious implementation details, or decisions better represented in code, tests, or specs. Those live in the task file's Plan or Execution sections.
+
+Process: before adding or changing an ADR, ask the user for approval and summarize the title, context, decision, consequences, and future value. ADRs are only marked `accepted` after explicit user approval. If new work conflicts with an accepted ADR, explain the conflict and ask whether to keep, rewrite, or update it.
+
+## Minimum Information per ADR
+
+Every ADR must include, at minimum:
+
+- **Title**: `ADR-XXX: <short title>`.
+- **Date**: when it was recorded.
+- **Status**: `accepted` (approved) or `rejected` (declined; keep only if remembering the rejection prevents repeated debate).
+- **Context**: what uncertainty, constraint, or trade-off forced the decision and which options mattered.
+- **Decision**: the concrete rule future work should follow, specific enough for another agent to apply it.
+- **Consequences**: benefits, costs, constraints, or follow-up work it creates.
+
+Record only decisions with future impact. Keep one-off choices, temporary workarounds, task-local assumptions, and code details in the task file's Plan or Execution sections.
 
 ## Format
 

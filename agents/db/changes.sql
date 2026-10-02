@@ -3,7 +3,7 @@
 -- If `AGENTS.md` points to a project-local DB change log file, update that file instead of this one.
 --
 -- Example entry format:
-[TASK-XXX] Short title
+Task: Short title
 Date: YYYY-MM-DD
 Forward:
 CREATE TABLE example (id INT PRIMARY KEY);
