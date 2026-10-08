@@ -23,7 +23,7 @@ The repository can be prepared for a real project in two ways:
 
 A project with existing source code (package manifests, `src/`, config files, etc.).
 
-Uses the `/bootstrap` command (`.opencode/commands/bootstrap.md`), which loads the `project-bootstrap` skill. That skill owns the procedure; this document owns the readiness criteria and the transition contract below.
+Uses the `/bootstrap` command (`.opencode/commands/bootstrap.md`), which loads the `bootstrap` skill. That skill owns the procedure; this document owns the readiness criteria and the transition contract below.
 
 **Readiness criteria (critical):**
 - Product identity (name, domain, users, goal) confirmed by user
@@ -78,4 +78,4 @@ After user approval, perform in one scoped maintenance step:
 4. Prune the conditional documents that do not apply: delete each unused or `Not applicable` source-of-truth document from the list above and its Source of Truth Map row. For each pruned document, remove or generalize any `AGENTS.md` rule or boundary that hard-references its path.
 5. Delete `agents/docs/bootstrap.md`.
 6. Delete `.opencode/commands/bootstrap.md`.
-7. Delete `.opencode/skills/project-bootstrap/`.
+7. Delete `.opencode/skills/bootstrap/`.

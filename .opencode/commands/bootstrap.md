@@ -6,7 +6,7 @@ Adopt this agent skeleton for an **existing project** (one with source code, man
 
 Read `agents/docs/bootstrap.md` for the bootstrap rules, allowed scope, readiness criteria, and the transition contract.
 
-Load the `project-bootstrap` skill with the skill tool and follow it as the procedure.
+Load the `bootstrap` skill with the skill tool and follow it as the procedure.
 
 Optional context: `$ARGUMENTS`
 

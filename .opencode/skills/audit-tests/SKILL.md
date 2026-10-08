@@ -1,5 +1,5 @@
 ---
-name: test-audit
+name: audit-tests
 description: Audit the project test surface for quality and functional coverage, then fill only the gaps the user confirms. Use when reviewing whether existing tests are valid, finding coverage gaps, or building a safety net for legacy code. Never chases a coverage percentage.
 ---
 

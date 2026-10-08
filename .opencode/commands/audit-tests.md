@@ -12,4 +12,4 @@ Read `agents/docs/testing.md` first. It is the source of truth for commands, loc
 
 Read the active task file `agents/task/TASK.md` when it exists. Validate it as `agents/docs/task-lifecycle.md` defines; stop on malformed or ambiguous state instead of altering it silently.
 
-Load the `test-audit` skill with the skill tool and follow it. Default to audit only; write tests only for the gaps the user confirms. For a large surface, the skill may parallelize the audit across areas with sub-agents.
+Load the `audit-tests` skill with the skill tool and follow it. Default to audit only; write tests only for the gaps the user confirms. For a large surface, the skill may parallelize the audit across areas with sub-agents.

@@ -1,9 +1,9 @@
 ---
-description: Group changes into semantic commits and push
+description: Create precise semantic Conventional Commits by reviewing hunks, then push
 ---
 
-Create semantic commits from all available changes, then push.
+Create semantic Conventional Commits from all available changes, then push.
 
-Load the `commit-discipline` skill with the skill tool and follow its procedure. The skill is the single source of truth for inspection, grouping, Conventional Commit format, splitting, safety, push, and the final check.
+Load the `commit` skill with the skill tool and follow its procedure.
 
-If the user provides extra context via `$ARGUMENTS`, use it to refine commit messages, but do not force text that does not accurately describe the changes.
+If the user provides extra context via `$ARGUMENTS`, use it to refine commit messages without forcing inaccurate wording.

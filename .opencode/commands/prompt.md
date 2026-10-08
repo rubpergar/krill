@@ -1,11 +1,7 @@
 ---
-description: Convert a rough request into an optimized prompt and execute it
+description: Refine a rough request into a task-fit prompt and execute it
 ---
 
-Take the user's raw request, improve it into a stronger prompt, then execute that optimized prompt.
+Load the `prompt` skill with the skill tool and follow its procedure.
 
-Raw request: `$ARGUMENTS`
-
-If `$ARGUMENTS` is empty, ask the user for the raw task they want to improve and execute.
-
-Read `AGENTS.md` for repository rules. Load the `prompt-optimization` skill with the skill tool and follow it in optimize-and-execute mode.
+User's raw request: `$ARGUMENTS`

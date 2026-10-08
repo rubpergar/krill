@@ -1,5 +1,5 @@
 ---
-name: project-bootstrap
+name: bootstrap
 description: Adopt the Krill agent skeleton into an existing project: inspect the repository, confirm findings with the user, fill the source-of-truth docs, run the readiness check, and transition from skeleton to project mode. Use when adopting Krill into an existing project, configuring source-of-truth docs, confirming stack and commands, or transitioning skeleton to project mode.
 ---
 

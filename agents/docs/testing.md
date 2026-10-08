@@ -92,7 +92,7 @@ Gaps blocked by missing infrastructure or an unclear contract are recorded in `a
 - Mock external services at boundaries; prefer real code for domain logic.
 
 ## Valid Test Criteria
-A test is valid only if it meets every universal criterion and, when it applies, the conditional ones. The `test-audit` skill applies them when auditing or writing tests and reports any violation; task validation must also check them.
+A test is valid only if it meets every universal criterion and, when it applies, the conditional ones. The `audit-tests` skill applies them when auditing or writing tests and reports any violation; task validation must also check them.
 
 ### Universal (every test)
 - **Independence:** each test must be able to run on its own and in any order, with its own identifiers, logical connections, and state. It must clean up only the data it creates and always close connections, threads, sockets, servers, and temporary files.

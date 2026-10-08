@@ -42,14 +42,14 @@ flowchart LR
 | `/review` | Review the task diff: spec, standards, and concrete improvements |
 | `/audit-tests` | Audit test quality and functional coverage |
 | `/improve-codebase-architecture` | Survey architectural friction, compare visual refactor candidates, and explore one before planning |
-| `/commit` | Group changes into semantic commits and push |
+| `/commit` | Review hunks, group related changes into semantic commits, and push |
 | `/prompt` | Convert a rough request into an optimized prompt and execute it |
 
 ## What's inside
 
 - `AGENTS.md`: mode, invariants, boundaries, and the source-of-truth map.
 - `.opencode/commands/`: user-invoked orchestrators (the table above).
-- `.opencode/skills/`: model-invoked process skills (TDD, design, code review, test audit, architecture survey, commit discipline, bootstrap, prompt optimization). Domain skills are added per project.
+- `.opencode/skills/`: model-invoked process skills (TDD, design, code review, test audit, architecture survey, commit, bootstrap, prompt). Domain skills are added per project.
 - `.opencode/agents/`: custom agents; `krill-maintainer.md` maintains Krill itself.
 - `agents/docs/`: durable contracts (task lifecycle, DoD, testing, decisions, debt, dependency policy, API, design, bootstrap).
 - `agents/task/`: the single active task file `TASK.md` and its template.
