@@ -1,0 +1,64 @@
+---
+description: Review the active task's diff for spec compliance, standards, and concrete improvements
+---
+
+# /review
+
+Review the active task's own diff (its commits and working-tree changes) against its plan, the repository standards, and design quality. Find real defects and concrete improvements, decide whether the task is ready for closeout, and report findings. Additional user context: `$ARGUMENTS`
+
+## Input and validation
+
+- Read `agents/docs/task-lifecycle.md` first and validate the active task exactly as that contract defines: the task file `agents/task/TASK.md` exists, `approved_at` is present, there is no frontmatter `status`, and the phase is recognized.
+- If there is no valid active task, stop and suggest `/plan`; never reinterpret malformed state as reviewable.
+- If the phase is `blocked`, report the blocker and stop; do not clear it by starting a review.
+- Read the active task file (Plan and Execution).
+- Determine the review range: by default, the current task's own changes (its commits and working-tree changes) against the point where the task started, scoped to the files the task touched. If `$ARGUMENTS` names concrete branches, commits, or another fixed point, use those instead. Treat the rest of `$ARGUMENTS` as free context and options such as `--deep` and `--no-checks`.
+
+## Method
+
+- Load the `code-review` skill with the skill tool and follow it: three independent axes (Spec, Standards, Improvement), each in its own sub-agent.
+- Load the `code-design` skill for design-discipline checks.
+
+## Task-specific rules
+
+- Plan and criteria source: the active task file plus the relevant source-of-truth documents declared in the `AGENTS.md` Source of Truth Map (for example `agents/docs/decisions.md` and `agents/docs/dod.md`, and the API or DB files only when the map still lists them) and accepted ADRs. Use `agents/docs/testing.md` only to judge test validity.
+- Use only read-only git operations (`git diff`, `git diff --cached`, `git log`, `git status`, `git ls-files --others --exclude-standard`). Never change product code, commit, checkout other branches, or push.
+- Never approve, close, or delete the task, and never rewrite its Plan or TDD ledger. Only `Resume State`, `Checkpoint Log`, and `Review Findings` may be updated.
+- Do not invent requirements or acceptance criteria; if there are none, say so and limit the review to existing behavior and repository conventions.
+- Refactoring and simplification belong to this stage: report them as findings, never apply them here.
+- Classify severity as `blocking`, `important`, or `nit`, and record every finding in `Review Findings` with an `open` disposition.
+- Scope findings to the task's diff and acceptance criteria. A `nit` may be deferred; a finding outside the task's diff or acceptance criteria is out-of-scope, belongs in `agents/docs/debt.md`, and is never a blocker.
+- Persist the outcome: set `phase: ready_for_closeout` only when no `blocking` or `important` finding is open and validation, Converge, required documentation, and blockers also pass. Otherwise set `phase: implementing`; use `blocked` only when resolving a finding needs a user decision or a plan change. Append the review evidence to `Checkpoint Log` and update `Last validation`.
+- Keep a technical, specific, and constructive tone; report findings first.
+
+## Output
+
+The first line must be exactly `Findings`. Then:
+
+```text
+Findings
+1. [finding]
+- Severity: `blocking|important|nit`
+- Axis: `spec|standards|improvement`
+- Reference: file:line or file
+- Explanation: concrete problem, activation condition, impact, and evidence
+- Minimal suggested fix: only when it helps, without imposing a broad refactor
+
+## Spec
+- covered | missing | partial | scope creep, with references
+## Standards
+- documented-standard breaches and baseline smells, with references
+## Improvement
+- concrete simplifications or alternatives, ordered by leverage, each with a recommendation
+
+Status of previous indications
+Scope deviations
+Reviewed context
+Validation (checks run or the reason they were not run)
+Residual risks or gaps
+Recommendation: `request changes`, `comment`, or `approve` (informational only)
+```
+
+If there are no problems, write explicitly `No blocking or important findings in the reviewed diff` and keep the validation and residual gaps when relevant.
+
+Do not publish anything, modify product code, commit, or push.
