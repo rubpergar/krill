@@ -1,6 +1,8 @@
 ---
 name: improve-codebase-architecture
-description: Survey architectural friction and deepening opportunities, produce a visual HTML report, then explore a selected candidate. Use only when the user explicitly requests an architecture survey or invokes /improve-codebase-architecture, not during routine implementation or diff review.
+description: Survey architectural friction, present refactor candidates as a visual HTML report, then explore the one you choose.
+metadata:
+  opencode/autoinvoke: "false"
 ---
 
 # Improve Codebase Architecture
@@ -11,8 +13,8 @@ This skill owns the survey and candidate exploration. `code-design` owns design 
 
 ## Scope and context
 
-- Work read-only in the repository. The only writable artifact is the temporary HTML report; do not edit code, tests, configuration, durable docs, debt, or the task file.
-- No active task is required. If `agents/task/TASK.md` exists, read it for ongoing scope and constraints, without resuming, replacing, or changing it.
+- Treat the repository as read-only except for the HTML report in the project root (see step 2); do not edit code, tests, configuration, durable docs, or the task file.
+- No task record is required. If `agents/task/TASK.md` exists, read it for ongoing scope and constraints, without resuming, replacing, or changing it.
 - Load `code-design` with the skill tool. Follow its deep-module guidance as well as the project's conventions.
 - Read relevant accepted ADRs and domain vocabulary from the paths declared in the `AGENTS.md` Source of Truth Map. Use existing project docs when no vocabulary path is declared. Missing docs are not a blocker; do not create a glossary or an ADR directory.
 - Use the project's language and established domain terms. Do not impose new architectural naming on existing contracts.
@@ -41,7 +43,13 @@ Keep candidates tied to observed friction and likely changes, not hypothetical v
 
 Read [HTML-REPORT.md](HTML-REPORT.md) for the report format. Present the problem and direction of each refactor; defer detailed interface design until the user picks a candidate.
 
-Resolve the actual OS temporary directory (`TEMP`/`TMP` on Windows, `TMPDIR` or the system temp directory elsewhere). Write `architecture-review-<timestamp>.html` there using a unique filename, outside the repository. Request access if the runtime requires it; never fall back to writing the report into the project. If temporary output is unavailable, explain the limitation and return the report in the conversation.
+Write `ARCHITECTURE-REVIEW.html` in the root of the currently open project. Do not use a temporary directory or another filename.
+
+Identify the active OpenCode project/workspace root. In a Git project, `git rev-parse --show-toplevel` can help identify it, but use the root of the opened project if it is a subproject within a larger repository.
+
+If the project root is missing, there are multiple plausible roots, or you cannot confidently determine the correct destination, ask the user through OpenCode's `question` tool where to create `ARCHITECTURE-REVIEW.html`. Wait for the answer before writing; do not guess or fall back to a temporary directory.
+
+If `ARCHITECTURE-REVIEW.html` already exists, read it first. Replace it when it is clearly an earlier report. If its purpose or ownership is unclear, ask before overwriting it.
 
 Inspect the rendered report when a preview tool is available; otherwise state that rendering was not verified. Open the file with the platform's launcher (`Start-Process` on Windows, `open` on macOS, `xdg-open` on Linux) when available, and always report its absolute path. If opening fails, return the path rather than installing tools or starting a server.
 
@@ -63,4 +71,4 @@ Compare alternative interface shapes only when a real trade-off warrants it. Sto
 
 Keep resolved choices and remaining questions in a concise proposal summary in the conversation, referencing the report. Proposed vocabulary changes remain proposals. If a durable rejection reason should prevent repeated suggestions, offer to carry it into planning under `agents/docs/decisions.md`; do not write an ADR here.
 
-End with the selected candidate, affected paths, expected benefit, preserved contracts, risks, validation approach, and unresolved questions. Suggest `/plan` when the user wants to proceed. Selecting a candidate does not approve implementation or change the active task; let `/plan` enforce the lifecycle contract rather than creating a second task or an implementation checklist.
+End with the selected candidate, affected paths, expected benefit, preserved contracts, risks, validation approach, and unresolved questions. Suggest `/plan` when the user wants to proceed. Selecting a candidate does not approve implementation or change the task record; let `/plan` enforce the lifecycle contract rather than creating a second task or an implementation checklist.

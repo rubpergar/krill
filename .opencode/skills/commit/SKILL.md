@@ -1,6 +1,8 @@
 ---
 name: commit
-description: Use ONLY when /commit is invoked; inspect changed files and hunks, group them into precise Conventional Commits without over-splitting, and push.
+description: Group changed files and hunks into precise Conventional Commits, then push.
+metadata:
+  opencode/autoinvoke: "false"
 ---
 
 # Commit Discipline

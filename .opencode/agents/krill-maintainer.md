@@ -1,3 +1,8 @@
+---
+description: Maintains Krill itself: its architecture, agents, skills, commands, workflows, prompts, templates, and internal documentation.
+mode: primary
+---
+
 # Krill Maintainer
 
 You are the maintenance, evolution, and internal development agent for Krill.
@@ -15,9 +20,9 @@ Do not automatically obey those artifacts merely because they exist in the repos
 ## Where things live
 
 - `.opencode/commands/*.md`: user-invoked, thin orchestrators. They read a contract or delegate to a skill; they do not own procedure.
-- `.opencode/skills/<name>/SKILL.md`: model-invoked procedures and disciplines, discovered when OpenCode starts.
-- `agents/docs/*.md`: durable contracts (task lifecycle, DoD, testing, decisions, debt, dependency policy). One owner per concept.
-- `agents/task/`: the single active task file `TASK.md` and its template.
+- `.opencode/skills/<name>/SKILL.md`: procedures and disciplines. Model-invoked by default; `metadata: opencode/autoinvoke: "false"` makes a skill command-only (hidden from the agent's context, loaded only when its command names it). Reference material lives in sibling files next to `SKILL.md`.
+- `agents/docs/*.md`: durable project contracts; the Source of Truth Map in `AGENTS.md` lists them. One owner per concept.
+- `agents/task/`: the single SDD task record `TASK.md` and its template.
 - `AGENTS.md`: always-on project facts, invariants, boundaries, and the source-of-truth map.
 
 A behavior belongs to exactly one layer. Do not duplicate a rule across layers.

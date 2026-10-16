@@ -1,20 +1,15 @@
-# Task Plan + Execution Template
-
-Copy this file to `agents/task/TASK.md` when planning starts. Do not implement from this template.
-
-The task file is the lifecycle state; there is never more than one active task and it lives at the fixed path `agents/task/TASK.md`. Do not add a `status` field to the frontmatter. See `agents/docs/task-lifecycle.md` for the complete contract.
-
-## Frontmatter
-
-```md
 ---
 title: Short task title
 created: YYYY-MM-DD
-approved_at: YYYY-MM-DDTHH:MM:SSZ # add only after explicit user approval
 ---
-```
 
-Omit `approved_at` while the phase is `planning`. No task id and no `archived_at` are used.
+# Short task title
+
+Instantiate this template as `agents/task/TASK.md` when planning starts. Fill the title and date, and replace the heading with the task title; do not implement from this template.
+
+The task file holds the single task record at the fixed path `agents/task/TASK.md`. Do not add a `status` field to the frontmatter. See `agents/docs/task-lifecycle.md` for the complete contract.
+
+Add `approved_at` only after explicit user approval. The initial phase is `planning`. No task id and no `archived_at` are used.
 
 ## Plan
 
@@ -71,11 +66,11 @@ The Execution section is persistent hot context. `/implement` must preserve it w
 
 ### Context
 - [ ] Re-read the approved plan and referenced source-of-truth docs before implementation.
-- [ ] Load and apply `.opencode/skills/tdd/SKILL.md`, or record why it does not apply.
+- [ ] Load `.opencode/skills/tdd/SKILL.md`; for behavior changes, use its RED/GREEN cycle or record an explicitly approved exception allowed by the skill.
 - [ ] Verify no open questions block implementation.
 
 ### Resume State
-- Phase: `planning` | `ready_to_implement` | `implementing` | `reviewing` | `blocked` | `ready_for_closeout`
+- Phase: `planning`
 - Next action: ...
 - Blockers: None
 - Last validation: Not run
@@ -102,11 +97,11 @@ Append only interruptions, blockers, scope changes, and important validation res
 
 ### Converge
 
-Contrast the implementation against the approved plan and acceptance criteria before closeout.
+Contrast the implementation against the approved plan and acceptance criteria before integration.
 
 - [ ] Every acceptance criterion has evidence (test, behavior, or documented exception).
 - [ ] No unrelated refactors or out-of-scope changes.
-- [ ] Out-of-scope findings registered in `agents/docs/debt.md`.
+- [ ] Out-of-scope findings reported to the user with evidence, or none found.
 - [ ] Durable docs updated (API, DB files, design, decisions) as needed.
 - [ ] Durable decisions recorded in `agents/docs/decisions.md` with user approval, or deliberately left task-local.
 
@@ -120,11 +115,6 @@ Contrast the implementation against the approved plan and acceptance criteria be
 
 ### Review Findings
 
-Every `/review` finding is recorded here with its severity and disposition. A finding starts `open` and ends `fixed`, `dismissed` with a reason, or `deferred` to `agents/docs/debt.md` with user consent; a `nit` may be deferred or dismissed. `ready_for_closeout` requires no `blocking` or `important` finding left `open`.
+Record findings reported by `/review`; lifecycle gates and dispositions are defined in `agents/docs/task-lifecycle.md`.
 
-- Finding | severity | disposition | evidence or reason
-
-### Closeout Evidence
-- [ ] Independent review completed; every finding dispositioned in `Review Findings`.
-- [ ] Durable docs synchronized during the task (API, DB files, design, decisions).
-- [ ] Task file `agents/task/TASK.md` deleted only after the work is integrated.
+- Finding | severity | disposition | evidence or user instruction

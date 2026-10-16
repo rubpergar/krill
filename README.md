@@ -23,9 +23,9 @@ It ships in `skeleton` mode: no product code and no stack assumptions. You adopt
    - `agents/`
    - `.opencode/`
 
-   Do not copy Krill's `.git`, `README.md`, or `LICENSE`; the project keeps its own.
-3. Open the project in OpenCode and run `/bootstrap`. For a new project with no code yet, follow the incremental path in [`agents/docs/bootstrap.md`](agents/docs/bootstrap.md).
-4. Work through the task lifecycle: plan, implement, review, close out.
+   Do not copy Krill's `.git` or `README.md`, or overwrite the host project's `LICENSE`. Preserve Krill's MIT notice by including its `LICENSE` separately or in the project's third-party notices.
+3. Open the project in OpenCode and run `/bootstrap`. For a new project with no code yet, follow the incremental path in [`.opencode/skills/bootstrap/BOOTSTRAP.md`](.opencode/skills/bootstrap/BOOTSTRAP.md).
+4. For work that needs the full lifecycle, plan, implement, review, and integrate.
 
 ```mermaid
 flowchart LR
@@ -37,7 +37,7 @@ flowchart LR
 | Command | Purpose |
 |---|---|
 | `/bootstrap` | Adopt the skeleton into an existing project and switch to project mode |
-| `/plan` | Create or refine the active task plan |
+| `/plan` | Create or refine the task plan |
 | `/implement` | Execute or resume the approved task with persistent TDD state |
 | `/review` | Review the task diff: spec, standards, and concrete improvements |
 | `/audit-tests` | Audit test quality and functional coverage |
@@ -49,10 +49,10 @@ flowchart LR
 
 - `AGENTS.md`: mode, invariants, boundaries, and the source-of-truth map.
 - `.opencode/commands/`: user-invoked orchestrators (the table above).
-- `.opencode/skills/`: model-invoked process skills (TDD, design, code review, test audit, architecture survey, commit, bootstrap, prompt). Domain skills are added per project.
+- `.opencode/skills/`: process skills (TDD, design, code review, test audit, architecture survey, commit, bootstrap, prompt). Model-invoked unless the frontmatter makes them command-only (`opencode/autoinvoke: "false"`). Domain skills are added per project.
 - `.opencode/agents/`: custom agents; `krill-maintainer.md` maintains Krill itself.
-- `agents/docs/`: durable contracts (task lifecycle, DoD, testing, decisions, debt, dependency policy, API, design, bootstrap).
-- `agents/task/`: the single active task file `TASK.md` and its template.
+- `agents/docs/`: durable contracts (task lifecycle, DoD, testing, decisions, dependency policy, API, design).
+- `agents/task/`: the single SDD task record `TASK.md` and its template.
 - `agents/db/`: schema, change log, and domain fallbacks.
 
 ## Requirements

@@ -2,46 +2,13 @@
 description: Resume or execute the approved task file with persistent TDD state
 ---
 
-Implement the single approved task file `agents/task/TASK.md` following the SDD/TDD workflow.
+Execute the approved task file `agents/task/TASK.md` following the SDD/TDD workflow.
 
-Read `agents/docs/task-lifecycle.md`, the task file, the relevant source-of-truth documents from the Source of Truth Map, `agents/docs/testing.md`, and `.opencode/skills/tdd/SKILL.md` before implementation. Load the `code-design` skill when writing or reviewing production code.
-
-## Preconditions
-
-Validate the active task exactly as `agents/docs/task-lifecycle.md` defines: the task file `agents/task/TASK.md` exists, `approved_at` is present, there is no frontmatter `status`, the phase is recognized and allows implementation, and no blocking open question remains. If the state is invalid or the phase does not allow implementation, stop and report it; never normalize malformed state. If there is no valid task, suggest `/plan`.
-
-## Resume-safe execution rules
-
-- Read the full existing `## Execution` section before changing it.
-- If `## Execution` already exists, never regenerate, replace, reorder, or reset it. Preserve all checked items, evidence, checkpoint history, and previous Resume State.
-- Add only missing scaffolding or items explicitly derived from the approved Plan. If the approved plan and Execution section disagree, stop and resolve the discrepancy rather than silently rewriting history.
-- Before new implementation work, set `phase: implementing` and write a concrete `Next action`. Preserve a `reviewing` phase until review findings determine whether work must resume.
-- After every meaningful pause, failure, interruption, scope change, or validation, persist `phase`, `Next action`, `Blockers`, `Last validation`, `Last checkpoint`, `Scope changes`, and `Updated` in `### Resume State`.
-- After each relevant RED and GREEN checkpoint, update the matching TDD Ledger item with its result and evidence in the same file before moving to another behavior.
-- A completed ledger item is never unchecked because a session restarted.
-- If the session or agent fails, leave the task file in place. A new session resumes from Resume State and the first incomplete ledger item, not from chat history.
-- Use the TDD skill's exception process and record any approved exception in the task before relying on it.
-- When a review finding is addressed, update its disposition in `Review Findings`: `fixed`, `dismissed` with a reason, or `deferred` to `agents/docs/debt.md` with the user's consent.
-
-## Converge and readiness
-
-Before considering implementation complete:
-
-- Run the validation commands in `agents/docs/testing.md`, from most targeted to broadest applicable command.
-- Run Converge against every acceptance criterion. Each criterion needs a test, observable behavior, or a documented exception.
-- Confirm no unrelated changes, unexplained scope changes, or unresolved blockers remain.
-- Confirm required durable documentation is synchronized.
-- Record the validation and Converge evidence in the task file.
-- Keep `phase: implementing` during validation and set `phase: reviewing` when ready for independent review. A clean review permits `phase: ready_for_closeout`.
-
-If implementation diverges from the approved plan, stop and resolve it with the user. Leave the task file with the discrepancy recorded.
+Read `agents/docs/task-lifecycle.md` first. It owns the task file, phases, gates, resumption, and how review findings are dispositioned; do not restate or override it. Read the task file, the relevant source-of-truth documents from the `AGENTS.md` map, and `agents/docs/testing.md`. Load the `tdd` skill and follow its approved exception process; load `code-design` when writing or reviewing production code.
 
 ## Flow
 
-1. Validate the task file and its approval metadata.
-2. Read Resume State and the first incomplete execution item.
-3. Preserve the existing ledger and continue at its Next action.
-4. Execute small RED → GREEN cycles, persisting each checkpoint.
-5. Validate, Converge, and record evidence.
-6. Request independent review when required; do not close or delete the task.
-7. Leave the task file in place until the work is integrated; delete it only when the task is finished.
+1. Validate the task and resume from its saved state according to `agents/docs/task-lifecycle.md`; if there is no valid task, suggest `/plan`.
+2. Execute the approved plan using the `tdd` skill and persist progress as the lifecycle contract defines.
+3. Run configured validation commands from `agents/docs/testing.md` and satisfy the Converge evidence criteria in `agents/docs/dod.md`. When the lifecycle gate is met, record `phase: reviewing` and report that `/review` is the next step. Do not invoke `/review` or perform an independent review in this invocation.
+4. Stop after reporting the phase and next action; do not invoke another command. Do not delete the task.

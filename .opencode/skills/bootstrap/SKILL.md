@@ -1,19 +1,21 @@
 ---
 name: bootstrap
-description: Adopt the Krill agent skeleton into an existing project: inspect the repository, confirm findings with the user, fill the source-of-truth docs, run the readiness check, and transition from skeleton to project mode. Use when adopting Krill into an existing project, configuring source-of-truth docs, confirming stack and commands, or transitioning skeleton to project mode.
+description: Adopt the Krill skeleton into an existing project and transition from skeleton to project mode.
+metadata:
+  opencode/autoinvoke: "false"
 ---
 
 # Project Bootstrap
 
-Adopt the agent skeleton for an **existing project** (one with source code, manifests, config files). Read `agents/docs/bootstrap.md` first: it is the source of truth for allowed scope, approval rules, readiness criteria, and the transition contract. Follow it; do not restate or override it. For new or empty projects, use the incremental initialization path described in that same file.
+Adopt the agent skeleton for an **existing project** (one with source code, manifests, config files). Read [BOOTSTRAP.md](BOOTSTRAP.md) first: it is the source of truth for allowed scope, approval rules, readiness criteria, and the transition contract. Follow it; do not restate or override it. For new or empty projects, use the incremental initialization path described in that same file.
 
 ## General rules
 
 - Do not modify product source code, configuration, or dependencies during adoption.
-- Write only to `AGENTS.md`, `agents/**`, and agent files, within the allowed scope in `agents/docs/bootstrap.md`.
+- Write only to `AGENTS.md`, `agents/**`, and agent files, within the allowed scope in [BOOTSTRAP.md](BOOTSTRAP.md).
 - Classify every finding as `detected` (observed), `inferred` (needs confirmation), or `missing` (not found).
 - Mark unconfirmed fields `pending confirmation` and user-accepted inferences `user-approved assumption: <description>`.
-- If the repository has no product code, stop and point the user to the new project initialization path in `agents/docs/bootstrap.md`.
+- If the repository has no product code, stop and point the user to the new project initialization path in [BOOTSTRAP.md](BOOTSTRAP.md).
 
 ## Procedure
 
@@ -81,16 +83,16 @@ Write confirmed fields as-is. Write assumed fields with the assumption note. Do 
 
 ### 7. Readiness check
 
-Classify each field as `confirmed`, `assumed`, or `pending`. A field counts as resolved if `confirmed` or `assumed`; `pending` is unresolved. Apply the readiness criteria and pass thresholds defined in `agents/docs/bootstrap.md` to decide whether readiness passes.
+Classify each field as `confirmed`, `assumed`, or `pending`. A field counts as resolved if `confirmed` or `assumed`; `pending` is unresolved. Apply the readiness criteria and pass thresholds defined in [BOOTSTRAP.md](BOOTSTRAP.md) to decide whether readiness passes.
 
 If readiness is partial or does not pass, ask whether the user wants to resolve pending fields now or defer. If it does not pass, explain the blockers and do not offer transition.
 
 ### 8. Transition to project mode
 
-Follow the transition contract in `agents/docs/bootstrap.md` exactly; it owns the mode switch, the message replacement, the rule and row removals, the pruning of conditional documents and their references, and the deletion order. Verify that durable findings are recorded before deleting anything.
+Follow the transition contract in [BOOTSTRAP.md](BOOTSTRAP.md) exactly; it owns the mode switch, the message replacement, the rule and row removals, the pruning of conditional documents and their references, and the deletion order. Verify that durable findings are recorded before deleting anything.
 
 When the transition is partial, add `Pending fields: <list>. Resolve them in a task plan before working on those areas.` to the project-mode message.
 
-Delete the bootstrap-only artifacts and the unused conditional documents in the order defined in `agents/docs/bootstrap.md`. Report the completed transition before the final self-deletion.
+Delete the bootstrap-only artifacts and the unused conditional documents in the order defined in [BOOTSTRAP.md](BOOTSTRAP.md). Report the completed transition before the final self-deletion.
 
 If the user declines, keep the partial configuration, stay in skeleton mode, and note that the user can resume later.

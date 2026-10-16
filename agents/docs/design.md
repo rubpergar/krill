@@ -42,7 +42,7 @@ components:
 
 # Design System
 
-Reusable UI/design source of truth. Delete this file if the project has no UI.
+Reusable UI/design source of truth. Mark as `Not applicable` if the project has no UI; the bootstrap transition deletes this file when it is not used.
 
 Document only durable, reusable UI decisions here. Do not document one-off screen details.
 

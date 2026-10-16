@@ -17,20 +17,17 @@ Apply these rules when writing, refactoring, or reviewing production code. They 
 - Keep code in one place until real duplication or variation appears.
 
 ## Production stays production
-- Never add methods, flags, or branches to production code that exist only for tests. Test setup and cleanup belong in test utilities.
-- If production code exists only to make a test easier, question whether it belongs in production at all.
-- Tests adapt to the production contract; never change production to satisfy an artificial test.
+Production code is never shaped by tests. See the contract rule in [`../tdd/SKILL.md`](../tdd/SKILL.md).
 
 ## Contracts
-- Preserve existing public contracts unless the approved plan explicitly changes them.
 - Keep modules and functions focused on a clear responsibility.
 
 ## Module design
 When surveying architecture or designing or restructuring a module's interface, read [DEEP-MODULES.md](DEEP-MODULES.md) for the shared vocabulary, deletion test, and interface-level reasoning. Small internal functions and deep modules are compatible; avoid exposing internal coordination to callers merely to keep individual files small.
 
 ## Complexity
-- Keep functions small enough to reason about locally. A cyclomatic complexity around 10 is a warning line, not a gate; use judgment, not a number.
-- Count decision points: `if`/`else if`, `switch` cases, loops, `catch`, and short-circuit boolean operators.
+- Keep functions small enough to reason about locally. A cyclomatic complexity around 10 is a warning line, not a gate: count `if`/`else if`, `switch` cases, loops, `catch`, and short-circuit boolean operators, then use judgment rather than the number.
+- Do not raise decision complexity without a concrete reason. Explain a material increase in the plan or review, prefer simplifying during refactoring, and use the project's existing measurement tools instead of adding one.
 - Prefer guard clauses and early returns over deep nesting. Nesting deeper than about 3 levels is a split signal.
 - When a function passes the warning line, extract a cohesive block or replace a conditional with data or polymorphism. Do not split arbitrarily.
 - Keep one level of abstraction per function; do not mix orchestration with low-level detail.
@@ -43,5 +40,3 @@ When surveying architecture or designing or restructuring a module's interface, 
 
 ## Conventions
 - Prefer existing patterns and local helpers.
-- Keep changes small, intentional, and task-scoped.
-- Move durable conventions into the applicable source-of-truth doc instead of growing this skill.

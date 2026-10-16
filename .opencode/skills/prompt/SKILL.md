@@ -1,6 +1,8 @@
 ---
 name: prompt
-description: Use ONLY when `/prompt` is invoked or the user explicitly asks to refine a prompt and execute it; create an actionable, task-fit brief and carry it out.
+description: Turn a rough request into a focused, actionable prompt and carry it out.
+metadata:
+  opencode/autoinvoke: "false"
 ---
 
 # Prompt Refinement and Execution

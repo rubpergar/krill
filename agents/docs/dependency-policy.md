@@ -2,7 +2,7 @@
 
 Rules for adding a dependency (library, package, framework). The goal is to avoid accidental dependency bloat and ensure every addition is justified.
 
-This document applies only when the project has a package manager. Delete it otherwise.
+This document applies only when the project has a package manager. Mark as `Not applicable` otherwise; the bootstrap transition deletes this file when it is not used.
 
 ## Before adding
 

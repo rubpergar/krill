@@ -16,8 +16,6 @@ If a condition is missing, keep the decision in the task file instead. Record it
 
 **Amendment**: if a new decision changes an accepted ADR, amend that ADR with a dated note instead of creating a duplicate. Create a new ADR only for a distinct decision.
 
-**Promotion from debt**: when discarded or accepted debt becomes a durable decision, record it here and reference this ADR from the debt entry (`-> ADR-XXX`).
-
 Do not record as an ADR: one-off task choices, temporary workarounds, task-local assumptions, obvious implementation details, or decisions better represented in code, tests, or specs. Those live in the task file's Plan or Execution sections.
 
 Process: before adding or changing an ADR, ask the user for approval and summarize the title, context, decision, consequences, and future value. ADRs are only marked `accepted` after explicit user approval. If new work conflicts with an accepted ADR, explain the conflict and ask whether to keep, rewrite, or update it.
@@ -41,7 +39,7 @@ Record only decisions with future impact. Keep one-off choices, temporary workar
 ## ADR-000: Short title
 Date: YYYY-MM-DD
 Status: accepted | rejected
-Context: What recurring uncertainty, constraint, or tradeoff forced the decision? What options mattered?
+Context: What recurring uncertainty, constraint, or trade-off forced the decision? What options mattered?
 Decision: What rule should future work follow? Be specific enough that another agent can apply it.
 Consequences: What benefits, costs, constraints, or follow-up work does this create?
 ```

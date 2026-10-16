@@ -8,8 +8,8 @@ Optional scope: `$ARGUMENTS`
 
 If `$ARGUMENTS` is provided, limit the audit to the specified module, package, directory, test target, or functional area. Otherwise inspect the full test surface.
 
-Read `agents/docs/testing.md` first. It is the source of truth for commands, locations, fixtures, coverage configuration, the Valid Test Criteria, and the Functional Coverage rule.
+Read `agents/docs/testing.md` first: it is the source of truth for commands, locations, fixtures, and coverage configuration. The test validity criteria live in `.opencode/skills/tdd/tests.md`.
 
-Read the active task file `agents/task/TASK.md` when it exists. Validate it as `agents/docs/task-lifecycle.md` defines; stop on malformed or ambiguous state instead of altering it silently.
+Read the task record `agents/task/TASK.md` when it exists. Validate it as `agents/docs/task-lifecycle.md` defines; stop on malformed or ambiguous state instead of altering it silently.
 
 Load the `audit-tests` skill with the skill tool and follow it. Default to audit only; write tests only for the gaps the user confirms. For a large surface, the skill may parallelize the audit across areas with sub-agents.

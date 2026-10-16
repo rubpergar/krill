@@ -63,19 +63,16 @@ Some source-of-truth documents only apply when the project needs them: `agents/d
 
 After user approval, perform in one scoped maintenance step:
 
-1. In `AGENTS.md`:
-   - Change `Current mode: skeleton` to `Current mode: project`.
-   - Replace the skeleton-mode heading message with:
-     ```
-     Current mode: `project`.
-     
-     This repository is an active project. Use the SDD/TDD workflow and the source-of-truth documents under `agents/**`.
-     
-     Bootstrap is complete. The bootstrap instructions and command have been removed; do not recreate them during normal project work.
-     ```
-2. Remove the skeleton-only rules from `AGENTS.md`: the two `skeleton`-mode bullets in `## Operating Rules` (unapproved editing of agent configuration in skeleton mode, and explicit approval for new project initialization), plus the `agents/docs/bootstrap.md` row from the Source of Truth Map.
+1. In the `## Mode` section of `AGENTS.md`, replace the whole skeleton-mode block (the current-mode line, the bootstrap-mode paragraph, the `BOOTSTRAP.md` pointer, and the "do not modify product source code" line) with:
+   ```
+   Current mode: `project`.
+   
+   This repository is an active project. Use the SDD/TDD workflow and the source-of-truth documents under `agents/**`.
+   
+   Bootstrap is complete. The bootstrap instructions and command have been removed; do not recreate them during normal project work.
+   ```
+2. Remove the skeleton-only rules from `AGENTS.md`: the two `skeleton`-mode bullets in `## Operating Rules` (unapproved editing of agent configuration in skeleton mode, and explicit approval for new project initialization).
 3. Verify that durable findings have been written to `AGENTS.md` and the applicable source-of-truth documents.
-4. Prune the conditional documents that do not apply: delete each unused or `Not applicable` source-of-truth document from the list above and its Source of Truth Map row. For each pruned document, remove or generalize any `AGENTS.md` rule or boundary that hard-references its path.
-5. Delete `agents/docs/bootstrap.md`.
+4. Prune the conditional documents that do not apply: delete each unused or `Not applicable` source-of-truth document from the list above and its Source of Truth Map row. For each pruned document, inspect the retained project-mode files (`AGENTS.md`, `agents/**`, `.opencode/**`) for references that would become dangling or unconditional, and remove or generalize them. References that live inside the bootstrap files themselves need no cleanup: those files are deleted later in this transition.
+5. Delete `.opencode/skills/bootstrap/` (the skill and this reference).
 6. Delete `.opencode/commands/bootstrap.md`.
-7. Delete `.opencode/skills/bootstrap/`.

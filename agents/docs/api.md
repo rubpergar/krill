@@ -1,6 +1,6 @@
 # API Contracts
 
-Mark as `Not applicable` if the project exposes no public API. Bootstrap deletes the file in that case.
+Mark as `Not applicable` if the project exposes no public API; the bootstrap transition deletes this file when it is not used.
 
 Document only contracts that clients depend on and that the code does not already express. If the project generates an OpenAPI spec or a typed client, reference it instead of copying route tables; keep this file for conventions and compatibility that code cannot express.
 
