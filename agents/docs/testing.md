@@ -2,7 +2,7 @@
 
 Customize before product implementation. If a command is unavailable, write `not available` and explain the fallback.
 
-This file defines project-specific testing logistics. Use `agents/skills/test-driven-development/SKILL.md` as the authority for the TDD workflow itself.
+This file defines project-specific testing logistics: commands, levels, environment, fixtures, locations, and coverage configuration. Test quality and validity criteria are owned by the `.opencode/skills/tdd/` skill; the coverage-audit rule is owned by the `audit-tests` skill. Do not restate them here.
 
 ## Commands
 
@@ -22,7 +22,7 @@ This file defines project-specific testing logistics. Use `agents/skills/test-dr
 | Build | |
 | Full validation | |
 | Coverage report | |
-| DESIGN.md lint | `npx @google/design.md lint agents/docs/design.md` (requires Node.js; optional — skip if unavailable) |
+| DESIGN.md lint | optional; applicable only while `agents/docs/design.md` is retained |
 
 ## Test Levels
 | Level | Purpose | Isolation | When to run |
@@ -67,17 +67,10 @@ This file defines project-specific testing logistics. Use `agents/skills/test-dr
 
 ## TDD Coordination
 - Read and apply the TDD skill once before implementation code when the task changes behavior or refactors behavior-preserving code.
-- Use the commands and locations in this guide while following the skill's red/green/refactor cycle.
-- Record any approved TDD exception in the task plan and checklist before implementing under that exception.
-
-## Test Quality
-- Prefer deterministic fixtures.
-- Avoid shared mutable state and order-dependent tests.
-- Keep sensitive or production-like data out of fixtures.
-- Mock external services at boundaries; prefer real code for domain logic.
-- Do not assert only on mock calls when user-visible behavior can be asserted.
+- Use the commands and locations in this guide while following the skill's red/green cycle.
+- Record any approved TDD exception in the task record before implementing under that exception. When no task record exists, state the exception and its approval in the conversation and the commit message.
 
 ## Failure Handling
 - Fix unexpected targeted-test failures before continuing.
 - Report unrelated failures before broadening scope.
-- Record skipped commands, reasons, and residual risk.
+- Compilation, targeted tests, and the applicable full suite must pass; record skipped commands, reasons, and residual risk.

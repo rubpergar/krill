@@ -1,108 +1,48 @@
 # Dependency Policy
 
-Rules for introducing new dependencies (libraries, packages, frameworks) into the project. The goal is to avoid accidental dependency bloat and ensure every addition is justified, evaluated, and recorded.
+Rules for adding or changing a dependency. The goal is to keep the dependency surface small, reproducible, and auditable.
 
-## Scope
+This document applies only when the project has a package manager. Mark as `Not applicable` otherwise; the bootstrap transition deletes this file when it is not used.
 
-Applies to all runtime dependencies. Dev dependencies for tooling (lint, format, test, typecheck) follow a lighter path described in the exceptions section.
+## Before adding
 
-Dependencies that are part of the initial project scaffold (chosen during bootstrap) are exempt — they are already decided by the stack selection.
+- State the specific problem it solves.
+- Prefer the standard library or existing project code when they suffice.
+- If a similar dependency already exists, explain why it does not.
+- Check the project's existing versioning and update policy before choosing a version.
 
-## 1. Justification
+## Evaluate at least two alternatives
 
-Before adding any dependency, answer:
+Include "do not add anything". For each, consider:
 
-- What specific problem does it solve?
-- Can this be solved with the language/runtime standard library or existing project code?
-- If a similar dependency already exists in the project, why does it not suffice?
+- **Maturity**: stable version, active maintenance, community size.
+- **License**: compatible with the project, no copyleft surprise.
+- **Maintenance cost**: breaking changes, number of transitive dependencies.
+- **Security**: historical CVEs, attack surface, install scripts, supply-chain risk.
+- **Size**: bundle, install time, and disk impact.
 
-## 2. Alternatives Considered
+## Versioning
 
-Evaluate at least two alternatives (including "do not add anything"). For each:
+Direct dependencies use exact versions by default: no `^`, `~`, `*`, `latest`, or git/URL ranges. Install them with the package manager's exact-save mode (for example `pnpm add --save-exact`). A different policy is an explicit project decision recorded as an ADR; the exception and its scope belong in that ADR.
 
-| Alternative | Maturity | License | Maintenance | Security | Size |
-|---|---|---|---|---|---|
-| ... | ... | ... | ... | ... | ... |
+Commit the lockfile. CI, or the project's validation command, installs from it with the package manager's frozen mode (for example `pnpm install --frozen-lockfile`). Transitive versions are pinned by the lockfile; do not add a direct dependency only to pin a transitive range. Use a documented override when the package manager requires one.
 
-## 3. Evaluation Criteria
+Updates go through automated tooling (for example Renovate or Dependabot) or explicit PRs. Review breaking changes and audit results before merging.
 
-### Maturity
-- Stable version (not alpha/beta/0.x unless justified)
-- Regular releases and active maintenance
-- Number of maintainers and community size
+Existing direct ranges are a finding to resolve in a task, not a silent rewrite.
 
-### License
-Must be compatible with the project's license. Check:
-- SPDX identifier
-- GPL family copyleft risk
-- Patent grants if applicable
+## Security checks
 
-### Maintenance Cost
-- Frequency of breaking changes
-- Number of transitive dependencies
-- Community responsiveness (issues, PRs)
+Before adding a runtime dependency, run the project's audit command (for example `pnpm audit --prod`) and record the result in the ADR. Run the same audit in CI, a scheduled job, or the project's validation command, and review findings.
 
-### Security
-- Historical CVEs and how they were handled
-- Attack surface of the dependency
-- Supply-chain risk (maintainer trustworthiness, access control)
+Review install scripts before allowing them; record the approval in the task or ADR.
 
-### Size Impact
-- Bundle size contribution (if browser/client-side)
-- Transitive dependency tree depth and width
-- Install time and disk impact
+Do not auto-merge dependency updates without reviewing breaking changes and audit results. If a known vulnerability is accepted, record the reason and the follow-up in the ADR or task record.
 
-## 4. Versioning Policy — Exact Versions Only
+## Record the decision
 
-### Rule
-All dependencies in `package.json` MUST use exact versions (`"1.2.3"`). Ranges with caret (`"^1.2.3"`), tilde (`"~1.2.3"`), or other operators are NOT allowed unless explicitly approved via an ADR exception.
+Every new runtime dependency is recorded as an ADR in `agents/docs/decisions.md` with the name, exact version, purpose, alternatives considered, evaluation summary, and audit result.
 
-### Rationale
-- `^1.2.3` allows automatic resolution of `1.2.4`, `1.3.0`, etc. Even minor/patch releases can introduce behavioral changes, regressions, or incompatibilities.
-- Exact pinning gives explicit control over when updates happen.
-- The lockfile (`package-lock.json` / `yarn.lock` / `pnpm-lock.yaml`) already pins transitive resolutions, but pinning in `package.json` adds a visible, auditable layer of intent.
+## Exceptions
 
-### How Updates Work
-- Major, minor, and patch updates are managed via automated tooling (Dependabot, Renovate) or explicit manual PRs.
-- Each update PR must be reviewed for breaking changes, changelog diff, and compatibility before merge.
-- Security patches follow the same process but with higher priority — they are not exempt from review.
-
-## 5. Decision Record
-
-Every new dependency (including the chosen version) MUST be recorded as an ADR in `agents/docs/decisions.md` with:
-
-- Name and exact version
-- Purpose and scope of use
-- Alternatives considered and why they were rejected
-- Evaluation summary (license, maturity, maintenance, security, size)
-
-## 6. Exceptions
-
-The following dev dependencies may skip the alternatives evaluation step, but still need justification and an ADR entry:
-
-- Linter and formatter (ESLint, Prettier, Ruff, rustfmt, etc.) — when they are the ecosystem standard
-- Test framework (Vitest, Jest, pytest, etc.) — when consistent with project stack
-- Type checker (TypeScript, mypy, etc.)
-- Build tooling (Vite, esbuild, Webpack, etc.) — when consistent with project stack
-
-All other dev dependencies (plugins, custom runners, code generators) follow the full policy.
-
-## 7. Boundary Exclusion
-
-The SDD workflow Boundary rule (`AGENTS.md`) already says:
-
-> "Do not introduce dependencies without documenting why."
-
-This policy is the "documenting why" mechanism. That rule is updated to point here.
-
-## 8. Exception Process
-
-To approve an exception to any rule in this policy:
-- Document the exception in the task plan with rationale.
-- Get explicit user approval.
-- Record the exception as an ADR.
-
-## Exempt from This Policy
-
-- Dependencies introduced during project bootstrap / scaffold initialization.
-- Critical security patches (CVE with active exploitation) — but the update still needs an ADR entry within one working cycle.
+Dev tooling that is the ecosystem standard (linter, formatter, test framework, type checker, build tool) still needs justification and an ADR entry, but may skip the alternatives evaluation. Dependencies from the initial scaffold are already decided by the stack choice. In both cases, direct versions still follow the versioning rule.
