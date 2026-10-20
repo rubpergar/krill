@@ -11,4 +11,4 @@ Read `agents/docs/task-lifecycle.md` first. It owns the task file, phases, gates
 1. Validate the task and resume from its saved state according to `agents/docs/task-lifecycle.md`; if there is no valid task, suggest `/plan`.
 2. Execute the approved plan using the `tdd` skill and persist progress as the lifecycle contract defines.
 3. Run configured validation commands from `agents/docs/testing.md` and satisfy the Converge evidence criteria in `agents/docs/dod.md`. When the lifecycle gate is met, record `phase: reviewing` and report that `/review` is the next step. Do not invoke `/review` or perform an independent review in this invocation.
-4. Stop after reporting the phase and next action; do not invoke another command. Do not delete the task.
+4. Stop after reporting the phase and next step; do not invoke another command. Do not delete the task.

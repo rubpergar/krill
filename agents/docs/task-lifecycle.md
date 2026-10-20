@@ -34,7 +34,7 @@ A phase is left only when its gate holds. This table is the single owner of phas
 | Phase | Gate to leave it |
 |---|---|
 | `planning` | No blocking `### Open Questions`, and the user explicitly approves the plan. Write `approved_at` and set `phase: ready_to_implement`. |
-| `ready_to_implement` | The Execution scaffold exists and the first `Next action` is set. Starting the first implementation step sets `phase: implementing`. |
+| `ready_to_implement` | The Execution scaffold exists and the first `TDD Ledger` item is defined. Starting the first implementation step sets `phase: implementing`. |
 | `implementing` | The implementation evidence and validation criteria in `agents/docs/dod.md` are recorded, no blocker remains, and the task is ready for independent review. Then set `phase: reviewing`; this ends the `/implement` invocation. Report `/review` as the next step and do not invoke it automatically. |
 | `reviewing` | An independent review is complete (or an approved exception is recorded in the task file), the gates in `agents/docs/dod.md` pass, and no `blocking` or `important` finding remains open. Findings addressed by implementation are `fixed` with evidence; findings the user decides not to address are `dismissed` without a required reason. `nit` findings may remain open and never block closeout. Then set `phase: ready_for_closeout`; otherwise return to `implementing`. Use `blocked` only when resolving a finding needs a user decision or a plan change. |
 | `blocked` | The blocker recorded in `Resume State` is resolved. A changed plan is re-approved first and returns the task to `ready_to_implement`; a resolved technical blocker returns it to `implementing`. |
@@ -63,15 +63,16 @@ The task record is the hot, persistent context. It replaces the former standalon
 - never regenerate, replace, reorder, or reset an existing Execution section;
 - preserve every completed item and every existing evidence entry;
 - add only missing scaffolding or new items explicitly justified by the approved plan;
-- before continuing and after a meaningful pause, failure, interruption, scope change, or validation, persist `Phase`, `Next action`, `Blockers`, `Last validation`, `Last checkpoint`, `Scope changes`, and `Updated` in the task file;
+- before continuing and after a meaningful pause, failure, interruption, scope change, or validation, persist `Phase`, `Blockers`, `Last validation`, `Last checkpoint`, `Scope changes`, and `Updated` in the task file;
+- treat the first incomplete `TDD Ledger` item as the next action;
 - update the TDD Ledger after each relevant RED and GREEN checkpoint, including its result and evidence; and
 - leave the task file in place if the session stops, fails, or is interrupted.
 
-When the implementation gate passes, `/implement` records `phase: reviewing`, reports `/review` as the next step, and ends its invocation. It does not invoke `/review` automatically. A phase or `Next action` is resumption information, not authorization to execute another command.
+When the implementation gate passes, `/implement` records `phase: reviewing`, reports `/review` as the next step, and ends its invocation. It does not invoke `/review` automatically. A phase or the current ledger item is resumption information, not authorization to execute another command.
 
-On a new session, or after an agent failure, read the task file and resume from `Resume State` and the first incomplete ledger item. Do not reconstruct progress from chat history or Git history, or change phase merely because a session started. If the next action is unknown, mark the task `blocked` and ask the user; do not infer a completed step. `/implement` does not restart a task already at `ready_for_closeout`.
+On a new session, or after an agent failure, read the task file and resume from `Resume State`; the first incomplete `TDD Ledger` item is the next action. Do not reconstruct progress from chat history or Git history, or change phase merely because a session started. If the next ledger item is unknown or the ledger is inconsistent with the resume state, mark the task `blocked` and ask the user; do not infer a completed step. `/implement` does not restart a task already at `ready_for_closeout`.
 
-The ledger records durable execution evidence. Each RED and GREEN checkpoint has its own completion marker, so an interrupted behavior can resume at the exact cycle. The resume state records the small, replaceable pointer to the next action. A short append-only checkpoint entry is used for interruptions, blockers, scope changes, and important validation results; it is not a second checklist.
+The ledger records durable execution evidence and is the single progress pointer: its first incomplete item is the next action. Each RED and GREEN checkpoint has its own completion marker, so an interrupted behavior can resume at the exact cycle. The resume state records the current phase, blockers, scope changes, and the latest pointers, not a second copy of progress. A short append-only checkpoint entry is used for approvals, interruptions, blockers, scope changes, and important validation results; it is not a second checklist.
 
 ## Review readiness
 
@@ -81,7 +82,7 @@ The ledger records durable execution evidence. Each RED and GREEN checkpoint has
 
 After recording the review and reporting a concise summary of its findings, `/review` ends its invocation and waits for the user. It never invokes `/implement` or fixes findings.
 
-The `/review` orchestrator may update only `Resume State`, `Checkpoint Log`, and `Review Findings`. Record findings and review evidence there; update `Next action`, `Blockers`, `Last validation`, `Last checkpoint`, and `Updated` to match the result.
+The `/review` orchestrator may update only `Resume State`, `Checkpoint Log`, and `Review Findings`. Record findings and review evidence there; update `Blockers`, `Last validation`, `Last checkpoint`, and `Updated` to match the result. The next action is the first open `blocking` or `important` finding; when none remains, it is the first incomplete ledger item, or the closeout step when the ledger is complete.
 
 ## Finishing and removal
 
