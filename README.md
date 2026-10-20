@@ -25,12 +25,7 @@ It ships in `skeleton` mode: no product code and no stack assumptions. You adopt
 
    Do not copy Krill's `.git` or `README.md`, or overwrite the host project's `LICENSE`. Preserve Krill's MIT notice by including its `LICENSE` separately or in the project's third-party notices.
 3. Open the project in OpenCode and run `/bootstrap`. For a new project with no code yet, follow the incremental path in [`.opencode/skills/bootstrap/BOOTSTRAP.md`](.opencode/skills/bootstrap/BOOTSTRAP.md).
-4. For work that needs the full lifecycle, plan, implement, review, and integrate.
-
-```mermaid
-flowchart LR
-    P["/plan"] --> I["/implement"] --> R["/review"]
-```
+4. For work that needs the full lifecycle, plan, implement, review, and integrate. See [Command flows](#command-flows) for the normal paths and the loops between them.
 
 ## Commands
 
@@ -44,6 +39,44 @@ flowchart LR
 | `/improve-codebase-architecture` | Survey architectural friction, compare visual refactor candidates, and explore one before planning |
 | `/commit` | Review hunks, group related changes into semantic commits, and push |
 | `/prompt` | Convert a rough request into an optimized prompt and execute it |
+
+## Command flows
+
+The diagram maps how the commands connect for normal work. The lifecycle itself is defined in [`agents/docs/task-lifecycle.md`](agents/docs/task-lifecycle.md), which remains the source of truth for phases and gates.
+
+```mermaid
+flowchart TD
+    START(["Bootstrapped project"]) --> WORK{"Type of work"}
+
+    WORK -->|"Needs the full lifecycle"| PLAN["/plan<br/>create or refine agents/task/TASK.md"]
+    WORK -->|"Rough request to sharpen"| PROMPT["/prompt"]
+    WORK -->|"Explore architecture first"| ARCH["/improve-codebase-architecture"]
+    WORK -->|"Small fix or docs edit"| DIRECT["Direct edit<br/>TDD only if behavior changes"]
+
+    PROMPT -->|"needs the full lifecycle"| PLAN
+    PROMPT -->|"small enough"| DIRECT
+    ARCH -->|"chosen candidate"| PLAN
+
+    PLAN --> APPROVAL{"Plan approved?"}
+    APPROVAL -->|"no: resolve open questions"| PLAN
+    APPROVAL -->|"yes"| IMPL["/implement"]
+
+    IMPL -->|"implementation complete"| REVIEW["/review"]
+
+    REVIEW -->|"blocking / important findings"| IMPL
+    REVIEW -->|"needs a plan change:<br/>blocked, then re-approve"| PLAN
+    REVIEW -->|"no blocking / important findings"| COMMIT["/commit<br/>semantic commits + push"]
+    DIRECT --> COMMIT
+    COMMIT --> END(["Integration done"])
+
+    AUDIT["/audit-tests<br/>any time"] -.->|"confirmed gaps become work"| WORK
+```
+
+Three rules make the flow easier to read:
+
+- **Commands do not chain automatically.** `/implement` stops and reports `/review` as the next step; `/review` reports findings and waits for you. You choose every transition.
+- **Review can loop.** `blocking` and `important` findings send you back to `/implement`, which ends ready for `/review` again. `nit` findings may remain open and never block closeout.
+- **Plan changes need approval.** A change to an approved plan records `blocked`; after you re-approve it, `/implement` resumes.
 
 ## What's inside
 
