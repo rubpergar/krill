@@ -35,7 +35,7 @@ Fill only what applies during bootstrap.
 - New project initialization in `skeleton` mode requires explicit user approval and must follow `.opencode/skills/bootstrap/BOOTSTRAP.md`.
 - Exploratory, advisory, review-only, or planning-only requests do not change code unless the user asks for edits.
 - Keep changes scoped to the task or the explicitly requested maintenance.
-- Prefer updating stable source-of-truth docs over duplicating instructions.
+- Update a durable document only when its contract changes. One owner per fact; status snapshots, implementation detail, and one-off detail stay in the task file. The plan names the document and section.
 - Treat blank fields, placeholder markers, and `not available` commands as missing configuration, not as instructions to improvise.
 
 ## Communication And Context
@@ -57,7 +57,7 @@ Read the smallest useful set. Use this table to decide what to open, not as a ma
 | `agents/docs/dod.md` | Acceptance | Definition of done | Before declaring implementation complete or entering review | Yes |
 | `agents/docs/testing.md` | Testing | Test commands, fixtures, environment, coverage setup | Adding/running tests or validating work | Only if validation changes |
 | `agents/docs/decisions.md` | Decisions | ADR records | Planning, durable decision, or past rationale matters | Yes |
-| `agents/docs/api.md` | API contracts | Routes, payloads, errors, compatibility | API routes, clients, or payloads affected | No |
+| `agents/docs/api.md` | API contracts | Non-obvious contracts, error format, compatibility | An external or independently versioned client is affected | No |
 | `agents/db/schema.sql` | DB schema | Current structure. Override path during bootstrap if project has its own. | Persistence, migrations, queries, or schema affected | No |
 | `agents/db/changes.sql` | DB change log | Ordered SQL changes with rollback notes. Override path during bootstrap if project has its own. | Persistence, migrations, queries, or schema affected | No |
 | `agents/db/domain.md` | DB domain | Vocabulary, entities, business rules | Data model or business rules affected | No |
@@ -80,7 +80,7 @@ The complete lifecycle contract is in `agents/docs/task-lifecycle.md`. Commands 
 - `agents/task/TASK.md` is the only SDD task state, and at most one may exist. A command operating on a recorded task requires it to exist; the lifecycle contract defines when the record is needed.
 - Do not add a frontmatter `status` field, a global backlog, or a standalone checklist.
 - Product implementation follows TDD unless the approved task records an exception; the methodology is `.opencode/skills/tdd/SKILL.md` and the project logistics are in `agents/docs/testing.md`.
-- Durable docs are updated only when their contracts change, and lasting ADRs require user approval.
+- Durable docs follow the rule in Operating Rules, and lasting ADRs require user approval.
 - Do not create commits or branches unless the user asks.
 
 Scale the workflow to the change. Do not push for a task plan when one is not needed:

@@ -1,8 +1,8 @@
 # API Contracts
 
-Mark as `Not applicable` if the project exposes no public API; the bootstrap transition deletes this file when it is not used.
+Mark as `Not applicable` if no external or independently versioned client depends on the wire contract; internal app routes are covered by code and tests. The bootstrap transition deletes this file when it is not used.
 
-Document only contracts that clients depend on and that the code does not already express. If the project generates an OpenAPI spec or a typed client, reference it instead of copying route tables; keep this file for conventions and compatibility that code cannot express.
+Document only contracts that clients depend on and that the code does not already express. If the project generates an OpenAPI spec or a typed client, reference it instead of copying route tables; keep this file for conventions, non-obvious route semantics, and compatibility that code cannot express.
 
 ## Conventions
 - Base URL:
@@ -12,11 +12,7 @@ Document only contracts that clients depend on and that the code does not alread
 - Versioning/compatibility:
 
 ## Contracts not visible in code
-Document wire protocols, field semantics, and guarantees that types and routes do not capture. A route table copied from code is not useful here.
-
-## Routes
-| Method | Path | Request | Response | Notes |
-|---|---|---|---|---|
+Document wire protocols, field semantics, and guarantees that types and routes do not capture. Route inventory lives in code or the generated OpenAPI; record only non-obvious route semantics here.
 
 ## Compatibility Notes
 - ...

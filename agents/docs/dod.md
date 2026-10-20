@@ -16,6 +16,6 @@ The implementation step is done when these criteria pass.
 - Targeted tests pass; the applicable full suite, lint, typecheck, and build pass when configured and relevant.
 - Every skipped command has a reason and residual risk recorded.
 - Converge has mapped every acceptance criterion to concrete evidence (a test, observable behavior, or a documented exception); a criterion without evidence is not done.
-- Required source-of-truth documents are synchronized, including API, DB, domain, design, dependency, or decisions documentation when affected.
+- Durable documentation matches the plan's `Documentation impact` or an approved change, and follows the `AGENTS.md` documentation rule; a task without the field uses its plan's documentation section.
 - Temporary files, debug logs, scratch scripts, and test artifacts are cleaned up or intentionally promoted.
 - `git status` contains only intentional changes.

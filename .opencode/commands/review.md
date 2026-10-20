@@ -19,6 +19,7 @@ Review the complete task diff (its commits and working-tree changes) against its
 ## Task-specific rules
 
 - Plan and criteria source: the task record plus the relevant source-of-truth documents declared in the `AGENTS.md` Source of Truth Map (for example `agents/docs/decisions.md` and `agents/docs/dod.md`, and the API or DB files only when the map still lists them) and accepted ADRs. Judge test quality and validity with `.opencode/skills/tdd/`; use `agents/docs/testing.md` only for project test logistics.
+- Documentation check (report under `Standards`): verify durable docs match the plan's `Documentation impact` and the `AGENTS.md` documentation rule; flag unnecessary or duplicated additions. Task-local decisions stay in the task file.
 - Use the review skill for analysis and record the result according to `agents/docs/task-lifecycle.md`. Do not modify product code or change task state outside the fields and transitions allowed by that contract.
 - Keep a technical, specific, and constructive tone; report findings first.
 

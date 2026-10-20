@@ -59,15 +59,15 @@ Ask one by one through the OpenCode question interface; do not print questions a
 - **Agent runtime**: confirm project-level plugins and MCPs. Present values detected from `opencode.json` for confirmation. If not declared in project config, leave them blank unless the user explicitly wants them recorded as project capabilities.
 - **Critical modules**: key services, entry points, sensitive areas.
 - **Restrictions**: security (auth, payments, PII), performance, deployment limits, code standards, branch/release workflows.
-- **Additional documents**: ask whether the project needs `agents/docs/api.md` (API?), `agents/db/schema.sql` + `agents/db/domain.md` (DB/model?), `agents/docs/design.md` (UI?). `agents/docs/decisions.md` always stays.
+- **Additional documents**: ask whether the project needs `agents/docs/api.md` (does an external or independently versioned client depend on the wire contract?), `agents/db/schema.sql` + `agents/db/domain.md` (DB/model?), `agents/docs/design.md` (UI?). `agents/docs/decisions.md` always stays.
 
 ### 5. Fill source-of-truth docs
 
 Write only facts confirmed by the user. Never write unconfirmed inferences as authoritative.
 
-- **`AGENTS.md`**: `## Project` (Product, Domain, Users, Goal); `## Stack` (runtime/framework, package manager, database, test tools, deployment, external services); `## Agent Runtime` (plugins, MCPs) when confirmed; `## Commands` with confirmed commands. Add a `## Project Structure` section only when the project has meaningful primary routes or entry points.
+- **`AGENTS.md`**: `## Project` (Product, Domain, Users, Goal); `## Stack` (runtime/framework, package manager, database, test tools, deployment, external services); `## Agent Runtime` (plugins, MCPs) when confirmed; `## Commands` with confirmed commands. Add a `## Project Structure` section only when the project has meaningful primary routes or entry points; keep it top-level, not a file inventory.
 - **`agents/docs/testing.md`**: test commands, locations, services, env vars.
-- **Additional docs (per step 4)**: `agents/docs/api.md` (base URL, routes, auth, formats, errors); `agents/db/schema.sql` (DB type, schema, migrations, connection); `agents/db/domain.md` (vocabulary, entities, business rules); `agents/docs/design.md` (components, styles, a11y, tokens); `agents/docs/decisions.md` (existing ADRs).
+- **Additional docs (per step 4)**: `agents/docs/api.md` (conventions and non-obvious contracts for an external or independently versioned client; no route inventory); `agents/db/schema.sql` (DB type, schema, migrations, connection); `agents/db/domain.md` (vocabulary, entities, business rules); `agents/docs/design.md` (durable tokens, component rules, a11y; no one-off screen details); `agents/docs/decisions.md` (existing ADRs).
 
 Mark unused files `Not applicable`. The transition deletes every `Not applicable` document and its Source of Truth Map row, so an adopted project keeps only the documents it uses.
 
